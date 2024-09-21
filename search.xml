@@ -28,7 +28,7 @@
 </blockquote>
 <span id="more"></span>
 <h2 id="第一章-辐射转移"><a href="#第一章-辐射转移" class="headerlink" title="第一章 辐射转移"></a>第一章 辐射转移</h2><h3 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h3><ul>
-<li>天体物理中的辐射过程综述：带电粒子静止或匀速直线运动的辐射场$\propto r^{-2}$，能流$\propto \vec{E}\times \vec{B}\propto r^{-4}$，无穷远处无辐射，因此在天体物理的研究范围内，只有做<strong>加速运动</strong>的粒子才能产生辐射。</li>
+<li>天体物理中的辐射过程综述：带电粒子静止或匀速直线运动的辐射场$\propto r^{-2}$，能流$\propto \vec{E}\times \vec{B}\propto r_{-4}$，无穷远处无辐射，因此在天体物理的研究范围内，只有做<strong>加速运动</strong>的粒子才能产生辐射。</li>
 </ul>
 <h4 id="带电粒子的加速机制"><a href="#带电粒子的加速机制" class="headerlink" title="带电粒子的加速机制"></a>带电粒子的加速机制</h4><ol>
 <li>其他带电粒子的库伦场加速：轫致辐射或自由-自由辐射；</li>
@@ -77,6 +77,8 @@
       </categories>
       <tags>
         <tag>Astrophysics</tag>
+        <tag>Solar Physics</tag>
+        <tag>USTC</tag>
       </tags>
   </entry>
   <entry>
@@ -155,6 +157,32 @@
       </categories>
       <tags>
         <tag>Astrophysics</tag>
+        <tag>Solar Physics</tag>
+        <tag>USTC</tag>
+        <tag>pmo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>日地空间物理学研究前沿讲座</title>
+    <url>/2024/09/21/%E6%97%A5%E5%9C%B0%E7%A9%BA%E9%97%B4%E7%89%A9%E7%90%86%E5%AD%A6%E7%A0%94%E7%A9%B6%E5%89%8D%E6%B2%BF%E8%AE%B2%E5%BA%A7/</url>
+    <content><![CDATA[<h1 id="日地空间物理学研究前沿讲座"><a href="#日地空间物理学研究前沿讲座" class="headerlink" title="日地空间物理学研究前沿讲座"></a>日地空间物理学研究前沿讲座</h1><blockquote>
+<p>该笔记基于USTC《日地空间物理学研究前沿讲座》的讲座内容建立</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="Lec01-地球和水星日側磁層受太陽風壓縮程度之比較"><a href="#Lec01-地球和水星日側磁層受太陽風壓縮程度之比較" class="headerlink" title="Lec01.地球和水星日側磁層受太陽風壓縮程度之比較"></a>Lec01.地球和水星日側磁層受太陽風壓縮程度之比較</h1><blockquote>
+<p>2024年9月10日，台湾中央大学许志浤教授</p>
+</blockquote>
+<h1 id="Lec02-异常活跃和不对称的冰巨星磁层系统"><a href="#Lec02-异常活跃和不对称的冰巨星磁层系统" class="headerlink" title="Lec02.异常活跃和不对称的冰巨星磁层系统"></a>Lec02.异常活跃和不对称的冰巨星磁层系统</h1><blockquote>
+<p>2024年9月24日，科罗拉多大学曹鑫博士</p>
+</blockquote>
+<p><strong>摘要</strong>：与类地行星和气态巨行星相比，冰巨星具有极其异常、活跃且不对称的磁层系统，这主要源于其异常大的轴倾角和高度倾斜、偏心的行星磁偶极场。我们分析了冰巨星磁层与上游太阳风相互作用的昼夜和季节性变化，重点揭示了冰巨星与其自转周期同步发生的周期性磁重联现象。这种极端条件下多因素驱动的磁层动力学与典型的类地行星磁层图像完全不同，可能形成较弱的离子辐射带和高度扭曲的磁尾结构。此外我们系统地模拟了磁层顶拓扑结构的昼夜周期变化，并分析了其对于不同行星际磁场（IMF）方向的即时响应。我们研究发现，在上游太阳风相对稳定的条件下，冰巨星的行星自转主导了磁层顶的不对称形态，并且IMF方向也能够调节磁层顶的微观结构。我们的研究表明，磁层或边界层附近的多个区域可能会引发不稳定性和重联现象。我们的研究建议，未来对冰巨星的轨道器和探测器任务应重点关注这些具有重要科学价值的空间环境区域。</p>
+]]></content>
+      <categories>
+        <category>课堂笔记</category>
+      </categories>
+      <tags>
+        <tag>Solar Physics</tag>
+        <tag>USTC</tag>
       </tags>
   </entry>
 </search>
