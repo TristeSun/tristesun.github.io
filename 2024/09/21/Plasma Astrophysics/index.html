@@ -331,7 +331,47 @@
 </ul>
 <p><strong>等离子天体物理</strong>：以天体中“<strong>等离子体——磁场</strong>”电磁相互作用为主的天体等离子体过程的研究，研究内容从<strong>非热电磁辐射</strong>到<strong>高能粒子加速</strong>，从<strong>磁化等离子体结构</strong>到<strong>磁能释放过程</strong>等。</p>
 <h4 id="宇宙热历史：引力与大尺度结构生成"><a href="#宇宙热历史：引力与大尺度结构生成" class="headerlink" title="宇宙热历史：引力与大尺度结构生成"></a>宇宙热历史：引力与大尺度结构生成</h4><p>引力主导—&gt;负热容量—&gt;熵减少—&gt;结构生成</p>
-<h4 id="天体结构的基本类型：Core-Halo"><a href="#天体结构的基本类型：Core-Halo" class="headerlink" title="天体结构的基本类型：Core + Halo"></a>天体结构的基本类型：Core + Halo</h4>
+<h4 id="天体结构的基本类型：Core-Halo"><a href="#天体结构的基本类型：Core-Halo" class="headerlink" title="天体结构的基本类型：Core + Halo"></a>天体结构的基本类型：Core + Halo</h4><h2 id="第二讲：宇宙等离子体的基本静电特性：德拜屏蔽，朗缪尔振荡，库仑碰撞"><a href="#第二讲：宇宙等离子体的基本静电特性：德拜屏蔽，朗缪尔振荡，库仑碰撞" class="headerlink" title="第二讲：宇宙等离子体的基本静电特性：德拜屏蔽，朗缪尔振荡，库仑碰撞"></a>第二讲：宇宙等离子体的基本静电特性：德拜屏蔽，朗缪尔振荡，库仑碰撞</h2><h3 id="等离子体基本概念和参数（电离度、耦合条件、经典条件）"><a href="#等离子体基本概念和参数（电离度、耦合条件、经典条件）" class="headerlink" title="等离子体基本概念和参数（电离度、耦合条件、经典条件）"></a>等离子体基本概念和参数（电离度、耦合条件、经典条件）</h3><h4 id="萨哈-Saha-方程"><a href="#萨哈-Saha-方程" class="headerlink" title="萨哈(Saha)方程"></a>萨哈(Saha)方程</h4><ul>
+<li>电离：原子吸收足够多的能量，电子脱离原子成为自由电子。光致电离、碰撞电离、压致电离等</li>
+<li>电离度：电离原子数密度与总原子数密度之比</li>
+<li><strong>Saha方程</strong>：<script type="math/tex">\frac{n_in_e}{n_a}=(\frac{2\pi m_ek_BT}{h^2})^{3/2}\exp (-\frac{\psi _I}{k_Bt})</script><br>其中$n_i,n_e,n_a$分别代表离子、电子、中性原子的数密度，$\psi_I$式原子的电离势能。</li>
+<li>假设只有一次电离，即$n_i=n_e$，则电离度$\chi$满足<script type="math/tex">\chi =\frac{n_i}{n_i+n_a}</script> <script type="math/tex">\Rightarrow \frac{\chi^2}{1-\chi}=(\frac{2\pi m_ek_BT}{h^2})^{3/2}(n_i+n_a)^{-1}\exp (-\frac{\psi _I}{k_Bt})</script></li>
+<li>天体环境下：密度稀薄，温度高<script type="math/tex">n\simeq 3\times 10^{25}\text{m}^{-3}, T\simeq 0.026eV</script> <script type="math/tex">\Rightarrow \chi \sim 10^{-107}</script></li>
+</ul>
+<h4 id="等离子体的宏观参量：密度、温度和磁场"><a href="#等离子体的宏观参量：密度、温度和磁场" class="headerlink" title="等离子体的宏观参量：密度、温度和磁场"></a>等离子体的宏观参量：密度、温度和磁场</h4><ul>
+<li>部分和完全电离等离子体：$\chi&gt;10^{-3}$为部分电离等离子体，$\chi=1$为完全电离等离子体</li>
+<li>电中性条件：$n_e=\sum Z_in_i$，而等离子体密度$n=n_e$</li>
+<li>双温等离子体：电子、离子分别达到热平衡状态，即$T_i\neq T_e$</li>
+<li>磁化等离子体：磁场强度$B$强到使粒子回旋半径小于碰撞自由程，称等离子体所磁化的，突出磁化特性是呈现<strong>各向异性</strong></li>
+</ul>
+<h4 id="等离子体静电耦合参数"><a href="#等离子体静电耦合参数" class="headerlink" title="等离子体静电耦合参数"></a>等离子体静电耦合参数</h4><ul>
+<li>新的温度单位：eV，$k_BT_0=1\text{eV} \Rightarrow T_0=\frac{1\text{eV}}{k_B}=11600\text{K}$</li>
+<li>粒子间平均距离（Wigner-Seitz半径）：$d=n^{-1/3}$ 或 $d_{WS}=(\frac{3}{4\pi n})^{1/3}\approx 0.62d$</li>
+<li>朗道长度：热粒子可接近的最小距离 $\lambda_L=\frac{e^2}{4\pi\varepsilon_0 T}$</li>
+<li>等离子体耦合参数：粒子间静电作用势能与热运动动能之比 $\Gamma =\frac{\lambda_L}{d}$</li>
+<li>弱耦合条件（稀薄条件）：$\Gamma \ll 1$</li>
+</ul>
+<h4 id="经典条件（量子效应可忽略）"><a href="#经典条件（量子效应可忽略）" class="headerlink" title="经典条件（量子效应可忽略）"></a>经典条件（量子效应可忽略）</h4><script type="math/tex; mode=display">\lambda_dB=\frac{h}{p}\ll d</script><p>与弱耦合条件通用。</p>
+<h3 id="德拜势与德拜屏蔽（弱耦合等离子体条件）"><a href="#德拜势与德拜屏蔽（弱耦合等离子体条件）" class="headerlink" title="德拜势与德拜屏蔽（弱耦合等离子体条件）"></a>德拜势与德拜屏蔽（弱耦合等离子体条件）</h3><h4 id="微观粒子间的相互作用"><a href="#微观粒子间的相互作用" class="headerlink" title="微观粒子间的相互作用"></a>微观粒子间的相互作用</h4><p>对于等离子体来说，粒子间的短程分子力变为<strong>长程电磁力</strong>，单粒子间的两体相互作用变成多粒子的<strong>集体相互作用</strong></p>
+<h4 id="德拜长度、德拜屏蔽和德拜势"><a href="#德拜长度、德拜屏蔽和德拜势" class="headerlink" title="德拜长度、德拜屏蔽和德拜势"></a>德拜长度、德拜屏蔽和德拜势</h4><ul>
+<li>德拜长度：<script type="math/tex">\lambda_D=\sqrt{\frac{\varepsilon_0T_eT_i}{n_0e^2(T_e+T_i)}}</script></li>
+<li>德拜势：<script type="math/tex">\phi_D(r)=\frac{e}{4\pi \varepsilon_0r}\exp (-\frac{r}{\lambda_D})</script></li>
+<li>德拜屏蔽的必要条件：德拜球内的粒子数（等离子体参数）远大于1，称为<strong>等离子体条件</strong><blockquote>
+<p>等离子体参数：<script type="math/tex">N_D=\frac{4\pi}{3}n\lambda_D ^3</script></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="朗缪尔静电振荡和等离子体本征频率"><a href="#朗缪尔静电振荡和等离子体本征频率" class="headerlink" title="朗缪尔静电振荡和等离子体本征频率"></a>朗缪尔静电振荡和等离子体本征频率</h3><h4 id="朗缪尔振荡"><a href="#朗缪尔振荡" class="headerlink" title="朗缪尔振荡"></a>朗缪尔振荡</h4><p>电子运动方程 <script type="math/tex">m_e\frac{d^2x}{dt^2}=-\frac{e^2n_ex}{\varepsilon_0}</script> 这是一个简谐振功方程，频率为 <script type="math/tex">\omega_{pe}=\sqrt{\frac{n_ee^2}{m_e\varepsilon_0}}</script> 称为朗缪尔振荡。对于电子和离子 <script type="math/tex">\omega_{pe}=\sqrt{\frac{T_e}{m_e}}\frac{1}{\lambda_D}=\frac{1}{\tau _{De}}</script> <script type="math/tex">\omega_{pi}=\sqrt{\frac{n_ie^2}{m_i\varepsilon_0}}</script> 等离子体振荡频率 <script type="math/tex">\omega_{p}=\sqrt{\omega_{pe}^2+\omega_{pi}^2}\approx \omega_{pe}</script></p>
+<blockquote>
+<p>德拜屏蔽的三重意义：</p>
+<ol>
+<li>等离子体中形成<strong>静电屏蔽</strong>的特征尺度</li>
+<li>带电粒子微观热<strong>振动范围</strong>的特征尺度</li>
+<li>等离子体中产生<strong>电荷分离</strong>的特征尺度</li>
+</ol>
+</blockquote>
+<h4 id="等离子体粒子的微观热振荡及其涨落场"><a href="#等离子体粒子的微观热振荡及其涨落场" class="headerlink" title="等离子体粒子的微观热振荡及其涨落场"></a>等离子体粒子的微观热振荡及其涨落场</h4><h4 id="等离子体特征长度"><a href="#等离子体特征长度" class="headerlink" title="等离子体特征长度"></a>等离子体特征长度</h4><script type="math/tex; mode=display">L\gg \lambda_{D}\gg d \gg \lambda_L, \lambda_{dB}</script><h3 id="带电粒子间的库仑碰撞"><a href="#带电粒子间的库仑碰撞" class="headerlink" title="带电粒子间的库仑碰撞"></a>带电粒子间的库仑碰撞</h3><p>由点电荷的库仑势 <script type="math/tex">\phi_c(r)=\frac{Z_\beta e}{4\pi \varepsilon_0}\frac{1}{r}</script> 根据能量守恒和角动量守恒 <script type="math/tex">\frac{1}{2}(\dot{r}^2+r^2\dot{\psi}^2)+\frac{G_{\alpha \beta}}{r^2}=\frac{1}{2}v_{\alpha \beta}^2</script> <script type="math/tex">r^2\dot{\psi}=v_{\alpha \beta}b</script> <script type="math/tex">G_{\alpha \beta}=\frac{Z_{\alpha}Z_{\beta}e^2}{4\pi \varepsilon _0m_{\alpha \beta}}</script> 其中$b$称为瞄准距离，相对初始速度$v<em>{\alpha \beta}=v</em>{\alpha}-v<em>{\beta}$。<br>则粒子的碰撞偏转角 <script type="math/tex">\theta =2\tan^{-1}(b_0/b)</script> $$b_0=\frac{Z</em>{\alpha}Z<em>{\beta}e^2}{4\pi \varepsilon_0 m</em>{\alpha \beta}v_{\alpha \beta}^2}\approx \lambda_L&lt;b\ll d$$</p>
+
         </div>
 
         
