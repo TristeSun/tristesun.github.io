@@ -318,6 +318,8 @@ a {
   bottom: -8%;
   right: 0;
   left: min(46%, 34rem);
+  /* 滤色混合：照片的纯黑背景透明化，与页面底色无缝衔接 */
+  mix-blend-mode: screen;
   /* 整体径向羽化：子元素（含发光层）一起融入夜色 */
   -webkit-mask-image: radial-gradient(82% 96% at 60% 46%, #000 42%, transparent 84%);
   mask-image: radial-gradient(82% 96% at 60% 46%, #000 42%, transparent 84%);
@@ -334,8 +336,7 @@ a {
 }
 
 .cover__sun {
-  opacity: 0.97;
-  filter: saturate(1.08) contrast(1.05);
+  filter: saturate(1.1) contrast(1.06);
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 
