@@ -1,0 +1,277 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Triste's Blog</title><link>https://tristesun.github.io/</link><description>Some memories, some thoughts, some experiences.</description><language>zh-CN</language><managingEditor>2012536@mail.nankai.edu.cn (Triste Sun)</managingEditor><generator>Hugo</generator><atom:link href="https://tristesun.github.io/posts/" rel="self" type="application/rss+xml"/><item><title>Sunpy Basic 学习记录</title><link>https://tristesun.github.io/2024/11/27/sunpy_basic/</link><guid isPermaLink="true">https://tristesun.github.io/2024/11/27/sunpy_basic/</guid><pubDate>Wed, 27 Nov 2024 21:00:00 +0000</pubDate><description><![CDATA[<p>这是一个Sunpy基础的学习文档，来自于官方文档
+<a href="https://docs.sunpy.org/en/stable/tutorial/index.html">https://docs.sunpy.org/en/stable/tutorial/index.html</a></p>
+<h1 id="units">Units</h1>
+<p>Sunpy中的单位知识
+<a href="https://docs.sunpy.org/en/stable/tutorial/units.html">https://docs.sunpy.org/en/stable/tutorial/units.html</a></p>
+<h2 id="adding-units-to-data">Adding units to data</h2>
+<p>为数据添加单位，通过数字*单位创建一个带单位的变量。</p>
+<pre tabindex="0"><code>import astropy.units as u
+length = 10 * u.meter
+length
+</code></pre><p>$10; \mathrm{m}$</p>
+<p>变量length具有float数值（value）和单位（unit）两部分</p>
+<pre tabindex="0"><code>length.value
+</code></pre><pre tabindex="0"><code>np.float64(10.0)
+</code></pre><pre tabindex="0"><code>length.unit
+</code></pre><p>$\mathrm{m}$</p>
+<h2 id="arithmetic-with-units">Arithmetic With Units</h2>
+<p>带单位的计算</p>
+<pre tabindex="0"><code>distance_start = 10 * u.mm
+distance_end = 23 * u.km
+displacement = distance_end - distance_start
+displacement
+</code></pre><p>$22.99999; \mathrm{km}$</p>
+<pre tabindex="0"><code>time = 15 * u.minute
+speed = displacement / time
+speed
+</code></pre><p>$1.5333327; \mathrm{\frac{km}{min}}$</p>
+<p>可见 <code>astropy.unit</code> 能自动对单位进行换算与量纲的计。与此同时，不同单位间的错误计算会被报错。</p>
+<h2 id="converting-units">Converting Units</h2>
+<p>单位转换</p>
+<pre tabindex="0"><code>length.to(u.km)
+</code></pre><p>$0.01; \mathrm{km}$</p>
+<pre tabindex="0"><code>length.cgs # cgs为厘米-克-秒下的单位
+</code></pre><p>$1000; \mathrm{cm}$</p>
+<h2 id="unit-equivalencies">Unit Equivalencies</h2>
+<p>如在公式$E=hc/\lambda$中，能量（keV）与波长（m）是等效的，但直接进行单位转化会报错。然而，我们可以使用光谱等效性来执行这种转换：</p>
+<pre tabindex="0"><code>length.to(u.keV, equivalencies=u.spectral())
+</code></pre><p>$1.239842 \times 10^{-10}; \mathrm{keV}$</p>
+<p>在太阳物理学中常见的一种等效关系是将天空平面中的角距离（arcsec）转换为太阳上的实际距离。要进行这种转换，sunpy 提供了  <code>solar_angle_equivalency</code> ，这需要指定测量该角距离的位置：</p>
+<pre tabindex="0"><code>from sunpy.coordinates import get_earth
+from sunpy.coordinates.utils import solar_angle_equivalency
+
+length.to(u.arcsec, equivalencies=solar_angle_equivalency(get_earth(&#34;2013-10-28&#34;)))#2013-10-28时太阳到地球的距离
+</code></pre><pre tabindex="0"><code>INFO: Apparent body location accounts for 495.82 seconds of light travel time [sunpy.coordinates.ephemeris]
+</code></pre><p>$1.3876375 \times 10^{-5}\mathrm{arcsec}$</p>
+<h2 id="dropping-units">Dropping Units</h2>
+<p>不需要单位时，可以去掉单位</p>
+<pre tabindex="0"><code>length.to_value()
+</code></pre><pre tabindex="0"><code>np.float64(10.0)
+</code></pre><pre tabindex="0"><code>length.to_value(u.km)
+</code></pre><pre tabindex="0"><code>np.float64(0.01)
+</code></pre><h2 id="quantities-as-function-arguments">Quantities as function arguments</h2>
+<p>当调用一个依赖于与物理量相对应的输入的函数时，通常隐含着一个假设，即这些输入参数是以该函数预期的单位表示的。例如，如果我们像上面那样定义一个计算速度的函数，输入应该对应于距离和时间：</p>
+<pre tabindex="0"><code>def speed(length, time):
+    return length / time
+</code></pre><p>然而，这是假设传入的两个参数在没有进行检查的情况下具有与距离和时间一致的单位。 <code>quantity_input</code> 装饰器与函数注释结合使用，对函数输入强制执行兼容的单位：</p>
+<pre tabindex="0"><code>@u.quantity_input # 用于检测输入参数的单位是否正确
+def speed(length: u.m, time: u.s):
+    return length / time
+</code></pre><pre tabindex="0"><code>speed(1*u.m, 1*u.minute)
+</code></pre><p>$1; \mathrm{\frac{m}{min}}$</p>
+<p>注意到，输出的单位取决于输入的单位。为了确保函数的输出具有一致的单位，可以添加了一个额外的函数注释，以便在返回答案之前始终将输出强制转换为米/秒。</p>
+<pre tabindex="0"><code>@u.quantity_input
+def speed(length: u.m, time: u.s) -&gt; u.m/u.s:
+    return length / time
+speed(1*u.m, 1*u.minute)
+</code></pre><p>$0.016666667; \mathrm{\frac{m}{s}}$</p>
+<h1 id="times">Times</h1>
+<p>Sunpy中有关时间的基本知识 <a href="https://docs.sunpy.org/en/stable/tutorial/time.html">https://docs.sunpy.org/en/stable/tutorial/time.html</a></p>
+<h2 id="parsing-times">Parsing Times</h2>
+<p>太阳数据与许多不同的时间格式相关联。为了处理所有这些格式，sunpy有 <code>sunpy.time.parse_time()</code> ，它接受各种输入，并返回一致的 Time 对象。注意， <code>datetime.datetime.datetime</code> 不提供对太阳物理学中使用的常见时间格式或闰秒的支持，因此在 sunpy 中始终使用  <code>astropy.time.Time</code> 。</p>
+<pre tabindex="0"><code>from sunpy.time import parse_time
+
+parse_time(&#39;2007-05-04T21:08:12&#39;)
+</code></pre><pre tabindex="0"><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2007-05-04T21:08:12.000&gt;
+</code></pre><pre tabindex="0"><code>parse_time(894316092.00000000, format=&#39;utime&#39;)
+</code></pre><pre tabindex="0"><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;utime&#39; value=894316092.0&gt;
+</code></pre><h2 id="time-ranges">Time Ranges</h2>
+<p>数据分析中的另一项标准任务是处理时间对或时间范围。为了处理时间范围，sunpy 提供了 <code>sunpy.time.TimeRange</code> 对象。可以通过提供开始时间和结束时间来创建一个 <code>sunpy.time.TimeRange</code> 对象：</p>
+<pre tabindex="0"><code>from sunpy.time import TimeRange
+
+time_range = TimeRange(&#39;2010/03/04 00:10&#39;, &#39;2010/03/04 00:20&#39;)
+</code></pre><p><code>TimeRange</code> 使用了 <code>sunpy.time.parse_time()</code> ，所以它可以接受多种时间格式。或者，也可以指定一个开始时间和一个持续时间：</p>
+<pre tabindex="0"><code>time_range = TimeRange(&#39;2010/03/04 00:10&#39;, 400 * u.second)
+</code></pre><p><code>TimeRange</code> 提供了许多有用的函数。例如，可以轻松地获取间隔中心的时间或间隔的长度：</p>
+<pre tabindex="0"><code>time_range.center # TimeRange的中间时刻
+</code></pre><pre tabindex="0"><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2010-03-04T00:13:20.000&gt;
+</code></pre><pre tabindex="0"><code>time_range.seconds # TimeRange的持续时间
+</code></pre><p>$400; \mathrm{s}$</p>
+<p><code>TimeRange</code> 也可以很容易地拆分为等长的子区间，例如将一个 <code>TimeRange</code> 对象拆分为两个新的 <code>TimeRange</code> 对象。</p>
+<pre tabindex="0"><code>time_range.split(2)
+</code></pre><pre tabindex="0"><code>[   &lt;sunpy.time.timerange.TimeRange object at 0x12443bdf0&gt;
+     Start: 2010-03-04 00:10:00
+     End:   2010-03-04 00:13:20
+     Center:2010-03-04 00:11:40
+     Duration:0.002314814814814825 days or
+            0.0555555555555558 hours or
+            3.333333333333348 minutes or
+            200.00000000000088 seconds,
+    &lt;sunpy.time.timerange.TimeRange object at 0x12443a8b0&gt;
+     Start: 2010-03-04 00:13:20
+     End:   2010-03-04 00:16:40
+     Center:2010-03-04 00:15:00
+     Duration:0.002314814814814825 days or
+            0.0555555555555558 hours or
+            3.333333333333348 minutes or
+            200.00000000000088 seconds]
+</code></pre><h1 id="coordinates">Coordinates</h1>
+<p>Sunpy中的坐标相关知识，参照 <a href="https://docs.sunpy.org/en/stable/tutorial/coordinates.html">https://docs.sunpy.org/en/stable/tutorial/coordinates.html</a> 。</p>
+<p>本指南的这一部分介绍了在 sunpy 中坐标是如何表示的。sunpy 使用了 <code>astropy.coordinates</code> 模块来完成这个任务。</p>
+<p>就像 <code>units</code> 被用于表示物理量一样，sunpy 使用 <code>astropy.coordinates</code> 来表示物理空间中的点。这既适用于三维空间中的点，也适用于图像中的投影坐标。</p>
+<p>Astropy 的坐标模块主要通过 <code>SkyCoord</code> 类来使用，该类也使用了 Astropy 的单位体系。</p>
+<pre tabindex="0"><code>from astropy.coordinates import SkyCoord
+import astropy.units as u
+from sunpy.coordinates import frames # 导入sunpy中太阳使用的坐标系
+
+coord = SkyCoord(70*u.deg, -30*u.deg, obstime=&#34;2017-08-01&#34;,
+                 frame=frames.HeliographicStonyhurst)
+coord
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (HeliographicStonyhurst: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km): (lon, lat) in deg
+    (70., -30.)&gt;
+</code></pre><p>这个 <code>SkyCoord</code> 对象随后可以转换为在 Astropy 或 sunpy 中定义的任何其他坐标框架，例如将原始的斯通尼赫斯特框架（天球中的赤经/赤纬坐标系）转换为日心投影框架：</p>
+<pre tabindex="0"><code>coord.transform_to(frames.Helioprojective(observer=&#34;earth&#34;)) # 转换为日面投影坐标arcsec
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (Helioprojective: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;earth&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, km)
+    (769.96270814, -498.89715922, 1.51668773e+08)&gt;
+</code></pre><p>在实际使用中，使用数组坐标进行操作更加方便</p>
+<pre tabindex="0"><code>coord = SkyCoord([-500, 400]*u.arcsec, [100, 200]*u.arcsec, frame=frames.Helioprojective)
+coord
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+    [(-500., 100.), ( 400., 200.)]&gt;
+</code></pre><pre tabindex="0"><code>coord[0]
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+    (-500., 100.)&gt;
+</code></pre><h2 id="observer-location">Observer Location</h2>
+<p>“日心投影”（Helioprojective）和“日心”（Heliocentric）坐标系都是基于观测者的位置来定义的。因此，要将这两个坐标系中的任意一个转换为另一个坐标系，必须知道观测者的位置。可以使用 <code>SkyCoord</code> 的 <code>observer</code> 参数为坐标对象指定观测者。对于sunpy来说，要计算地球或其他太阳系天体的位置，必须知道与坐标相关的时间；这是通过 <code>obstime</code> 参数指定的。</p>
+<p>利用观测者位置，可以将一个观测者看到的坐标转换为另一个观测者看到的坐标：</p>
+<pre tabindex="0"><code>hpc = SkyCoord(0*u.arcsec, 0*u.arcsec, observer=&#34;earth&#34;,
+                obstime=&#34;2017-07-26&#34;,
+                frame=frames.Helioprojective)
+
+hpc.transform_to(frames.Helioprojective(observer=&#34;venus&#34;,
+                                         obstime=&#34;2017-07-26&#34;))
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (Helioprojective: obstime=2017-07-26T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;venus&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, AU)
+    (-1285.47497992, 106.20918654, 0.72405937)&gt;
+</code></pre><h2 id="using-coordinates-with-maps">Using Coordinates with Maps</h2>
+<p>Sunpy 中的 Map 使用坐标来指定图像上的位置，并在地图的绘图上绘制覆盖图。当创建一个地图时，会根据头部信息构建一个坐标框架。可以使用 <code>.coordinate_frame</code> 来访问这个坐标框架：</p>
+<pre tabindex="0"><code>from astropy.coordinates import SkyCoord
+import astropy.units as u
+
+import sunpy.map
+from sunpy.data.sample import AIA_171_IMAGE
+
+amap = sunpy.map.Map(AIA_171_IMAGE)
+amap.coordinate_frame
+</code></pre><pre tabindex="0"><code>&lt;Helioprojective Frame (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;)&gt;
+</code></pre><p>这可以在创建一个 <code>SkyCoord</code> 对象时使用，以将坐标系设置为该图像的坐标系：</p>
+<pre tabindex="0"><code>coord = SkyCoord(100 * u.arcsec, 10*u.arcsec, frame=amap.coordinate_frame)
+coord
+</code></pre><pre tabindex="0"><code>&lt;SkyCoord (Helioprojective: obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;): (Tx, Ty) in arcsec
+    (100., 10.)&gt;
+</code></pre><p><code>SkyCoord</code> 对象可以使用 <code>GenericMap.wcs.world_to_pixel</code> 转换为一对像素：</p>
+<pre tabindex="0"><code>pixels = amap.wcs.world_to_pixel(coord)
+pixels
+</code></pre><pre tabindex="0"><code>(array(551.7680511), array(515.18266871))
+</code></pre><p>这个 <code>SkyCoord</code> 对象也可以用于在地图上绘制一个点：</p>
+<pre tabindex="0"><code>import matplotlib.pyplot as plt
+
+fig = plt.figure()
+ax = plt.subplot(projection=amap)
+amap.plot()
+ax.plot_coord(coord, &#39;o&#39;)
+</code></pre><pre tabindex="0"><code>[&lt;matplotlib.lines.Line2D at 0x1254ade50&gt;]
+</code></pre><p><img src="sunpy_basic_57_1.png" alt="png"></p>
+]]></description></item><item><title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh</title><link>https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/</link><guid isPermaLink="true">https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/</guid><pubDate>Tue, 26 Nov 2024 15:00:00 +0000</pubDate><description><![CDATA[<blockquote>
+<p>以下绝大多数操作在mac和windows上也可以使用（windows下需要先配置Windows terminal, zsh, vim, git等环境）</p>
+</blockquote>
+<h1 id="安装zsh">安装zsh</h1>
+<h2 id="1安装ncurses依赖">1.安装ncurses依赖</h2>
+<p>首先配置.bashrc文件</p>
+<pre tabindex="0"><code>vim ~/.bashrc
+</code></pre><p>添加如下环境变量</p>
+<pre tabindex="0"><code>export CXXFLAGS=&#34;-fPIC&#34;
+export CFLAGS=&#34;-fPIC&#34;
+export NCURSES_HOME=$HOME/ncurses  # ncurses 目录
+export PATH=$NCURSES_HOME/bin:$PATH
+export LD_LIBRARY_PATH=$NCURSES_HOME/lib:$LD_LIBRARY_PATH
+export CPPFLAGS=&#34;-I$NCURSES_HOME/include&#34; LDFLAGS=&#34;-L$NCURSES_HOME/lib&#34;
+</code></pre><p>刷新</p>
+<pre tabindex="0"><code>source ~/.bashrc
+</code></pre><p>之后下载安装ncurses</p>
+<pre tabindex="0"><code>cd ~ &amp;&amp; mkdir ncurses &amp;&amp; cd ncurses  # 新建一个ncurses的安装目录
+wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz  # 下载ncurses-6.1
+tar -xzvf ncurses-6.1.tar.gz  # 解压
+cd ncurses-6.1
+./configure --prefix=&#34;$HOME/ncurses&#34; --with-shared --without-debug --enable-widec  # 指定路径configure
+make &amp;&amp; make install  # 安装
+</code></pre><h2 id="2安装zsh">2.安装zsh</h2>
+<p>安装zsh</p>
+<pre tabindex="0"><code>cd ~
+mkdir -p Applications/zsh-5.7.1 &amp;&amp; cd Applications/zsh-5.7.1
+wget -O zsh.tar.xz https://ftp.osuosl.org/pub/blfs/conglomeration/zsh/zsh-5.7.1.tar.xz
+xz -d zsh.tar.xz &amp;&amp; tar -xvf zsh.tar
+cd zsh-5.7.1
+# 生成Makefile
+./configure --prefix=$HOME/Applications/zsh-5.7.1
+# 编译安装
+make &amp;&amp; make install
+</code></pre><p>设置  <strong>bash_profile</strong>  文件将zsh设置为默认终端</p>
+<pre tabindex="0"><code>vim ~/.bash_profile
+</code></pre><p>添加如下内容</p>
+<pre tabindex="0"><code>exec $HOME/Applications/zsh-5.7.1/bin/zsh -l
+</code></pre><p>刷新</p>
+<pre tabindex="0"><code>source ~/.bash_profile
+</code></pre><p>之后可以将  <strong>bashrc</strong>  文件中的   <em>conda</em>   环境设置复制到  <strong>zshrc</strong>  文件中，从而在zsh中使用conda环境。</p>
+<h1 id="安装oh-my-zsh">安装oh-my-zsh</h1>
+<h2 id="1安装oh-my-zsh">1.安装oh-my-zsh</h2>
+<p>按照官网教程</p>
+<pre tabindex="0"><code># 使用以下两种方法之一安装
+# 1. wget
+sh -c &#34;$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;
+# 2. curl
+sh -c &#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;
+</code></pre><p>或使用国内镜像源</p>
+<pre tabindex="0"><code>#curl下载
+sh -c &#34;$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)&#34;
+#wget下载
+sh -c &#34;$(wget -O- https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)&#34;
+</code></pre><h2 id="2安装powerlevel10k主题">2.安装powerlevel10k主题</h2>
+<pre tabindex="0"><code>git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+# 可以使用 gitee.com 上的官方镜像加速下载
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+</code></pre><p>然后在.zshrc文件中设置主题</p>
+<pre tabindex="0"><code>vim ~/.zshrc
+</code></pre><p>添加如下内容</p>
+<pre tabindex="0"><code>ZSH_THEME=&#34;powerlevel10k/powerlevel10k&#34;
+</code></pre><p>按指引配置即可。如果需要重新配置</p>
+<pre tabindex="0"><code>p10k configure
+</code></pre><h2 id="3安装相关插件">3.安装相关插件</h2>
+<h2 id="31zsh-autosuggestions">3.1.zsh-autosuggestions</h2>
+<pre tabindex="0"><code>git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+# 可以使用下面任意一个加速下载
+# 加速1
+git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# 加速2
+git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# 加速3
+git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+</code></pre><h2 id="32zsh-syntax-highlighting">3.2.zsh-syntax-highlighting</h2>
+<pre tabindex="0"><code>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+# 可以使用下面任意一个加速下载
+# 加速1
+git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# 加速2
+git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+# 加速3
+git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+</code></pre><h2 id="33zsh-completions">3.3.zsh-completions</h2>
+<pre tabindex="0"><code>git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+#国内gitee源
+git clone https://gitee.com/yuhldr/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
+</code></pre><h2 id="34将插件添加到zshrc文件中">3.4.将插件添加到.zshrc文件中</h2>
+<pre tabindex="0"><code>vim ~/.zshrc
+</code></pre><p>添加如下内容</p>
+<pre tabindex="0"><code>plugins=(
+         git
+         z
+         zsh-autosuggestions
+         zsh-syntax-highlighting
+         zsh-completions
+)
+</code></pre><p>刷新</p>
+<pre tabindex="0"><code>source ~/.zshrc
+</code></pre>]]></description></item></channel></rss>
