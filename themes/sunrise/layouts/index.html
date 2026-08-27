@@ -5,8 +5,10 @@
   <div class="cover__stage" aria-hidden="true">
     {{- with resources.Get "img/sun-prominence.png" }}
     {{- $sun := .Process "resize 1600x webp q84" }}
-    <img class="cover__glow" src="{{ $sun.RelPermalink }}" alt="">
-    <img class="cover__sun" src="{{ $sun.RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
+    <div class="cover__sunbox">
+      <img class="cover__glow" src="{{ $sun.RelPermalink }}" alt="">
+      <img class="cover__sun" src="{{ $sun.RelPermalink }}" alt="">
+    </div>
     {{- end }}
     <div class="cover__rings">
       <i></i><i></i><i></i>
@@ -34,7 +36,7 @@
   <header class="cover__content wrap">
     <p class="cover__kicker">{{ site.Title }} · Solar Observatory</p>
     <h1 class="cover__title">The past is never dead,<br><em>it's not even past.</em></h1>
-    <p class="cover__meta">{{ site.Params.author }} ── 太阳物理 / 射电天文 / 折腾记录</p>
+    <p class="cover__meta">{{ site.Params.author }}</p>
   </header>
 
   <a class="cover__cue" href="#recent" aria-label="向下滚动查看文章">

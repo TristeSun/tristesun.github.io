@@ -310,32 +310,46 @@ a {
 }
 
 /* 太阳主体：大幅铺满右侧画面 */
+/* 太阳主体：锚定右侧固定比例容器，object-fit 自适应，
+   任何视口下太阳可见面积稳定约占封面 1/3～1/2 */
+.cover__sunbox {
+  position: absolute;
+  top: -6%;
+  bottom: -8%;
+  right: 0;
+  left: min(46%, 34rem);
+  /* 整体径向羽化：子元素（含发光层）一起融入夜色 */
+  -webkit-mask-image: radial-gradient(82% 96% at 60% 46%, #000 42%, transparent 84%);
+  mask-image: radial-gradient(82% 96% at 60% 46%, #000 42%, transparent 84%);
+}
+
 .cover__sun,
 .cover__glow {
   position: absolute;
-  top: -16%;
-  right: max(-34rem, -26vw);
-  width: min(112vw, 1560px);
-  height: auto;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
 }
 
 .cover__sun {
   opacity: 0.97;
   filter: saturate(1.08) contrast(1.05);
-  -webkit-mask-image: radial-gradient(74% 74% at 58% 42%, #000 48%, transparent 76%);
-  mask-image: radial-gradient(74% 74% at 58% 42%, #000 48%, transparent 76%);
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 
 .cover__glow {
+  inset: -6%;
+  width: auto;
+  height: auto;
   opacity: 0.5;
-  filter: blur(100px) saturate(1.3);
-  transform: scale(1.07);
+  filter: blur(90px) saturate(1.3);
 }
 
 @keyframes kenburns {
   from { transform: scale(1) translate3d(0, 0, 0); }
-  to   { transform: scale(1.055) translate3d(-18px, 12px, 0); }
+  to   { transform: scale(1.05) translate3d(-12px, 10px, 0); }
 }
 
 .cover__rings {
@@ -1453,11 +1467,11 @@ mark,
     min-height: 540px;
   }
 
-  .cover__sun,
-  .cover__glow {
-    width: 210vw;
-    right: -108vw;
-    top: 2%;
+  .cover__sunbox {
+    top: -4%;
+    bottom: 32%;
+    right: -14%;
+    left: 14%;
   }
 
   .cover__rings i:nth-child(3),
