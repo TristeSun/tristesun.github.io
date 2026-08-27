@@ -1,0 +1,3250 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Triste's Blog</title><link>https://tristesun.github.io/</link><description>The past is never dead, it's not even past.</description><language>zh-CN</language><managingEditor>2012536@mail.nankai.edu.cn (Triste Sun)</managingEditor><generator>Hugo</generator><atom:link href="https://tristesun.github.io/tags/%E4%BC%A0%E6%92%AD%E6%95%88%E5%BA%94/" rel="self" type="application/rss+xml"/><item><title>太阳射电观测的定标与传播效应 —— 文献综述</title><link>https://tristesun.github.io/2026/08/25/solar-radio-calibration-review/</link><guid isPermaLink="true">https://tristesun.github.io/2026/08/25/solar-radio-calibration-review/</guid><pubDate>Tue, 25 Aug 2026 15:13:00 +0000</pubDate><description><![CDATA[<h1 id="0-引言">0. 引言</h1>
+<p>本分类的 13 篇文献围绕太阳米波—分米波射电观测的两大基石问题展开：其一，如何把仪器输出定标准确到物理单位（绝对流量、亮度温度），即射电仪器定标；其二，射电波在非均匀、湍动的日冕介质中传播时如何被折射与散射变形，以及在科学解释中如何对传播效应加以建模与矫正。
+观测设备上，文献覆盖了南锡射电日象仪（NRH）、LOFAR、OVRO-LWA、ORFEES 频谱仪、伊尔库茨克非相干散射雷达（IISR）与 RSTN/Learmonth 流量监测网，并延伸到 SKA、FASR 等下一代设备的展望；方法上则从经典的源定标、旋转综合成像，一直到 Fokker–Planck/Langevin 随机散射模拟与 3D 光线追踪正向建模。
+下面第 1 节给出每篇文章的简要概括，第 2 节整理射电仪器定标方法，第 3 节梳理射电传播效应的研究、模拟与矫正，第 4 节归纳分类中其他值得注意的主题，第 5 节为文献一览。</p>
+<h1 id="1-每篇文章的简要概括">1. 每篇文章的简要概括</h1>
+<p><img src="fig01.png" alt="NRH 在 2008 年 6 月 6 日（太阳活动极小年）观测的宁静太阳多频像（445–173 MHz）与 SOHO/EIT 195 Å 像（Mercier &amp; Chambe 2009, Fig. 4）"></p>
+<h3 id="11-kerdraon--delouis--the-nançay-radioheliographnrh-仪器论文">1.1 Kerdraon &amp; Delouis — The Nançay Radioheliograph（NRH 仪器论文）</h3>
+<p>南锡射电日象仪由模拟相关器升级为数字相关器（576 通道、Stokes I 与 V），实现日冕快速二维成像：150–450 MHz 内准同时观测多达 10 个频率，最高 200 幅/秒。阵列由东西 19 天线（基线 50–3200 m）与南北阵列构成。系统以已知强射电源（通常为 Cygnus A）定标；采用 1-bit 数字化与 Walsh 函数相位调制抑制串扰，并由总功率接收机驱动 0–45 dB 步进衰减器，将信号电平控制在 3 dB 范围内以保证动态范围。
+<img src="fig02.png" alt="NRH 东西/南北阵列天线布局（Kerdraon &amp; Delouis, Fig. 1）"></p>
+<h3 id="12-mercier--chambe-2009--150450-mhz-高动态范围日冕像">1.2 Mercier &amp; Chambe 2009 — 150–450 MHz 高动态范围日冕像</h3>
+<p>利用 NRH 最新仪器与数据处理改进获得的宁静太阳高动态范围像：通过旋转综合（rotational synthesis）弥补瞬时 UV 覆盖不足、提高信噪比；2003 年新增 4 个抗混叠天线解决了高频混叠；配合改进的定标程序与含多尺度分析的修正 CLEAN 算法。科学结果：高频段日冕结构丰富、暗冕洞显著，低频段更平滑、对比度低；盘面亮温从 432 MHz 的约 400 kK 升至 150 MHz 的约 700 kK；文中还给出各频率的发射高度范围与冕层光深。</p>
+<h3 id="13-zhang-et-al-2022--lofar-2080-mhz-宁静太阳成像">1.3 Zhang et al. 2022 — LOFAR 20–80 MHz 宁静太阳成像</h3>
+<p>用 LOFAR 对宁静太阳进行 90 MHz 以下的高质量干涉成像光谱观测，给出 20–80 MHz 的亮度温度谱与太阳视大小。发现随频率持续存在的暗冕洞区；在 &lt;30 MHz 各处亮温收敛于 0.25–0.45 MK，作者将其主要归因于射电波散射造成的空间平滑；太阳东西向视宽大于南北向（与中低纬冕流密度较高有关）；有效半径随频率的变化趋势跟随局地等离子体层半径（f = f_pe(h)），并与 Saito77（赤道）和 Gibson（冕流）密度模型对比。观测亮温整体低于模型预期。
+<img src="fig03.png" alt="LOFAR 20–80 MHz 宁静太阳成像与 AIA/EUV 叠加（Zhang et al. 2022, Fig. 2）"></p>
+<h3 id="14-setov--kushnarev-2023--161-与-245-mhz-太阳流量绝对测量">1.4 Setov &amp; Kushnarev 2023 — 161 与 245 MHz 太阳流量绝对测量</h3>
+<p>对伊尔库茨克非相干散射雷达（161 MHz）与 Learmonth/RSTN（245 MHz）多年的太阳流量绝对测量做相关分析：宁静太阳背景分量落在 Benz (2009) 模型预期范围内（161 MHz 约 4.8 sfu、245 MHz 约 11.1 sfu）；米波流量对 F10.7 指数的依赖是非线性的（Pearson 与 Spearman 相关系数的差异揭示）；161 与 245 MHz 流量间的相关性反而低于各自与 F10.7 的相关；昼夜（日变化）效应会给测量引入系统误差，总系统误差估计为 5–25%。
+<img src="fig04.png" alt="日均值流量分布与宁静太阳分量直方图，竖线为 Benz (2009) 模型值（Setov &amp; Kushnarev 2023, Fig. 2）"></p>
+<h3 id="15-hamini-et-al-2021--orfees-射电频谱仪">1.5 Hamini et al. 2021 — ORFEES 射电频谱仪</h3>
+<p>介绍南锡 144–1004 MHz 全日流量密度频谱仪 ORFEES（服务法国空军 FEDOME 空间天气体系，同时用于天文研究）：焦点处对数周期双线偏振天线、低噪声前放抑制互调；超外差接收机；前端噪声二极管用于计算整个接收链（除前放外）的增益；数字后端为 14-bit ADC + ROACH 板，5 个子带覆盖全频段，每 100 ms 采样 10240 个频率点，经积分与 RFI 剔除后输出 998 个频点（Stokes I/V，FITS 格式）。由于接收机特性随频率变化，建立由定标观测得到的频率依赖增益校正表。
+<img src="fig05.png" alt="ORFEES 天线与接收系统（Hamini et al. 2021, Fig. 2）"></p>
+<h3 id="16-kontar-et-al-2017--太阳射电暴精细结构的成像光谱nat-comm">1.6 Kontar et al. 2017 — 太阳射电暴精细结构的成像光谱（Nat. Comm.）</h3>
+<p>用 LOFAR 的高时间分辨成像光谱观测 III 型暴精细结构（striae），定量证明：观测到的暴源空间特性由射电波传播效应、而非内禀发射源性质主导。束改正后的源面积比由 stria 频宽推得的发射区大四个数量级；基波（F）源质心大致沿径向运动、谐波（H）源近横向运动，且 F 源膨胀快于 H 源；这些特征排除了地球电离层折射的解释，指向日冕中的散射。结果还给出了更可靠的源亮温估计，并为通过射电观测诊断湍动日冕介质开辟了途径。
+<img src="fig06.png" alt="III 型暴 F/H 源质心位置与面积的时间演化（Kontar et al. 2017, Fig. 3）"></p>
+<h3 id="17-kontar-et-al-2019--各向异性射电波散射apj">1.7 Kontar et al. 2019 — 各向异性射电波散射（ApJ）</h3>
+<p>提出基于 Fokker–Planck 与 Langevin 方程的射电波输运 3D 随机模型，处理含各向异性电子密度涨落的日冕介质：与观测对比表明，约 30 MHz 的源要求密度涨落以垂直于径向的方向占优（各向异性因子约 0.3）；光子在初级发射区附近被各向同性化，随后被大尺度折射聚焦，使等离子体射电发射具有 HWHM 约 40°（30 MHz）的方向性；离盘心源的视位置沿径向外移，偏移量投影正比于 sin θs，且临边源沿径向的 FWHM 随日心角减小。该框架适用于各种等离子体发射机制的射电暴。
+<img src="fig07.png" alt="散射模拟的几何设置示意（Kontar et al. 2019, Fig. 1）"></p>
+<h3 id="18-chrysaphi-et-al-2018--cme-激波与-ii-型暴频带分裂">1.8 Chrysaphi et al. 2018 — CME 激波与 II 型暴频带分裂</h3>
+<p>LOFAR 对一个产生 II 型暴频带分裂（band splitting）的 CME 激波事件的成像光谱研究：Type II 源位于 CME 南侧翼与冕流相互压缩处；上下两子带源的表观空间分离约 0.2 ± 0.05 R☉。文章首次定量证明：这一分离幅度与「单一发射区 + 射电波散射」的情形相容，即两子带源可能近乎共空间——从而支持把频带分裂解释为激波上下游（Holman &amp; Pesses 模型）而非两个分离发射区（Smerd 模型）的观点。文中采用 1× Newkirk 密度模型与 ε²/h = 4.5–7×10⁻⁵ km⁻¹ 的涨落参数化计算散射光深 τ = 1 的位置，并给出由子带频率比估计源面外日心距离的方法。
+<img src="fig08.png" alt="II 型暴频带分裂动态谱与射电源成像叠加 CME/冕流（Chrysaphi et al. 2018, Fig. 1/3）"></p>
+<h3 id="19-zhang-et-al-2026--光线追踪正向建模热低频射电太阳">1.9 Zhang et al. 2026 — 光线追踪正向建模热低频射电太阳</h3>
+<p>发展了把 3D 全球日冕模型（PSI MAS，CR2298）中的折射光线追踪与辐射转移（GRFF 代码）相结合的正向建模框架，覆盖 40–800 MHz：用逐步扰动重描法计算光线管截面 S(s)，并在转移方程中加入正比于 d ln S/ds 的几何放大项，以在聚焦/散焦下强制流量守恒。加入传播效应后，宁静太阳背景谱能被很好重现；临边附近光线向外弯折，实际传播路径经过比直线路径更低密度、更低温度的等离子体；活动区亮度的建模仍不准，提示还需考虑其他物理因素。该工作为低频宁静太阳合成像及其与干涉观测的定量比较提供了物理方法。
+<img src="fig09.png" alt="280/550/800 MHz 合成宁静太阳射电图（光线追踪 vs 直线视线；Zhang et al. 2026, Fig. 8）"></p>
+<h3 id="110-kozarev--nedal--宁静日冕米波回旋同步gs辐射建模">1.10 Kozarev &amp; Nedal — 宁静日冕米波回旋同步（GS）辐射建模</h3>
+<p>用综合 MHD 日冕模型（MAS）+ FORWARD 正向模型估计热（自由-自由与回旋共振）辐射，再用 Fast GS 代码计算预期的回旋同步辐射，合成 20–300 MHz 的 GS 图像并与 LOFAR 20–90 MHz 宁静期观测对比。发现观测中存在热+回旋共振无法解释的显著过剩辐射，提出宁静期活动区 GS 或有贡献；这类辐射有望解释冕洞十米波亮度变化之谜、约束日冕磁场，并加深对中日冕电子群与太阳风形成联系的理解。局限：视线方向等离子体参数用天球面值近似、GS 参数（非热电子密度、能量范围）空间不变。
+<img src="fig10.png" alt="LOFAR 观测与 FORWARD 热辐射合成像的对比（Kozarev &amp; Nedal, Fig. 7）"></p>
+<h3 id="111-mondal-et-al-2023--弱暂现源与宁静日冕加热白皮书">1.11 Mondal et al. 2023 — 弱暂现源与宁静日冕加热（白皮书）</h3>
+<p>面向 2024 十年调查的白皮书：宁静日冕充满小尺度暂现源，其非热分量是 Parker 纳米耀斑加热图景的关键检验，但现有仪器（EOVSA、VLA、MWA）的图像保真度、动态范围与分辨率不足以在日面上测量这些弱源。作者以 SDO/AIA DEM 导出的宁静太阳为背景，注入服从 dN/dF ∝ F^-2.5 幂律（最小 1.5 Jy）的点源群，模拟演示：具有密集 UV 覆盖的 200 单元 FASR 类下一代阵列可探测低至纳米耀斑能级（约 10²⁴ erg）的弱非热事件。
+<img src="fig11.png" alt="不同非热电子密度下的预期射电谱与 FASR 检测阈值（Mondal et al. 2023, Fig. 3）"></p>
+<h3 id="112-mondal-et-al-2026--ovro-lwa--白光估计中日冕电子密度">1.12 Mondal et al. 2026 — OVRO-LWA + 白光估计中日冕电子密度</h3>
+<p>传统上日冕电子密度只靠白光反演，但需要几何（通常球对称）等简化假设。本文用 OVRO-LWA（13–87 MHz）射电亮度与 LASCO 白光 pB 联合约束 1.5–2.5 R☉ 的背景密度：白光 pB 沿视线积分；射电法基于局地等温与流体静力学平衡假设，发射主要来自最近点附近一个标高 H 的薄层。数据处理上，OVLO-LWA 每月多次在夜间用 Cygnus A、Cas A、Tau A、Virgo A 定标天线增益，结合 self-cal，扣除亮源并把相位中心移至太阳后成像（视场 96 R☉）。
+<img src="fig12.png" alt="所选用日期的 LASCO/C2 总亮度与 pB 像（Mondal et al. 2026, Fig. 1）"></p>
+<h3 id="113-mondal-et-al-2026--ska-与宁静日冕非热辐射展望章节">1.13 Mondal et al. 2026 — SKA 与宁静日冕非热辐射（展望章节）</h3>
+<p>SKA 系列书籍章节：宁静日冕非热辐射的探测历史上受限于弱信号所需的极高动态范围成像、低图像保真度与缺乏同时宽带观测。近期仪器（MWA 的 WINQSE 检测等）已产出多项结果，但仅限最亮事件。SKA-Mid 的灵敏度、优异的光谱 snapshot PSF 将带来变革：可在 Stokes I 中检测并刻画这些发射、研究其偏振性质、凭借高角分辨率将射电暂现源与热对应体唯一关联，进而研究弱暂现事件的热-非热能量分配，检验粒子加速与磁重联理论，并为日冕加热问题提供新探针。
+<img src="fig13.png" alt="WINQSE 弱暂现源示例：频谱、光变与成像（Mondal et al. 2026, Fig. 3）"></p>
+<h1 id="2-射电仪器定标方法整理">2. 射电仪器定标方法整理</h1>
+<p>按「总功率/频谱仪的绝对流量定标」与「干涉仪的复增益与图像定标」两条线整理。</p>
+<h2 id="21-绝对流量定标总功率仪器">2.1 绝对流量定标（总功率仪器）</h2>
+<ul>
+<li>标准源 + 站网体系：RSTN 四站（Learmonth 等）以 245–15400 MHz 八个离散频率实现全球连续太阳流量监测；Learmonth 提供本文使用的 245 MHz 数据。</li>
+<li>绝对测量仪器：IISR（161 MHz，非相干散射雷达改造）等可直接给出绝对流量，但需细致的数据处理（噪声基底、增益、指向等），系统误差估计为 5–25%。</li>
+<li>模型基准：宁静太阳流量与 Benz (2009) 太阳极小期模型比较（161 MHz ≈ 4.8 sfu、245 MHz ≈ 11.1 sfu）；Hamini et al. (2021) 基于San Vito 站数据给出太阳极大期的修正近似。</li>
+<li>ORFEES 的做法：天线前端噪声二极管定标接收链增益；由于接收机特性随频率变化，建立频率依赖的增益校正表（由定标观测得到），配合 RFI 剔除与通道积分。</li>
+<li>已知系统效应：昼夜（日变化）变化会引入测量误差；米波流量与 F10.7 的关系是非线性的，线性相关系数会低估高流量端的偏离；161 与 245 MHz 之间的互相关低于各自与 F10.7 的相关。</li>
+</ul>
+<blockquote>
+<p>流量单位：1 sfu = 10⁻²² W m⁻² Hz⁻¹ = 10⁴ Jy；Rayleigh–金斯关系把亮温与流量联系：
+$$
+I_\nu = \frac{2 k_B T_b}{\lambda^2}
+$$</p>
+</blockquote>
+<h2 id="22-干涉成像定标">2.2 干涉成像定标</h2>
+<ul>
+<li>源定标：NRH 用已知强射电源（通常 Cygnus A）定标系统；注意强源多为延展源，需处理其结构。
+<img src="fig14.png" alt="NRH 432 MHz 对 Cygnus A 的定标像（Kerdraon &amp; Delouis, Fig. 3）"></li>
+<li>OVRO-LWA 的流水线：夜间用 Cygnus A、Cas A、Taurus A、Virgo A 定标天线增益 + self-cal 自校；把增益应用到观测数据后扣除视场内亮射电源、相位中心移到太阳，再成像。</li>
+<li>动态范围技术（NRH）：1-bit 数字化（需独立的 IF 功率检测恢复可见度）、Walsh 函数相位调制抑制同轴馈电串扰、总功率接收机驱动的 0–45 dB 步进衰减器保持电平在线性范围。</li>
+<li>旋转综合：太阳活动平静时用数小时地球自转改善 UV 覆盖与信噪比，配合 2003 年加装的 4 个抗混叠天线解决高频（如 408/432 MHz）短基线缺失导致的混叠。</li>
+<li>相位误差与去卷积：对相位误差敏感度做模拟评估；使用含多尺度（scale analysis）分析的修正 CLEAN，自然恢复大尺度结构，实现高动态范围成像（盘面起伏 RMS 与临边对比）。</li>
+<li>偏振定标：NRH 通过平行偶极（Stokes I）与正交偶极（Stokes V）相关测量圆偏振；由于日冕中法拉第旋转在 700 kHz 带宽内足以消除线偏振，可安全假设无线偏振；低串扰 + 1° 跟踪精度使几个百分点的偏振度可测。</li>
+</ul>
+<h2 id="23-定标质量的经验约束">2.3 定标质量的经验约束</h2>
+<ul>
+<li>与模型/其他台站交叉比对：IISR/Learmonth 与 Benz 模型、RSTN 各站互比（Giersch &amp; Kennewell 2022）。</li>
+<li>统计诊断：日际自相关应为零，实测均值为正（161 MHz R̄≈0.27、245 MHz R̄≈0.44）揭示日变化系统误差。</li>
+<li>亮温合理性：NRH 极小年盘面 Tb ≈ 400 kK@432 MHz → 700 kK@150 MHz；LOFAR 20–80 MHz 收敛于 0.25–0.45 MK（低于模型，受传播效应影响）。</li>
+</ul>
+<h1 id="3-射电传播效应研究模拟与矫正">3. 射电传播效应：研究、模拟与矫正</h1>
+<h2 id="31-物理图像">3.1 物理图像</h2>
+<p>低频（≲1 GHz）射电波在日冕等离子体中的传播受两类效应支配：</p>
+<ul>
+<li>折射：大尺度电子密度梯度使光线弯折、偏离直线——低频源视位置外移（临边源上移）、临边增亮改变、视源大小随频率变化；</li>
+<li>散射：小尺度密度涨落（湍流）导致角扩散——源表观放大、模糊，脉冲时间展宽、衰减变缓。
+$$
+n_{\mathrm{r}} = \sqrt{1 - \left(f_{pe}/f\right)^2},\qquad f_{pe},[\mathrm{Hz}] \approx 8980,\sqrt{n_e,[\mathrm{cm^{-3}}]}
+$$
+折射率随频率降低而减小，这是所有低频传播效应的根源；观测高度大致跟随 f = f_pe(h) 的等离子体层。</li>
+</ul>
+<h2 id="32-观测证据">3.2 观测证据</h2>
+<ul>
+<li>Kontar et al. (2017)：束改正后的 III 型暴源面积比按 striae 频宽估计的内禀发射区大 4 个数量级；F 源沿径向运动而 H 源近横向、F 膨胀快于 H——传播效应主导观测形态。</li>
+<li>Zhang et al. (2022)：&lt;30 MHz 亮温在日面各处收敛（散射致平滑）；太阳 E-W 视宽大于 N-S（冕流高密度路径）；有效半径随频率的变化跟随局地等离子体半径。</li>
+<li>Chrysaphi et al. (2018)：II 型暴上下子带源 0.2 ± 0.05 R☉ 的表观分离可由单一发射区的散射解释，支持激波上下游近共空间模型。
+<img src="fig15.png" alt="LOFAR 有效半径随频率的变化与密度模型等离子体层对比（Zhang et al. 2022, Fig. 9）">
+<img src="fig16.png" alt="F/H 源径向位置与面积随时间的演化（Kontar et al. 2017, Fig. 4）"></li>
+</ul>
+<h2 id="33-模拟方法">3.3 模拟方法</h2>
+<h3 id="a-随机输运fokkerplanck--langevinkontar-et-al-2019">(a) 随机输运：Fokker–Planck / Langevin（Kontar et al. 2019）</h3>
+<p>把射电波在含各向异性密度涨落介质中的传播写成波矢空间的扩散（Fokker–Planck）方程，等价的非线性 Langevin 方程用扩散张量 D_ij 与高斯白噪声逐步积分光子/波包轨迹。对各向同性谱，波矢扩散率与散射频率有解析形式；对各向异性谱引入各向异性矩阵 A，数值求解。</p>
+<ul>
+<li>与观测对比要求：约 30 MHz 源需要垂直于径向的涨落占优，各向异性因子 α ≈ 0.3；</li>
+<li>预言：光子在源区附近被各向同性化后又被大尺度折射聚焦 → 发射方向性 HWHM ≈ 40°（30 MHz）；离盘心源视位置径向外移 ∝ sin θs；临边源径向 FWHM 随日心角减小（各向异性越强越明显）；</li>
+<li>吸收会缩短时间轮廓尾部，模拟需同时考虑散射 + 吸收。
+<img src="fig17.png" alt="不同日心角下源位置与大小的模拟结果（Kontar et al. 2019, Fig. 7）"></li>
+</ul>
+<h3 id="b-折射光线追踪--辐射转移zhang-et-al-2026">(b) 折射光线追踪 + 辐射转移（Zhang et al. 2026）</h3>
+<p>在 3D MHD 日冕模型（PSI MAS）中做折射光线追踪，并对每条光线求解含几何放大的辐射转移方程：无发射吸收时能量守恒要求 I·S = 常数，故当光线管截面 S(s) 变化时转移方程多出一项：
+$$
+\frac{dI}{ds} = \eta - \kappa I - I,\frac{d\ln S}{ds}
+$$
+S(s) 用「逐步扰动重描」数值估计：每步沿两个横向各发射一条与主光线同波矢、横向偏移 ε 的小扰动光线，一步之后三个位置定义横向平行四边形，其面积即截面：
+$$
+S_{i+1} \approx \tfrac{1}{2},\bigl|\delta\mathbf{r}_1 \times \delta\mathbf{r}<em>2\bigr|\cdot\hat{\mathbf{t}}<em>i,\qquad M</em>{i+1} \equiv S</em>{i+1}/\epsilon_i^2
+$$
+M &gt; 1 表示光管发散（视亮度被稀释）、M &lt; 1 表示聚焦。GRFF 计算热自由-自由发射/吸收后合成 40–800 MHz 图像：含传播效应的宁静太阳谱与观测相符；临边光线向外弯折、路径采样更低密度温度的等离子体；直线视线近似在临边明显失真。</p>
+<h3 id="c-前向建模对比kozarev--nedal">(c) 前向建模对比（Kozarev &amp; Nedal）</h3>
+<p>MHD + FORWARD 热辐射 + FastGS 合成低频像与 LOFAR 对比，通过「观测 − 热模型」的过剩量估计非热（GS）成分；传播效应使冕洞/临边源视位置上移，模型对比时需考虑。</p>
+<h2 id="34-矫正与应对策略">3.4 矫正与应对策略</h2>
+<ul>
+<li>散射光深估计：Chrysaphi et al. (2018) 取 ⟨δn²⟩/⟨n⟩² = ε² 与密度标高 h 之比 ε²/h = 4.5–7×10⁻⁵ km⁻¹ 为常数，用 1× Newkirk 密度模型计算两子带源各自的散射光深 τ(s)，说明下游（高频）源散射更少、τ=1 距离更近，从而单区发射也能产生表观分离。
+$$
+n_e(R) = 4.2\times10^{4},10^{4.32/R}\ \mathrm{cm^{-3}}\quad(\text{1}\times\text{Newkirk, }R\ \text{in}\ R_\odot)
+$$</li>
+<li>投影改正：利用两子带（或 F/H）频率比与共同密度模型，可估计源的面外日心距离比，改正视向投影导致的高度低估（Chrysaphi et al. 2018 式 (2) 及其几何关系）。</li>
+<li>密度模型选择与验证：Newkirk（激波/爆发常用）、Saito77 赤道模型（N_e = 1.36×10⁶ r⁻²·¹⁴ + 1.68×10⁸ r⁻⁶·¹³ cm⁻³）、Gibson 冕流模型——用太阳视大小/有效半径-频率关系（Zhang et al. 2022）或白光/射电联合（Mondal et al. 2026）约束模型。</li>
+<li>正向建模代替反演：对宁静太阳/爆发源，直接在 3D 模型中做光线追踪合成观测（含 d ln S/ds 项）与数据比较，避免「先反演再纠正传播」的病态步骤。</li>
+<li>观测策略上的缓解：更高频率（折射 ∝ (f_pe/f)²）受影响小；同时多频成像可分离内禀漂移（径向、跟随密度）与散射位移；F/H 对比（同频率对应不同密度高度）可诊断散射强度。</li>
+</ul>
+<h1 id="4-分类中的其他主题">4. 分类中的其他主题</h1>
+<h2 id="41-宁静日冕的非热辐射与日冕加热">4.1 宁静日冕的非热辐射与日冕加热</h2>
+<p>三篇文献构成一条主线：现有 MWA/EOVSA/VLA 只能探测最亮的弱暂现源（WINQSE，Mondal et al. 2026 章节）→ FASR 类阵列模拟证明可下探纳米耀斑能级 10²⁴ erg（白皮书，2023）→ SKA-Mid 的灵敏度与光谱 snapshot PSF 将使这类研究常态化，并可通过热-非热能量分配检验磁重联/粒子加速理论。弱源探测对成像动态范围与定标精度（第 2 节）提出极限要求，而其解译又必须先扣除传播效应（第 3 节）——两条技术主线在此汇合。
+$$
+\frac{dN}{dF} \propto F^{-2.5}\quad(\text{模拟注入的暂现源流量分布，}F_{\min}=1.5\ \mathrm{Jy})
+$$
+<img src="fig18.png" alt="弱暂现源（WINQSE）的窄带脉动频谱与成像（Mondal et al. 2026, Fig. 3）"></p>
+<h2 id="42-电子密度诊断白光与射电互证">4.2 电子密度诊断：白光与射电互证</h2>
+<p>白光 pB 反演依赖球对称等几何假设；射电亮度诊断则基于局地等温 + 流体静力学平衡：发射主要来自射线上最近日心距 r₁ 附近、厚度为一个标高的薄层，
+$$
+H = \frac{k_B,T_H}{\bar{m},g},\qquad \bar{m} = 0.6,m_p
+$$
+pB 本身是视线积分量（含几何散射因子 A(r)、B(r)）：
+$$
+pB = C\int n_e(r_s),A(r_s),B(\rho),\frac{r_s}{\sqrt{r_s^2-\rho^2}},dr_s
+$$
+OVRO-LWA + LASCO 联合给出 1.5–2.5 R☉ 中日冕背景密度的独立交叉检验；低频射电所采的冕层高度（f = f_pe(h)）是白光与 EUV 常规覆盖的盲区补充。</p>
+<h2 id="43-空间天气与下一代设备">4.3 空间天气与下一代设备</h2>
+<ul>
+<li>ORFEES：天文与空间天气（FEDOME）双用途频谱仪范式——低分辨率快速数据服务业务、科学数据 FITS 开放；射电暴本身也可能成为空间天气危害（通信干扰）。</li>
+<li>地基射电对 PSP/Solar Orbiter 时代的意义：连接低日冕加速区与就位探测；地面频谱仪覆盖至光球上方约 1 R☉ 高度。</li>
+<li>SKA / FASR / CSRH：宽频动态成像光谱 + 高动态范围，是弱非热辐射、传播效应 tomography（多频成像散射诊断）的设备基础。</li>
+</ul>
+<h1 id="5-文献一览">5. 文献一览</h1>
+<ul>
+<li>Kerdraon &amp; Delouis, The Nançay Radioheliograph —— 仪器：NRH 数字相关器、多频快成像、CygA 定标。</li>
+<li>Mercier &amp; Chambe 2009, ApJ 700:L137 —— 仪器/成像：150–450 MHz 高动态范围旋转综合像。</li>
+<li>Zhang et al. 2022, ApJ —— 观测：LOFAR 20–80 MHz 宁静太阳亮温谱与视大小；散射平滑证据。</li>
+<li>Setov &amp; Kushnarev 2023, Sol.-Terr. Phys. —— 定标：161/245 MHz 绝对流量相关分析、误差体系。</li>
+<li>Hamini et al. 2021, JSWSC —— 仪器：ORFEES 144–1004 MHz 频谱仪与定标链路。</li>
+<li>Kontar et al. 2017, Nat. Comm. 8:1515 —— 传播：III 型暴源由传播效应主导的成像光谱证据。</li>
+<li>Kontar et al. 2019, ApJ 885:137 —— 模拟：各向异性散射 Fokker–Planck/Langevin 框架（α≈0.3）。</li>
+<li>Chrysaphi et al. 2018, ApJ 868:79 —— 传播+改正：II 型暴频带分裂的散射解释与投影改正。</li>
+<li>Zhang et al. 2026, arXiv —— 模拟：折射光线追踪 + 几何放大项的热低频太阳正向建模。</li>
+<li>Kozarev &amp; Nedal 2025 —— 模拟：宁静日冕米波 GS 辐射正向建模与 LOFAR 对比。</li>
+<li>Mondal et al. 2023（白皮书）—— 展望：弱暂现源与日冕加热、FASR 探测能力模拟。</li>
+<li>Mondal et al. 2026, ApJ —— 方法：OVRO-LWA + LASCO 白光联合电子密度。</li>
+<li>Mondal et al. 2026（SKA 章节）—— 展望：SKA 对宁静日冕非热辐射的能力评估。</li>
+</ul>
+<blockquote>
+<p>本笔记由 Zcode 自动化工作流生成：Zotero（Local API，分类 Radio Calibration et al.）→ PDF 文本/图片提取（PyMuPDF）→ 中文综述撰写 → Notion（公式块 + File Upload 图片）。图片均为原论文截图，图注标明出处。</p>
+</blockquote>
+]]></description></item><item><title>omp（Oh My Pi）使用教程</title><link>https://tristesun.github.io/2026/08/14/omp-tutorial/</link><guid isPermaLink="true">https://tristesun.github.io/2026/08/14/omp-tutorial/</guid><pubDate>Fri, 14 Aug 2026 21:02:00 +0000</pubDate><description><![CDATA[<h1 id="ompoh-my-pi使用教程">omp（Oh My Pi）使用教程</h1>
+<blockquote>
+<p>本教程基于 <a href="http://omp.sh/docs">omp.sh/docs</a> 官方文档整理，重点覆盖 <strong>CLI 使用</strong> 与 <strong>CLI 中 Jupyter Notebook 的使用</strong>。omp 是一个可编程的 AI 编码代理（coding agent），由 can1357 开发，官方名称为 Oh My Pi，CLI 命令为 <code>omp</code>。</p>
+</blockquote>
+<hr>
+<h2 id="-快速入门3-分钟上手">🚀 快速入门（3 分钟上手）</h2>
+<p><strong>omp 是什么？</strong> 一句话：一个住在终端里的 AI 编程助手。你在项目目录里把它叫出来，用大白话跟它说你要干什么，它就帮你读代码、改代码、跑命令。
+<strong>第 1 步：安装（选一条）</strong></p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://omp.sh/install <span class="p">|</span> bash   <span class="c1"># 官方脚本（最简单）</span>
+</span></span><span class="line"><span class="cl">bun install -g @oh-my-pi/pi-coding-agent   <span class="c1"># 或 bun 全局装</span>
+</span></span><span class="line"><span class="cl">mise use -g omp@latest                     <span class="c1"># 或 mise 管理</span></span></span></code></pre></div>
+</div>
+<p>装完验证：<code>omp --version</code>。
+<strong>第 2 步：登录账号</strong></p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">omp          <span class="c1"># 首次运行会自动进入引导向导</span>
+</span></span><span class="line"><span class="cl">omp setup    <span class="c1"># 想手动重跑引导也可以</span></span></span></code></pre></div>
+</div>
+<p>跟着提示登录一个提供商即可（有 Anthropic / ChatGPT / Copilot / Gemini 账号都能用）。
+<strong>第 3 步：用起来</strong></p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> 你的项目目录
+</span></span><span class="line"><span class="cl">omp            <span class="c1"># 打开交互式会话，直接打字聊天</span>
+</span></span><span class="line"><span class="cl">omp -c         <span class="c1"># 继续上次没聊完的会话</span>
+</span></span><span class="line"><span class="cl">omp -p 给 README.md 写个简介   <span class="c1"># 问一句就退出（适合脚本）</span>
+</span></span><span class="line"><span class="cl">omp @bug.log 看看这个报错是怎么回事  <span class="c1"># 带上文件一起问</span></span></span></code></pre></div>
+</div>
+<p><strong>第 4 步：记住 3 个救命命令</strong></p>
+<ul>
+<li><code>/plan 你的需求</code> —— 先让它做计划，确认后再动手（改代码前强烈建议）</li>
+<li><code>/model</code> —— 切换模型（用哪个 AI 大脑）</li>
+<li><code>omp --help</code> —— 忘了就查，全部参数都有
+<strong>遇到问题？</strong> 让它自己诊断：直接问它&quot;报错了，帮我看看&quot;，它自带调试能力。</li>
+</ul>
+<blockquote>
+<p>想知道更多用法？往下翻目录，或点链接直接跳官方文档。</p>
+</blockquote>
+<hr>
+<h2 id="-章节导航点击跳转">📚 章节导航（点击跳转）</h2>
+<p>本页下方是按主题整理的详细教程；每条附官方文档链接，随时点开看最新版：</p>
+<table header-row="true">
+<tr>
+<td>章节</td>
+<td>官方文档</td>
+</tr>
+<tr>
+<td>一、快速开始（安装 / 登录）</td>
+<td>[Quickstart](https://omp.sh/docs/quickstart)</td>
+</tr>
+<tr>
+<td>二、CLI 使用详解（重点）</td>
+<td>[CLI reference](https://omp.sh/docs/cli)</td>
+</tr>
+<tr>
+<td>三、CLI 中 Jupyter Notebook 的使用（重点）</td>
+<td>[notebook-tool-runtime](https://github.com/can1357/oh-my-pi/blob/main/docs/notebook-tool-runtime.md)</td>
+</tr>
+<tr>
+<td>四、常用斜杠命令</td>
+<td>[Slash commands](https://omp.sh/docs/slash)</td>
+</tr>
+<tr>
+<td>五、会话 / 记忆 / 计划模式</td>
+<td>[Sessions](https://omp.sh/docs/sessions) / [Memory](https://omp.sh/docs/memory) / [Plan mode](https://omp.sh/docs/plan)</td>
+</tr>
+<tr>
+<td>六、核心工具</td>
+<td>[Tools index](https://omp.sh/docs/tools)</td>
+</tr>
+<tr>
+<td>七、模型角色与提供商</td>
+<td>[Roles](https://omp.sh/docs/roles) / [Providers](https://omp.sh/docs/providers)</td>
+</tr>
+<tr>
+<td>八、配置与安全</td>
+<td>[Settings](https://omp.sh/docs/settings) / [Env](https://omp.sh/docs/env) / [Secrets](https://omp.sh/docs/secrets)</td>
+</tr>
+<tr>
+<td>九、子代理与并行</td>
+<td>[Subagents](https://omp.sh/docs/subagents)</td>
+</tr>
+<tr>
+<td>十、参考资料</td>
+<td>[omp.sh/docs](https://omp.sh/docs)</td>
+</tr>
+</table>
+---
+## 一、快速开始
+### 1. 安装
+```bash
+# 方式一：通过 bun 全局安装
+bun install -g @oh-my-pi/pi-coding-agent
+<h1 id="方式二使用官方安装脚本">方式二：使用官方安装脚本</h1>
+<p>curl -fsSL <a href="https://omp.sh/install">https://omp.sh/install</a> | bash</p>
+<h1 id="方式三通过-mise-管理版本">方式三：通过 mise 管理版本</h1>
+<p>mise use -g omp@latest</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <pre tabindex="0"><code>验证安装：
+```bash
+omp --version
+omp --help    # 查看全部 flag / env var / 工具参考</code></pre>
+</div>
+<h3 id="2-认证登录">2. 认证（登录）</h3>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">omp               <span class="c1"># 首次运行会进入引导向导</span>
+</span></span><span class="line"><span class="cl">omp setup         <span class="c1"># 手动运行引导向导</span>
+</span></span><span class="line"><span class="cl">/login anthropic  <span class="c1"># 在交互会话内登录提供商（支持 OAuth 的走浏览器流程）</span></span></span></code></pre></div>
+</div>
+<p>支持 OAuth 浏览器登录的提供商：Anthropic（Pro/Max）、OpenAI Codex、GitHub Copilot、Gemini CLI、Cursor。其余提供商用 <code>*_API_KEY</code> 环境变量或 <code>/login</code> 粘贴密钥。
+凭证统一存放在 <code>~/.omp/agent/agent.db</code>（SQLite）。</p>
+<h3 id="3-终端建议">3. 终端建议</h3>
+<ul>
+<li>使用支持真实色彩的现代终端（Kitty、WezTerm、iTerm2 等），TUI 体验最佳。</li>
+<li>建议在项目目录下启动 <code>omp</code>，它会自动识别项目上下文与配置文件。</li>
+</ul>
+<hr>
+<h2 id="二cli-使用详解重点">二、CLI 使用详解（重点）</h2>
+<h3 id="1-基本语法">1. 基本语法</h3>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">omp <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>@files...<span class="o">]</span> <span class="o">[</span>messages...<span class="o">]</span>
+</span></span><span class="line"><span class="cl">omp &lt;command&gt; <span class="o">[</span>args<span class="o">]</span> <span class="o">[</span>flags<span class="o">]</span></span></span></code></pre></div>
+</div>
+<ul>
+<li>裸运行 <code>omp</code>：在当前目录打开交互式会话。</li>
+<li>加 <code>-p</code>：打印一个回答后退出（一次性调用）。</li>
+<li>带子命令：直接调用该工具，不启动 agent。</li>
+<li>任何带值的 flag 都支持 <code>--flag=value</code> 写法。</li>
+<li>任何以 <code>@</code> 开头的参数都当作文件处理，即使夹在 flag 中间。</li>
+</ul>
+<h3 id="2-优先级规则">2. 优先级规则</h3>
+<blockquote>
+<p>CLI flag 大于环境变量，大于 <code>~/.omp/agent/config.yml</code>，大于内置默认值
+<code>--api-key</code> 只对本次运行生效、永不持久化，优先级高于一切。</p>
+</blockquote>
+<h3 id="3-五种输出模式">3. 五种输出模式</h3>
+<table header-row="true">
+<tr>
+<td>模式</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>`text`（默认）</td>
+<td>纯文本流式输出到 stdout，配合 `-p` 用于脚本</td>
+</tr>
+<tr>
+<td>`json`</td>
+<td>换行分隔的 JSON 事件，适合管道给其他工具</td>
+</tr>
+<tr>
+<td>`rpc`</td>
+<td>基于 stdio 的 JSON-RPC，供 SDK 和编程客户端使用</td>
+</tr>
+<tr>
+<td>`rpc-ui`</td>
+<td>同 rpc，但把 TUI 内的工具调用界面暴露给客户端</td>
+</tr>
+<tr>
+<td>`acp`</td>
+<td>Agent Client Protocol（stdio），同 `omp acp`</td>
+</tr>
+</table>
+最常用的组合：`-p` 表示一次性文本输出；`--mode json` 用于 CI 集成。
+### 4. 模型选择
+```bash
+--model <id>          # 激活模型，支持模糊匹配，如 sonnet、gpt-5-codex
+--provider <name>     # 提供商提示（多为兼容旧配置）
+--smol <id>           # 覆盖 smol 角色（快速/便宜的小任务）
+--slow <id>           # 覆盖 slow 角色（深度推理、规划）
+--plan <id>           # 覆盖 plan 角色（plan mode 使用）
+--models p1,p2,...    # 角色轮换模式列表，每项为 id[:effort]
+--thinking <level>    # 推理强度：minimal/low/medium/high/xhigh
+--list-models         # 打印发现的模型（兼作认证探测）
+--api-key <key>       # 本次运行专用密钥，不持久化
+```
+### 5. 会话管理
+```bash
+--continue, -c           # 打开当前目录最近一次的会话
+--resume, -r [id|path]   # 按 id 前缀或 jsonl 路径恢复；不带值则弹出交互选择器
+--session <value>        # --resume 的别名
+--fork <message-id>      # 从指定消息分支（需与 -r 配合）
+--no-session             # 本次运行不写入 ~/.omp/agent/sessions/
+--session-dir <dir>      # 自定义会话存储/查找目录
+--no-title               # 跳过后台"生成标题"的模型调用
+```
+### 6. 工具与扩展控制
+```bash
+--tools a,b,...         # 只允许这些内置工具（未知名称警告并丢弃）
+--no-tools              # 禁用全部内置工具（插件工具仍加载）
+--no-lsp                # 不启动语言服务器
+--no-pty                # bash 工具不启用 PTY
+-e, --extension <path>  # 加载扩展文件（可重复）
+--hook <path>           # 加载 hook/扩展文件（可重复，同一加载器）
+--plugin-dir <path>     # 把目录当作插件根目录（可重复）
+--no-extensions         # 禁用扩展发现（也丢弃本次的 -e）
+--no-skills             # 禁用技能发现与加载
+--skills <p1,p2,...>    # 只保留匹配 glob 的技能
+--no-rules              # 禁用 RULES.md 发现与注入
+--system-prompt <text|@file>       # 替换系统提示词
+--append-system-prompt <text|@file> # 追加到默认系统提示词
+```
+### 7. 上下文文件（@files）
+```bash
+omp @prompt.md @screenshot.png "实现图上画的东西"
+```
+- 文本文件按 UTF-8 解码，内联为 `<file name="/abs/path">…</file>` 块；超过 5MB 的文件只保留路径桩。
+- 图片（PNG/JPEG/WebP/GIF…）作为多模态附件传入（默认自动缩放，单张上限 25MB）。
+- 缺失或不可读的文件会中止运行并返回非零退出码，绝不静默跳过。
+- 注意：`@files` 在 `--mode rpc` / `rpc-ui` 下不受支持，需走 RPC 协议传内容。
+- `-p` 会读取 STDIN 作为提示词：`cat README.md | omp -p "总结一下"`。
+### 8. 其他常用 flag
+```bash
+--cwd <dir>             # 指定启动目录
+--config <file>         # 加载额外的 config.yml 覆盖（可重复）
+--approval-mode <mode>  # always-ask / write / yolo
+--auto-approve, --yolo  # 自动批准所有工具调用
+--hide-thinking         # 隐藏思考块（仅影响显示）
+--export <file> [out]   # 把录制的 jsonl 会话渲染为 HTML
+--allow-home            # 允许从 $HOME 启动而不自动切到临时目录
+-h, --help              # 帮助 + env var / 工具参考
+-v, --version           # 版本号
+```
+### 9. 子命令一览
+<table header-row="true">
+<tr>
+<td>子命令</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>`acp`</td>
+<td>通过 stdio 说 Agent Client Protocol，供 Zed、Neovim 等编辑器嵌入</td>
+</tr>
+<tr>
+<td>`agents`</td>
+<td>管理 agent 定义；`omp agents unpack` 解出内置子代理</td>
+</tr>
+<tr>
+<td>`auth-broker`</td>
+<td>远程凭证保险库：serve / token / login / logout / list / import / migrate / status</td>
+</tr>
+<tr>
+<td>`auth-gateway`</td>
+<td>正向代理，向 OpenAI/Anthropic 请求注入 broker 凭证</td>
+</tr>
+<tr>
+<td>`commit`</td>
+<td>根据暂存 diff 生成提交信息并更新 [CHANGELOG.md](http://CHANGELOG.md)（--push / --dry-run / --no-changelog / --legacy / --context / --model）</td>
+</tr>
+<tr>
+<td>`completions`</td>
+<td>生成 bash / zsh / fish 的 shell 补全脚本</td>
+</tr>
+<tr>
+<td>`config`</td>
+<td>读写设置：list / get / set / reset / path / init-xdg</td>
+</tr>
+<tr>
+<td>`grep`</td>
+<td>独立运行原生 grep 包装（--glob / --limit / --context / --files / --count / --no-gitignore）</td>
+</tr>
+<tr>
+<td>`grievances`</td>
+<td>查看自动 QA 工具问题日志（list / clean / push）</td>
+</tr>
+<tr>
+<td>`install`</td>
+<td>安装或链接扩展包</td>
+</tr>
+<tr>
+<td>`join`</td>
+<td>从链接加入共享协作会话（同 /join）</td>
+</tr>
+<tr>
+<td>`plugin`</td>
+<td>插件与市场生命周期：install / uninstall / list / link / doctor / features / config / enable / disable / marketplace / discover / upgrade</td>
+</tr>
+<tr>
+<td>`read`</td>
+<td>从 shell 调用 read 工具读取任意路径或 \*:// URI</td>
+</tr>
+<tr>
+<td>`search`（`q`）</td>
+<td>通过配置的提供商栈做网络搜索；`omp q` 是短别名</td>
+</tr>
+<tr>
+<td>`setup`</td>
+<td>引导向导；`omp setup python` 配置 Python 内核，`omp setup stt` 配置语音转写</td>
+</tr>
+<tr>
+<td>`shell`</td>
+<td>进入基于 brush-core 的交互式 REPL（--cwd / --timeout / --no-snapshot）</td>
+</tr>
+<tr>
+<td>`ssh`</td>
+<td>管理 ssh 工具的主机定义（add / remove / list）</td>
+</tr>
+<tr>
+<td>`stats`</td>
+<td>查看所有会话的使用统计（成本、请求数、token）</td>
+</tr>
+<tr>
+<td>`update`</td>
+<td>自更新（--force / --check）</td>
+</tr>
+<tr>
+<td>`usage`</td>
+<td>显示每个已认证账号的提供商用量限制（--provider / --redact / --history / --days / --json）</td>
+</tr>
+<tr>
+<td>`worktree`（`wt`）</td>
+<td>列出/清理 \~/.omp/wt 下 agent 管理的 git worktree（list / clear）</td>
+</tr>
+</table>
+### 10. 实用配方（Recipes）
+```bash
+# 继续当前目录最近一次会话
+omp -c
+<h1 id="交互式挑选会话">交互式挑选会话</h1>
+<p>omp -r</p>
+<h1 id="按-id-前缀恢复并从某条消息分支">按 id 前缀恢复，并从某条消息分支</h1>
+<p>omp -r 1f9d2a &ndash;fork msg_8c1e &ldquo;换一种思路试试&rdquo;</p>
+<h1 id="一次性调用无-tui">一次性调用，无 TUI</h1>
+<p>omp -p &ldquo;总结 CHANGELOG.md 自上个版本以来的变更&rdquo;</p>
+<h1 id="只读审计无编辑无-shell无-lsp">只读审计：无编辑、无 shell、无 LSP</h1>
+<p>omp &ndash;tools read,find,search &ndash;no-lsp -p &ldquo;在 src/ 里找死代码&rdquo;</p>
+<h1 id="角色轮换slowplan-用-sonnetsmol-用-haiku">角色轮换：slow/plan 用 sonnet，smol 用 haiku</h1>
+<p>omp &ndash;models &lsquo;sonnet:high,haiku:low&rsquo;</p>
+<h1 id="一次性附带文件与图片">一次性附带文件与图片</h1>
+<p>omp @prompt.md @screenshot.png &ldquo;实现图上画的东西&rdquo;</p>
+<h1 id="把旧会话渲染成独立-html">把旧会话渲染成独立 HTML</h1>
+<p>omp &ndash;export ~/.omp/agent/sessions/proj/2026-05-01.jsonl out.html</p>
+<h1 id="管道输入stdin-的内容即提示词">管道输入：stdin 的内容即提示词</h1>
+<p>git diff | omp &ldquo;review 这个 diff 并标出有风险的变化&rdquo;</p>
+<h1 id="ci-用的-json-事件流">CI 用的 JSON 事件流</h1>
+<p>omp &ndash;mode json &ndash;no-session -p &ldquo;$PROMPT&rdquo; &gt; events.jsonl</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <pre tabindex="0"><code>---
+## 三、CLI 中 Jupyter Notebook 的使用（重点）
+&gt; 核心结论：**omp 的 notebook 支持是文件转换/编辑，不是 notebook 执行**。`.ipynb` 文件通过 `read` 以&#34;单元格标记文本&#34;的形式暴露给模型编辑；真正的代码执行走 `eval` 工具（Python/JS 持久内核）。两者是分开的两条路径。
+### 1. 读取 .ipynb：单元格标记文本
+```bash
+# 在交互会话里让模型读一个 notebook
+read &#34;analysis.ipynb&#34;
+
+# 从 shell 直接读
+omp read analysis.ipynb</code></pre>
+</div>
+<p><code>read</code> 把 <code>.ipynb</code> 当作 notebook（除非加 <code>:raw</code> 选择器），默认视图是带标记的可编辑文本：</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># %% [code] cell:0
+</span></span><span class="line"><span class="cl">import pandas as pd
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># %% [markdown] cell:1
+</span></span><span class="line"><span class="cl">这是分析说明
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"># %% [raw] cell:2
+</span></span><span class="line"><span class="cl">...</span></span></code></pre></div>
+</div>
+<p>标记格式：<code># %% [code|markdown|raw] cell:N</code>。行选择器（如 <code>:50-200</code>）和多段范围选择器都作用在这个虚拟文本上。</p>
+<h3 id="2-编辑-notebook走-edit-管线">2. 编辑 notebook：走 edit 管线</h3>
+<ul>
+<li>模型用 <code>edit</code> 工具修改上面的虚拟文本，<code>serializeEditedNotebookText</code> 会把虚拟文本<strong>往返写回 notebook JSON</strong>。</li>
+<li>引用已存在但未被使用的 <code>cell:N</code> 时保留原单元格元数据；新单元格创建空元数据；<code>execution_count</code> 与 <code>outputs</code> 保留。</li>
+<li>注意：<strong>独立的 <strong><code>write</code></strong> 工具不认 notebook</strong>——它会用给定字节直接覆盖文件。要用 <code>write</code> 必须给合法的 notebook JSON，而不是标记文本。</li>
+</ul>
+<h3 id="3-执行-pythoneval-工具持久内核">3. 执行 Python：eval 工具（持久内核）</h3>
+<p>需要跑代码时，每个单元格一次 <code>eval</code> 调用，<code>language: &quot;py&quot;</code>：</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl"># 模型内部工具调用（示意）
+</span></span><span class="line"><span class="cl">eval(language=&#34;py&#34;, code=&#34;df = pd.read_csv(&#39;data.csv&#39;)&#34;)
+</span></span><span class="line"><span class="cl">eval(language=&#34;py&#34;, code=&#34;df.describe()&#34;)</span></span></code></pre></div>
+</div>
+<p>关键特性：</p>
+<ul>
+<li><strong>session 模式（默认）</strong>：内核按 <code>(session id, cwd, interpreter)</code> 缓存，跨调用保持状态——前一个单元格的变量后一个还能用，这就是 notebook 的&quot;持续内核&quot;体验。</li>
+<li><strong>per-call 模式</strong>：每次调用新建子进程，<code>finally</code> 里必定关闭。</li>
+<li><strong>reset</strong>：<code>reset: true</code> 在本次执行前重置选中的 Python 会话（不影响其他语言运行时）。</li>
+<li><strong>内核崩溃自愈</strong>：执行前检测到子进程已死会自动替换；执行中死掉会替换内核并<strong>重试一次</strong>；并发的 reset 会合并。</li>
+<li><strong>流式输出</strong>：stdout/stderr 实时分块；<code>display</code>/<code>result</code> 渲染 MIME 包（优先级 text/markdown 大于 text/plain 大于 text/html）；JSON 输出树、PNG/JPEG 图像都能结构化捕获。</li>
+<li><strong>超时/取消</strong>：发 SIGINT，超时后输出带超时标注，下次调用重建内核。</li>
+<li><strong>输出截断</strong>：超出阈值时完整输出溢出到 artifact 文件，内存里保留 UTF-8 安全的尾部缓冲，返回截断提示与可选的 <code>artifact://&lt;id&gt;</code> 指针。</li>
+</ul>
+<h3 id="4-推荐的-notebook-工作流">4. 推荐的 notebook 工作流</h3>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">1. read 读取 .ipynb 的默认可编辑视图
+</span></span><span class="line"><span class="cl">2. 用 edit 管线修改该虚拟文本
+</span></span><span class="line"><span class="cl">3. 把某个目标 cell 的源码复制进 eval(language=&#34;py&#34;) 调用执行
+</span></span><span class="line"><span class="cl">4. 逐个执行后续 cell；session 模式下 Python 状态跨调用保持
+</span></span><span class="line"><span class="cl">5. 后续源码改动继续走 edit 管线（整文件 write 必须给 notebook JSON）</span></span></code></pre></div>
+</div>
+<blockquote>
+<p>当前实现<strong>没有</strong>一个工具能同时修改 .ipynb 并以内核上下文执行 notebook cell——编辑走 edit 管线，执行走 eval 工具。</p>
+</blockquote>
+<h3 id="5-环境变量与内核配置">5. 环境变量与内核配置</h3>
+<table header-row="true">
+<tr>
+<td>变量</td>
+<td>作用</td>
+</tr>
+<tr>
+<td>`PI_PY`</td>
+<td>门控 eval 的 Python 后端：truthy（1/true/yes/on）启用，其他值禁用；未设置时跟随 `eval.py` 设置（默认启用）</td>
+</tr>
+<tr>
+<td>`PI_JS`</td>
+<td>eval 的 JavaScript 后端的配套门控（`eval.js` 设置）</td>
+</tr>
+<tr>
+<td>`PI_PYTHON_SKIP_CHECK`</td>
+<td>跳过 Python 可用性探测</td>
+</tr>
+<tr>
+<td>`PI_PYTHON_IPC_TRACE`</td>
+<td>设为 1 记录与 Python runner 交换的 NDJSON 帧</td>
+</tr>
+<tr>
+<td>`VIRTUAL_ENV`</td>
+<td>Python 运行时解析的最高优先级 venv 路径</td>
+</tr>
+</table>
+```bash
+# 单独配置 Python 内核
+omp setup python        # 交互式引导
+omp setup python --check  # 只探测不安装
+```
+Python runner 会剥离子进程环境里的常见 API key 变量，只转发 `LC_`、`XDG_`、`PI_` 前缀与一组安全基础变量。
+### 6. 与"真正的 Jupyter"的差别
+- omp 不会启动 Jupyter 服务、没有 notebook 专属工具去对接内核；`eval` 的 Python runner 是独立实现的 NDJSON 子进程协议。
+- notebook 编辑路径完全没有内核生命周期（无 kernel session id、无执行、无流式分块、无富显示捕获）。
+- 想同时要"改 notebook + 跑代码"，就按第 4 节的工作流手动组合 read/edit + eval。
+---
+## 四、常用斜杠命令
+在编辑器里输入 `/` 会弹出补全菜单。已安装的 skills 显示为 `/skill:<name>`，自定义命令模板以 `/<template>` 展开。
+### 1. Top 10 最常用
+- `/plan` — 切换计划模式；agent 先起草再执行（见 Plan mode）
+- `/model` — 打开模型选择器；挑选角色与提供商
+- `/compact` — 手动总结旧上下文；可传 focus
+- `/tree` — 会话树导航；跳转到任意历史消息
+- `/branch` — 从历史消息在同文件开新线程
+- `/extensions` — 扩展控制中心（skills / hooks / 自定义工具 / MCP / 插件）
+- `/agents` — Agent 控制中心；派生、观察、指挥子代理
+- `/login` — OAuth 登录提供商；`/logout` 撤销
+- `/share` — 渲染会话并上传（自定义 handler，否则 gist 兜底）
+- `/handoff` — 写结构化交接总结并结束回合
+### 2. 会话类
+- `/session [info/delete]` — 查看会话信息或删除当前会话
+- `/resume` — 打开会话选择器
+- `/new` — 开始新会话
+- `/drop` — 删除当前会话并开始新会话
+- `/rename <title>` — 重命名当前会话
+- `/move <path>` — 将会话移到不同工作目录
+- `/tree` — 会话树导航（切换分支）
+- `/branch` — 从历史消息分支（同文件、新叶子）
+- `/fork` — 从历史消息 fork 到新文件
+- `/compact [focus]` — 手动压缩会话上下文
+- `/handoff [focus]` — 写结构化交接并结束回合
+- `/btw <question>` — 用当前上下文问一个临时性问题
+- `/retry` — 重试最后一次失败的 agent 回合
+- `/export [path]` — 导出会话为 HTML
+- `/dump` — 复制会话记录到剪贴板
+- `/share` — 上传会话为私密 gist（或自定义 handler）
+- `/copy [last/code/all/cmd]` — 复制最后一条 agent 消息 / 代码块 / 最后一条 bash 或 python 命令
+- `/goal <subcommand>` — 持久自主目标（set / show / pause / resume / drop / budget）
+- `/todo <subcommand>` — 查看/编辑 todo 列表（edit / copy / export / import / append / start / done / drop / rm）
+### 3. 模型与计划
+- `/model`（`/models`）— 打开模型选择器
+- `/fast [on/off/status]` — 切换 OpenAI 服务层 fast 模式
+- `/loop [count/duration]` — 切换循环模式（每次产出后自动重提交下一条提示词）
+- `/force <tool> [prompt]` — 强制下一回合使用指定工具
+- `/browser [headless/visible]` — 切换浏览器 headless/visible 模式
+- `/plan [prompt]` — 切换计划模式；把下一条提示词路由给规划器
+### 4. 扩展与信息
+- `/mcp <subcommand>` — 管理 MCP 服务器（add / list / remove / test / reauth / unauth / enable / disable / smithery-search / smithery-login / smithery-logout / reconnect / reload / resources / prompts / notifications）
+- `/ssh <subcommand>` — 管理 SSH 主机（add / list / remove）
+- `/memory <subcommand>` — 检查/清空/重建记忆（view / clear/reset / enqueue/rebuild / mm list/show/refresh/history/seed/delete/reload）
+- `/marketplace <subcommand>` — 管理市场源与插件（add / remove / update / list / discover / install / uninstall / installed / upgrade）
+- `/plugins [list/enable/disable]` — 查看和管理已装插件（npm + marketplace）
+- `/reload-plugins` — 重载 skills、命令、hooks、工具、agents 与 MCP
+- `/usage` — 提供商用量与限流余量（回答"还能继续干吗？"）
+- `/context` — 当前回合的 token 预算分解（回答"下一回合装得下吗？"）
+- `/jobs` — 异步后台任务状态
+- `/tools` — 当前对 agent 可见的工具
+- `/extensions`（`/status`）— 打开扩展控制中心
+- `/agents` — 打开 Agent 控制中心
+- `/debug` — 打开调试工具选择器
+- `/changelog [full]` — 显示更新日志
+- `/hotkeys` — 显示实时键盘快捷键列表
+- `/settings` — 打开设置菜单
+---
+## 五、会话、记忆与计划模式
+### 1. 会话模型
+会话是磁盘上 `~/.omp/agent/sessions/` 下的一棵**只追加树**，按工作目录分组——两个项目永不共享历史。每个回合是一个带父指针的节点；分支会移动叶子节点并从此处追加，原时间线永远保留在文件里。
+- 会话 id 是时间有序的 UUIDv7，短前缀即可用 `-r` 识别。
+**恢复会话的四种方式：**
+```bash
+omp -c                       # 继续当前目录最近一次会话
+omp -r                       # 打开本项目的选择器
+omp -r 1f9d2a                # 按 id 前缀恢复
+omp --resume ./session.jsonl # 恢复指定文件
+omp --no-session             # 临时会话：不落盘
+```
+- `-c` 优先用每终端面包屑定位，split pane / tmux 互不干扰；缺失时回退到 cwd 最新会话。
+- `-r <prefix>` 先在当前项目找，再全局找；匹配在其他目录时会先询问再 fork 进来。
+- `--fork <id|path>` 把会话恢复进一个带 `parentSession` 血统标记的全新文件，原文件不动。
+- `--no-session` 临时运行：什么都不持久化，`/fork`、`/export`、`/share` 都被禁用。配 `-p` 做一次性管道完美。
+**`/tree`** 导航器**：原地移动叶子指针到当前文件的任意历史消息——不新建文件、不 fork。适合回合跑偏或想跳过冗长工具绕路时。
+**`/branch`** vs **`/fork`**：
+- `/branch` 留在同一文件，从历史消息开新线程（同 id 空间、新叶子）。
+- `/fork` 把整个会话克隆进全新文件（带 parentSession 标记），原文件不动。
+- 经验：想要一个文件成为探索的权威记录选 `/branch`；备选方案可能被抛弃、不想污染父会话的 `/tree` 视图选 `/fork`。
+**`/compact`**：把活动分支较老的一半总结成一条摘要条目，近期回合保持原样。可传 focus 引导总结方向，如 `/compact Focus on the API changes`。磁盘文件不受影响——`/tree` 仍能走回压缩前的历史。
+### 2. 记忆（Memory）
+记忆是**跨会话**的知识，和单会话内的压缩（compaction）是两回事。
+- **本地记忆**：注入本机过往会话的静态引导块。
+- **Hindsight**：可选的远程记忆库，agent 通过 retain / recall / reflect 读写。
+作用域（scoping）三档：
+- `per-project-tagged`（推荐）：全局事实与项目事实共存一个 bank，召回时合并。
+- `per-project`：项目之间互不可见（如 NDA 客户项目），但召回不再拉入跨项目偏好。
+- `global`：单开发者单心智项目。
+**Mental models**：长期维护的精选摘要（用户偏好、项目约定、架构决策），每个 bank 播种一次、整合后刷新；激活集以 `<mental_models>` 块拼进系统提示词。TUI 里用 `/memory mm` 管理。
+```yaml
+# config.yml 示例：自托管 Hindsight
+memory:
+  backend: hindsight
+hindsight:
+  apiUrl: http://hindsight.internal:8888
+  apiToken: REPLACE_ME
+  bankId: null                  # 首次使用时按项目分配
+  scoping: per-project
+```
+### 3. 计划模式（Plan mode）
+`/plan` 把编辑器换成计划审查界面，并把下一条提示词路由给 **plan 角色**模型（旁路回合）。规划器被限制为只读：只能创建/编辑它的计划文件（`local://<slug>-plan.md`），批准前不会碰你的代码。
+```text
+/plan refactor src/importer.ts to stream rows instead of buffering
+```
+循环：陈述目标 → 迭代（规划器起草，你像正常回合一样回复纠正；只读工具仍可用，能 grep 仓库、读 PR）→ 批准（满意后规划器调用 `resolve` 且 `action: "apply"`，出现批准选择器）。
+计划模式用独立角色模型，可以把更强的推理器钉在这里而不用每回合付费。覆盖方式：`--plan <model-id>`（单次）、`PI_PLAN_MODEL`（shell）、`modelRoles.plan`（config.yml 持久）。
+---
+## 六、核心工具
+在会话里运行 `/tools` 查看实时工具面；CLI 用 `--tools read,search,edit` 限制。出厂内置工具：
+<table header-row="true">
+<tr>
+<td>工具</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>`ast_edit`</td>
+<td>基于 ast-grep 模式的结构化 codemod；写入前先预览暂存</td>
+</tr>
+<tr>
+<td>`ast_grep`</td>
+<td>基于 ast-grep 模式的结构化代码搜索；`ast_edit` 的只读兄弟</td>
+</tr>
+<tr>
+<td>`bash`</td>
+<td>在持久会话里跑 shell，带 cwd/env/PTY 控制</td>
+</tr>
+<tr>
+<td>`browser`</td>
+<td>用 Puppeteer 驱动真实 Chromium 标签页；跨调用保留</td>
+</tr>
+<tr>
+<td>`debug`</td>
+<td>DAP 驱动的断点、单步、局部变量检查</td>
+</tr>
+<tr>
+<td>`edit`</td>
+<td>行锚定补丁，按每会话文件快照校验</td>
+</tr>
+<tr>
+<td>`eval`</td>
+<td>在持久内核里跑 Python 或 JS 单元（**notebook 执行路径**）</td>
+</tr>
+<tr>
+<td>`find`</td>
+<td>按 glob 快速查文件名，按修改时间排序</td>
+</tr>
+<tr>
+<td>`generate_image`</td>
+<td>结构化图像生成（subject / scene / lighting / style 字段）</td>
+</tr>
+<tr>
+<td>`github`</td>
+<td>基于 gh 的 op 包装：repo_view / pr_create / pr_checkout / search_\* / run_watch</td>
+</tr>
+<tr>
+<td>`inspect_image`</td>
+<td>把本地图像交给视觉模型拿文本回答</td>
+</tr>
+<tr>
+<td>`irc`</td>
+<td>同进程 peer agent 之间的短消息；给 parked agent 发消息会唤醒它</td>
+</tr>
+<tr>
+<td>`job`</td>
+<td>列出/等待/取消异步 bash 或 task 起的后台任务</td>
+</tr>
+<tr>
+<td>`lsp`</td>
+<td>重命名、引用、定义、悬停、诊断、代码操作</td>
+</tr>
+<tr>
+<td>`read`</td>
+<td>文件、目录、归档、SQLite、文档、图像、内部 URI、网页 URL</td>
+</tr>
+<tr>
+<td>`recipe`</td>
+<td>跑项目 task runner（bun / just / make / cargo）里的目标</td>
+</tr>
+<tr>
+<td>`report_tool_issue`</td>
+<td>上报异常工具行为供自动 QA 追踪</td>
+</tr>
+<tr>
+<td>`resolve`</td>
+<td>应用或丢弃挂起的预览动作（ast_edit、plan-mode 批准）</td>
+</tr>
+<tr>
+<td>`search`</td>
+<td>跨文件/目录/glob/内部 URL 的正则内容搜索</td>
+</tr>
+<tr>
+<td>`task`</td>
+<td>派发并行子代理；结果以 agent:// URL 返回</td>
+</tr>
+<tr>
+<td>`todo`</td>
+<td>分阶段任务跟踪，TUI 实时渲染</td>
+</tr>
+<tr>
+<td>`web_search`</td>
+<td>一次查询，派发给第一个可用搜索提供商</td>
+</tr>
+<tr>
+<td>`write`</td>
+<td>创建或覆盖文件、归档条目、SQLite 行</td>
+</tr>
+</table>
+---
+## 七、模型角色与提供商
+### 1. 模型角色（Roles）
+角色是 omp 在特定时刻会用到的命名槽位。把模型钉到每个角色上，agent 就不用每次都问。核心角色：
+<table header-row="true">
+<tr>
+<td>角色</td>
+<td>用途</td>
+<td>CLI 覆盖</td>
+<td>环境变量</td>
+</tr>
+<tr>
+<td>default</td>
+<td>常规回合的激活模型</td>
+<td>`--model`</td>
+<td>PI_MODEL 或 modelRoles.default</td>
+</tr>
+<tr>
+<td>smol</td>
+<td>快速/便宜的小任务</td>
+<td>`--smol`</td>
+<td>PI_SMOL_MODEL</td>
+</tr>
+<tr>
+<td>slow</td>
+<td>深度推理、规划</td>
+<td>`--slow`</td>
+<td>PI_SLOW_MODEL</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>plan mode 专用</td>
+<td>`--plan`</td>
+<td>PI_PLAN_MODEL</td>
+</tr>
+</table>
+角色轮换：`--models 'sonnet:high,haiku:low'` 让不同角色用不同模型/推理强度。
+### 2. 提供商认证（Providers）
+三种认证方式（后设置的会覆盖先前的）：
+<table header-row="true">
+<tr>
+<td>方式</td>
+<td>适用场景</td>
+<td>示例</td>
+</tr>
+<tr>
+<td>环境变量</td>
+<td>脚本、CI、首次冒烟测试，不落盘</td>
+<td>`ANTHROPIC_API_KEY=sk-ant-… omp`</td>
+</tr>
+<tr>
+<td>`/login`</td>
+<td>交互式；支持 OAuth 的走浏览器流程，否则提示输 key</td>
+<td>`/login anthropic`</td>
+</tr>
+<tr>
+<td>`config.yml` / `models.yml`</td>
+<td>声明式；钉住 key（或 env var 名）</td>
+<td>`apiKey: MYCO_API_KEY`</td>
+</tr>
+</table>
+`/login` 是追加式的（不替换已有凭证）；`/logout <provider>` 清空。凭证存 `~/.omp/agent/agent.db`。
+**支持 OAuth 浏览器登录的提供商**：
+<table header-row="true">
+<tr>
+<td>提供商</td>
+<td>`/login` id</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>Anthropic（Pro/Max）</td>
+<td>anthropic</td>
+<td>[console.anthropic.com](http://console.anthropic.com) 浏览器流程；取消则回退到输 key</td>
+</tr>
+<tr>
+<td>OpenAI Codex</td>
+<td>openai-codex</td>
+<td>ChatGPT 账号流程；用量感知轮换，接近 5h/周限额时跳过</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td>github-copilot</td>
+<td>设备码流程；成功后可启用整个 Copilot 目录（Claude/GPT/Gemini/Grok）</td>
+</tr>
+<tr>
+<td>Gemini CLI</td>
+<td>google-gemini-cli</td>
+<td>Google 账号流程；与 gemini CLI 共用凭证</td>
+</tr>
+<tr>
+<td>[Z.AI](http://Z.AI)</td>
+<td>zai</td>
+<td>仅粘贴 key</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>cursor</td>
+<td>[cursor.com](http://cursor.com) 浏览器流程</td>
+</tr>
+</table>
+**凭证解析顺序**（取第一个命中）：`--api-key` 运行时覆盖 > agent.db 里的 API key（多个 key 轮询）> agent.db 里的 OAuth 凭证（调用前刷新）> 提供商环境变量 > `models.yml` 的 `apiKey`。
+同时存在 API key 和 OAuth 凭证时 API key 优先；显式设 `ANTHROPIC_OAUTH_TOKEN` 可强制 OAuth 优先。
+### 3. 远程凭证保险库（auth broker）
+多机共享一套凭证，不用每台机器都 `/login`：
+```bash
+# broker 主机上
+omp auth-broker serve --bind=127.0.0.1:8765
+omp auth-broker login anthropic     # OAuth 流程只在这里跑
+omp auth-broker token --json        # 铸出给客户端用的 bearer token
+```
+配套 `auth-gateway` 正向代理：向 OpenAI Chat / Anthropic Messages / OpenAI Responses 请求注入 broker 凭证。
+---
+## 八、配置与安全
+### 1. Settings（config.yml）
+持久设置位于 `~/.omp/agent/config.yml`（可用 `PI_CODING_AGENT_DIR` 换目录、`PI_CONFIG_DIR` 改名）。纯 YAML 树，缺的键落到内置默认。三种改法：
+- `/settings`：会话内菜单驱动，保存即校验。
+- `omp config <action>`：脚本化修改。
+- 直接编辑文本：下次启动读取；YAML 损坏会警告并忽略整个文件。
+```bash
+omp config list                            # 完整配置树
+omp config get modelRoles.default          # 读单个键
+omp config set theme.dark catppuccin-macchiato
+omp config reset theme.dark                # 回到 schema 默认
+omp config path                            # 打印 agent 配置目录
+```
+**优先级**（高到低）：CLI flag > 环境变量 > `~/.omp/agent/config.yml` > 内置默认。
+### 2. 环境变量
+omp 通过分层的 `.env` 链解析环境变量，先定义先赢：进程环境 > `$PWD/.env` > `~/.omp/agent/.env` > `~/.omp/.env` > `~/.env`。`OMP_FOO` 会镜像成 `PI_FOO`。改完 `.env` 需重启 omp。
+常用运行时旋钮：
+<table header-row="true">
+<tr>
+<td>变量</td>
+<td>作用</td>
+</tr>
+<tr>
+<td>`PI_CODING_AGENT_DIR`</td>
+<td>把 agent 数据目录移出 `~/.omp/agent`</td>
+</tr>
+<tr>
+<td>`PI_CONFIG_DIR`</td>
+<td>重命名 `$HOME` 下的配置根目录（默认 `.omp`）</td>
+</tr>
+<tr>
+<td>`PI_SMOL_MODEL` / `PI_SLOW_MODEL` / `PI_PLAN_MODEL`</td>
+<td>钉住各角色模型（CLI flag 优先）</td>
+</tr>
+<tr>
+<td>`PI_NO_PTY`</td>
+<td>设为 1 关闭 bash 工具的 PTY</td>
+</tr>
+<tr>
+<td>`PI_PY` / `PI_JS`</td>
+<td>门控 eval 的 Python/JS 后端</td>
+</tr>
+</table>
+安全提示：任何以 `_API_KEY`、`_TOKEN`、`_OAUTH_TOKEN` 结尾的都是秘密。永不提交 `.env`；含凭证的 `.env` 要 `chmod 600`。
+### 3. 凭证存储与安全（Secrets）
+- 所有提供商凭证（OAuth refresh/access token、API key）都放在本地 SQLite：`~/.omp/agent/agent.db`。
+- 每行存 provider id、凭证类型（OAuth 或 API key）、密钥负载。OAuth 行带 refresh + access 两个 token；access 到期前 1 分钟自动进程内刷新。
+- 保护这个文件要像保护 `~/.ssh/id_*` 一样：文件系统权限是唯一防线。
+- 轮换凭证：`/logout` 再 `/login`（没有原地轮换）。
+- 想彻底把凭证移出机器，用 auth broker——笔记本上完全不持有 refresh token。
+OAuth 本地回调端口：Anthropic 54545、OpenAI Codex 1455、Gemini CLI 8085、Google Antigravity 51121、GitLab Duo 8080。端口被占时先关掉占用者再重跑 `/login`。
+---
+## 九、子代理与并行（Subagents & IRC）
+### 1. task 工具：并行派发
+`task` 一次派发一个或多个子代理并行工作。每个条目拿一条自包含的 `assignment`（批次共享 `context`），在自己的子会话里跑。并发由信号量限流；结果随产出实时送达。每个 agent 的完整输出以 `agent://<id>` 保留、转录以 `history://<id>` 保留，父会话随时可 `read`。
+- `isolated: true`：每个任务在独立工作区跑（APFS/Btrfs/overlayfs 等平台用 COW 克隆），并发编辑互不冲突，任务成功时补丁合并回来。
+### 2. 出厂内置的 8 个 agent
+<table header-row="true">
+<tr>
+<td>Agent</td>
+<td>最适合</td>
+<td>会派生</td>
+</tr>
+<tr>
+<td>explore</td>
+<td>快速只读调研；返回压缩结论</td>
+<td>—</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>多文件架构决策</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>designer</td>
+<td>UI/UX 实现、无障碍、视觉评审</td>
+<td>—</td>
+</tr>
+<tr>
+<td>reviewer</td>
+<td>带结构化发现的质量与安全评审</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>librarian</td>
+<td>外部库/API 调研，源码可验证的回答</td>
+<td>—</td>
+</tr>
+<tr>
+<td>oracle</td>
+<td>资深工程师咨询：调试、架构、第二意见、动手实现</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>task</td>
+<td>通用多步骤委派</td>
+<td>any</td>
+</tr>
+<tr>
+<td>quick_task</td>
+<td>纯机械更新或数据收集（跑便宜模型、少推理）</td>
+<td>—</td>
+</tr>
+</table>
+> 经验：机械活选 `quick_task`，开放式的活选 `task`。自定义 agent 丢到 `~/.omp/agent/agents/` 或 `.omp/agents/` 即可，`omp agents unpack` 可把内置 agent 解出来改。
+### 3. 并行机制
+同一次 `task` 调用的所有任务同时启动、独立运行。每个子代理都能在 IRC peer 块里看到其他任务，可以边干边聊。任务完成变 `idle`，TTL 过后变 `parked`——id 全程可寻址，给 `parked` 发消息会唤醒它跑一轮后续。
+### 4. IRC：agent 之间的短消息
+`irc` 工具在同进程的 agent 之间投递短消息。主 agent 叫 `Main`；子代理用自己的 task id（重名加 `-2` 后缀）。
+<table header-row="true">
+<tr>
+<td>op</td>
+<td>行为</td>
+</tr>
+<tr>
+<td>list</td>
+<td>枚举 peers（running / idle / parked）与未读数</td>
+</tr>
+<tr>
+<td>send</td>
+<td>投递消息给 `to`（peer id 或 all）；立即返回回执，不阻塞；`await: true` 阻塞到对方回复</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>阻塞等待一条入站消息</td>
+</tr>
+<tr>
+<td>inbox</td>
+<td>排空挂起的消息</td>
+</tr>
+</table>
+- 给忙的 peer 发 DM：在它的下一个步骤边界注入为旁注；对方太慢时会用侧信道生成简短自动回复。
+- 给 idle/parked 的 peer 发 DM：唤醒（或复活）它，把你的消息当后续回合跑。
+- 回复超时别重发，先查 `inbox`/`wait`——对方可能正在忙当前步骤。
+- 没有开关：只要还有可聊的对象，`irc` 就可用——每个子代理里、任何还能派生子代理的会话里都有。
+### 5. 工作示例：父派两个子代理，其中一个 DM 另一个
+```text
+# 父会话
+任务：审计 src/ 的 auth 覆盖
+- AuthMap：映射 src/auth/ 下所有 token 签发路径。RouteAudit ping 你时回答它。
+- RouteAudit：列出 src/routes/ 下的受保护路由。定稿前 DM AuthMap 要实时 issuer 列表。
+<h1 id="routeaudit-内部">RouteAudit 内部</h1>
+<p>irc op=send to=AuthMap await=true message=&ldquo;Which issuer does /api/v2 use?&rdquo;</p>
+<h1 id="--回复到达routeaudit-继续">-&gt; 回复到达，RouteAudit 继续</h1>
+<h1 id="批次返回后父会话">批次返回后，父会话</h1>
+<p>read agent://AuthMap
+read agent://RouteAudit</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <pre tabindex="0"><code>---
+## 十、参考资料
+- 官方文档：[omp.sh/docs](http://omp.sh/docs)
+- 开源仓库：[github.com/can1357/oh-my-pi](http://github.com/can1357/oh-my-pi)
+- 本地命令参考：`omp --help`（含全部 flag、环境变量、工具清单）
+- 本教程重点：**CLI 使用**（第二章）与 **CLI 中 Jupyter Notebook 的使用**（第三章），其余章节为支撑性速查。
+---
+*教程整理完毕。如有细节更新，建议对照官方文档复核后再用。*</code></pre>
+</div>
+]]></description></item><item><title>OMO 使用教程</title><link>https://tristesun.github.io/2026/08/14/omo-tutorial/</link><guid isPermaLink="true">https://tristesun.github.io/2026/08/14/omo-tutorial/</guid><pubDate>Fri, 14 Aug 2026 12:16:00 +0000</pubDate><description><![CDATA[<h1 id="oh-my-openagentomo使用教程">oh-my-openagent（OMO）使用教程</h1>
+<blockquote>
+<p>面向只熟悉 OpenCode 基础操作的新手。
+本文档基于<strong>你当前这台 Mac 上的实际安装状态</strong>编写，跟着做就能用。</p>
+</blockquote>
+<h2 id="1-omo-是什么">1. OMO 是什么？</h2>
+<p>oh-my-openagent（简称 OMO / omo）是 OpenCode 的一个<strong>增强插件</strong>。装了它之后，OpenCode 不再只是&quot;一个和 AI 对话的终端&quot;，而是变成一套有<strong>多个专业 AI 智能体协作</strong>的团队系统：</p>
+<ul>
+<li><strong>Sisyphus</strong>（主指挥官）：规划任务、把工作分派给其他智能体、盯着任务完成</li>
+<li><strong>Explore / Librarian</strong>：快速搜索代码、查文档</li>
+<li><strong>Oracle / Momus / Metis</strong>：架构咨询、方案评审</li>
+<li><strong>Hephaestus</strong>：深度执行任务（GPT 系，需要订阅才能发挥）</li>
+<li>等共 11 个智能体
+你不需要手动指挥它们——只要说一句带 <strong><code>ultrawork</code></strong>（或 <code>ulw</code>）的话，Sisyphus 就会自动组队干活，干完才停。</li>
+</ul>
+<h2 id="2-你这台机器装了什么">2. 你这台机器装了什么</h2>
+<table header-row="true">
+<tr>
+<td>项目</td>
+<td>状态</td>
+<td>位置</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td>✅ 1.18.18</td>
+<td>系统里</td>
+</tr>
+<tr>
+<td>OMO 插件</td>
+<td>✅ 4.19.4（Ultimate 版）</td>
+<td>`~/.config/opencode/opencode.jsonc` 已注册</td>
+</tr>
+<tr>
+<td>OMO 配置</td>
+<td>✅ 已生成</td>
+<td>`~/.omo/omo.jsonc`</td>
+</tr>
+<tr>
+<td>可用模型</td>
+<td>⚠️ 只有免费模型</td>
+<td>`opencode/deepseek-v4-flash-free` 等 7 个</td>
+</tr>
+<tr>
+<td>bun</td>
+<td>✅ 1.3.14</td>
+<td>跑 CLI 用</td>
+</tr>
+<tr>
+<td>ast-grep</td>
+<td>✅ 0.45.1</td>
+<td>代码重构技能用</td>
+</tr>
+<tr>
+<td>gh (GitHub CLI)</td>
+<td>⚠️ 已装未登录</td>
+<td>可选，GitHub 自动化用</td>
+</tr>
+</table>
+### 重要：你的模型情况（先读这段）
+你没有 Claude / OpenAI 等任何订阅，所以：
+- OMO 安装时默认写的 `opencode/gpt-5-nano` **你用不了**，我已把所有智能体改成你真正能用的 **`opencode/deepseek-v4-flash-free`**（就是你现在这个会话用的模型）。
+- 查看你能用的全部模型：在终端运行 `opencode models`，能看到 `opencode/` 开头的 7 个免费模型。
+- **Sisyphus 官方推荐 Claude Opus 5，没有 Claude 订阅时它的编排效果会打折扣**——这是官方文档明确说的，不是故障。
+## 3. 第一步：让插件生效
+插件在你**下次启动 opencode 时才会加载**（本次会话是安装前启动的）。
+```bash
+# 关掉当前 opencode，然后重新打开
+opencode
+```
+**怎么确认插件加载成功了？**
+启动后随便问一句带 `ulw` 的话，比如：
+```javascript
+用 ulw 模式，看看当前目录的结构并总结
+```
+如果 Sisyphus 开始分工、出现多个智能体的执行过程，就说明 OMO 生效了。
+## 4. 日常怎么用（重点）
+### 4.1 最强指令：`ultrawork` / `ulw`
+在消息里**带上这两个词任意一个**，OMO 就会进入"全编排模式"：自动规划 → 派智能体并行干活 → 干完为止。
+```javascript
+ulw 帮我把这个项目的 README 整理一下
+```
+```javascript
+ultrawork 分析一下代码里有哪些 TODO 没做完
+```
+平时不想思考用什么模式？**无脑加 **`ulw`** 就行**，官方原话："The agent figures out the rest."
+### 4.2 其他模式关键词（直接打这些词）
+<table header-row="true">
+<tr>
+<td>你在消息里打</td>
+<td>效果</td>
+</tr>
+<tr>
+<td>`search`</td>
+<td>专注网页/文档搜索</td>
+</tr>
+<tr>
+<td>`analyze`</td>
+<td>深度分析模式</td>
+</tr>
+<tr>
+<td>`team mode` / `teammode`</td>
+<td>强制团队协作模式（需要先在配置里开启，见第 7 节）</td>
+</tr>
+<tr>
+<td>`hyperplan`</td>
+<td>用 5 个"敌对评审"挑刺你的方案，之后才动手</td>
+</tr>
+</table>
+### 4.3 斜杠命令（在输入框打 `/` 会弹出）
+<table header-row="true">
+<tr>
+<td>命令</td>
+<td>干什么</td>
+<td>什么时候用</td>
+</tr>
+<tr>
+<td>`/start-work`</td>
+<td>先让规划智能体（Prometheus）问你问题、出方案，确认后自动执行</td>
+<td>重要任务，先想清楚再动手</td>
+</tr>
+<tr>
+<td>`/goal`</td>
+<td>设置一个持续目标，AI 空闲时会自动继续推进直到完成</td>
+<td>长任务挂后台</td>
+</tr>
+<tr>
+<td>`/stop-continuation`</td>
+<td>停止所有自动继续的机制</td>
+<td>想让它停的时候</td>
+</tr>
+<tr>
+<td>`/refactor`</td>
+<td>智能重构代码（自动检查、验证）</td>
+<td>改代码结构</td>
+</tr>
+<tr>
+<td>`/handoff`</td>
+<td>生成当前工作摘要，换新会话时带上继续干</td>
+<td>换会话前</td>
+</tr>
+<tr>
+<td>`/remove-ai-slops`</td>
+<td>清理 AI 生成的垃圾代码模式</td>
+<td>代码看着"AI 味"太重</td>
+</tr>
+<tr>
+<td>`/init-deep`</td>
+<td>生成项目的 [AGENTS.md](http://AGENTS.md) 知识库</td>
+<td>新项目第一次用</td>
+</tr>
+<tr>
+<td>`/hyperplan`</td>
+<td>直接调用对抗式规划</td>
+<td>同上 4.2</td>
+</tr>
+</table>
+> 💡 新手最常用的两个：**`ulw`**（无脑全自动）和 **`/start-work`**（先规划后执行）。
+### 4.4 技能（不用记，自动触发）
+装了 OMO 后，一些技能会根据你的任务**自动加载**，比如：
+- 涉及浏览器操作 → 自动用 Playwright
+- 涉及 git 提交 → 自动用 git-master 规范提交
+- 涉及 UI/前端 → 自动用 frontend 技能
+你什么都不用做，正常说话就行。
+## 5. 智能体（Agent）一览
+Sisyphus 会自动调度它们，你**一般不用直接指定**，了解一下心里有数即可：
+<table header-row="true">
+<tr>
+<td>智能体</td>
+<td>角色</td>
+<td>通俗理解</td>
+</tr>
+<tr>
+<td>**Sisyphus**</td>
+<td>主指挥官</td>
+<td>大管家，派活、盯进度</td>
+</tr>
+<tr>
+<td>**Prometheus**</td>
+<td>战略规划师</td>
+<td>动手前先访谈你、出方案</td>
+</tr>
+<tr>
+<td>**Atlas**</td>
+<td>任务清单管家</td>
+<td>把大任务拆成清单跟踪</td>
+</tr>
+<tr>
+<td>**Oracle**</td>
+<td>架构/疑难顾问</td>
+<td>想不通的问题问它</td>
+</tr>
+<tr>
+<td>**Librarian**</td>
+<td>资料检索员</td>
+<td>查文档、查开源实现</td>
+</tr>
+<tr>
+<td>**Explore**</td>
+<td>代码搜索员</td>
+<td>快速翻代码库</td>
+</tr>
+<tr>
+<td>**Metis / Momus**</td>
+<td>方案评审</td>
+<td>挑毛病、把关</td>
+</tr>
+<tr>
+<td>**Hephaestus**</td>
+<td>深度执行者</td>
+<td>埋头写代码（GPT 系，需订阅）</td>
+</tr>
+<tr>
+<td>**Multimodal-Looker**</td>
+<td>看图/PDF</td>
+<td>截图、文档识别</td>
+</tr>
+<tr>
+<td>**Sisyphus-Junior**</td>
+<td>通用执行者</td>
+<td>被派活的小弟</td>
+</tr>
+</table>
+## 6. 换模型 / 改配置（了解即可）
+所有智能体用的模型都写在 `~/.omo/omo.jsonc` 里。想改某个智能体的模型，编辑这个文件：
+```json
+{
+  "[opencode]": {
+    "agents": {
+      "sisyphus": { "model": "opencode/deepseek-v4-flash-free" },
+      "explore": { "model": "opencode/big-pickle" }
+    }
+  }
+}
+```
+规则：
+- 改完**重启 opencode** 生效
+- 可用的模型用 `opencode models` 查
+- 想临时关掉某个功能，配置文件里支持 `disabled_agents`、`disabled_skills` 等数组
+- 备份文件在 `~/.omo/omo.jsonc.bak.*`（安装时自动生成的）
+## 7. 可选：开启团队模式（Team Mode）
+默认关闭。想玩"一个队长 + 多个队员并行"的多智能体协作，编辑 `~/.omo/omo.jsonc` 在 `[opencode]` 块里加：
+```json
+"team_mode": {
+  "enabled": true,
+  "max_parallel_members": 4,
+  "max_members": 8
+}
+```
+重启 opencode 后，`team mode` 关键词才生效。新手可以先不开。
+## 8. 维护与排错
+### 常用维护命令（注意：要按下面这种写法，见"已知坑"）
+```bash
+export OMO_WRAPPER_PACKAGE_ROOT=~/.config/opencode/node_modules/oh-my-openagent
+bun ~/.config/opencode/node_modules/oh-my-openagent/node_modules/oh-my-openagent-darwin-arm64/bin/oh-my-opencode.js doctor
+```
+`doctor` 会体检：系统、配置、插件、模型、遥测等 8 项，退出码 0 = 全部通过。
+### ⚠️ 已知坑：`bunx oh-my-openagent` 命令会报错
+当前 4.19.4 版本的 CLI 包装脚本有个 ESM 兼容 bug，直接跑 `bunx oh-my-openagent doctor` 会报 `SyntaxError: Cannot use import statement outside a module`。
+- **插件本身不受影响**（opencode 加载插件走的是另一条路径，正常工作）
+- 只有你**手动敲 CLI 命令**时需要用上面第 8 节那种 `bun ...` 的写法绕开
+### 常见问题速查
+<table header-row="true">
+<tr>
+<td>现象</td>
+<td>怎么办</td>
+</tr>
+<tr>
+<td>说了 `ulw` 没反应</td>
+<td>确认重启过 opencode；确认 `opencode.jsonc` 里有 `"oh-my-openagent@latest"`</td>
+</tr>
+<tr>
+<td>某个智能体报模型错误</td>
+<td>用 `opencode models` 看可用模型，把 `~/.omo/omo.jsonc` 里对应项改成可用的</td>
+</tr>
+<tr>
+<td>想关掉匿名遥测</td>
+<td>在 `~/.omo/omo.jsonc` 加 `"telemetry": false`，或终端 `export OMO_DISABLE_POSTHOG=1`</td>
+</tr>
+<tr>
+<td>gh 相关功能不可用</td>
+<td>终端运行 `gh auth login` 登录（可选功能，不影响其他）</td>
+</tr>
+<tr>
+<td>后悔了想卸载</td>
+<td>见第 9 节</td>
+</tr>
+</table>
+## 9. 卸载（备查）
+```bash
+# 1. 从 opencode.jsonc 移除插件条目（手动编辑去掉 "oh-my-openagent@latest"）
+# 2. 删除配置
+rm -f ~/.omo/omo.jsonc ~/.omo/omo.json
+# 3. 删除项目级配置（如果项目里有 .omo/ 目录）
+rm -f .omo/omo.jsonc .omo/omo.json
+```
+## 10. 一句话总结
+> **什么都别想，在 opencode 里正常说话，消息里带个 **`ulw`**，其余交给 OMO。**
+---
+*本文档基于 2026-08-14 的安装状态编写。配置文件：**`~/.config/opencode/opencode.jsonc`**、**`~/.omo/omo.jsonc`**。*
+]]></description></item><item><title>AIA Data Process: Note</title><link>https://tristesun.github.io/2026/01/26/aia-data-processing/</link><guid isPermaLink="true">https://tristesun.github.io/2026/01/26/aia-data-processing/</guid><pubDate>Mon, 26 Jan 2026 17:12:00 +0000</pubDate><description><![CDATA[<h1 id="data-downloads">Data downloads</h1>
+<ol>
+<li>进入 JSOC 网站 <a href="http://jsoc.stanford.edu/ajax/exportdata.html?ds=aia.lev1_euv_12s">http://jsoc.stanford.edu/ajax/exportdata.html?ds=aia.lev1_euv_12s</a></li>
+<li>在 RecordSet 处输入起始时间和需要的波长，格式为</li>
+</ol>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">aia.lev1_euv_12s[start_time-endtime][wavelength1,wavelength2,…]{image}
+</span></span><span class="line"><span class="cl">eg. aia.lev1_euv_12s[2026-01-11T21:30:00Z-2026-01-12T00:00:00Z][211,335]{image}</span></span></code></pre></div>
+</div>
+<ol start="3">
+<li>点击 Record Count 计数文件数，以确认输入格式是否正确</li>
+<li>Method 选 url-tar 以便服务器等 wget 下载</li>
+<li>Notify 输入邮箱后，点击 check parameters 等待检查，然后点击 submit 提交</li>
+<li>RequestID 生成后，点击 Submit Status Request 等待请求发送至邮箱
+<img src="img01.png" alt=""></li>
+<li>邮箱收到链接后进入链接
+<img src="img02.png" alt="">
+复制 tarfile 的链接，终端进入存储文件夹，使用 wget 命令下载</li>
+</ol>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -c --tries<span class="o">=</span><span class="m">0</span> --timeout<span class="o">=</span><span class="m">30</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  targetfile_link</span></span></code></pre></div>
+</div>
+<ol start="8">
+<li>下载完成后，解压到文件夹即可</li>
+</ol>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">tar -xvf JSOC_file.tar</span></span></code></pre></div>
+</div>
+<h1 id="aia-quicklook-process">AIA quicklook process</h1>
+<p>AIA 数据下载完成后，一般先生成块视图片/视频方便对时间进行初步了解</p>
+<h2 id="png-mk">PNG mk</h2>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">glob</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.map</span> <span class="kn">import</span> <span class="n">Map</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 强制无显示后端（集群上很重要）</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib</span>
+</span></span><span class="line"><span class="cl"><span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&#34;Agg&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">colors</span> <span class="k">as</span> <span class="n">mcolors</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ProcessPoolExecutor</span><span class="p">,</span> <span class="n">as_completed</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">target_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">94</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="mi">335</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">date_str</span> <span class="o">=</span> <span class="s2">&#34;20260111&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">fits_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;/share/home/sunr/solar_data/data_sunr/aia_fits/</span><span class="si">{</span><span class="n">date_str</span><span class="si">}</span><span class="s2">&#34;</span> <span class="c1"># AIA fits 存储文件夹</span>
+</span></span><span class="line"><span class="cl"><span class="n">out_base</span> <span class="o">=</span> <span class="s2">&#34;/share/home/sunr/Documents/Corona/cme_three_sturctrue/aia_ql&#34;</span> <span class="c1"># 快视图片输出文件夹</span>
+</span></span><span class="line"><span class="cl"><span class="n">diff_lag</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># 差分时间，20 张对应 4 min</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">make_png_for_wavelength</span><span class="p">(</span><span class="n">wl</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">wl</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">wl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pattern</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fits_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&#34;aia.lev1_euv_12s.*.</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">.image_lev1.fits&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">aia_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">] files = </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">aia_files</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">aia_files</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">diff_lag</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">] Not enough files: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">aia_files</span><span class="p">)</span><span class="si">}</span><span class="s2"> &lt;= </span><span class="si">{</span><span class="n">diff_lag</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">save_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_base</span><span class="p">,</span> <span class="n">wl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">produced</span> <span class="o">=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">diff_lag</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">aia_files</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl">        <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="n">aia_files</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m0</span> <span class="o">=</span> <span class="n">Map</span><span class="p">(</span><span class="n">aia_files</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">diff_lag</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span><span class="o">.</span><span class="n">exposure_time</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data0</span> <span class="o">=</span> <span class="p">(</span><span class="n">m0</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">m0</span><span class="o">.</span><span class="n">exposure_time</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">diff</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">vmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data_clip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">diff_clip</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">diff_clip</span><span class="p">[</span><span class="n">diff_clip</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">m_norm</span> <span class="o">=</span> <span class="n">Map</span><span class="p">((</span><span class="n">data_clip</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">meta</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m_norm</span><span class="o">.</span><span class="n">plot_settings</span><span class="p">[</span><span class="s2">&#34;norm&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LogNorm</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m_diff</span> <span class="o">=</span> <span class="n">Map</span><span class="p">((</span><span class="n">diff_clip</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">meta</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">m_norm</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m_norm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">clip_interval</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">percent</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&#34;antialiased&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">m_diff</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">m_diff</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">clip_interval</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">99.9</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">percent</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&#34;antialiased&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;aia</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">_ql.png&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">out_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="n">produced</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1"># 每 20 张汇报一次进度（你可改更频繁）</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="n">produced</span> <span class="o">%</span> <span class="mi">20</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">] produced=</span><span class="si">{</span><span class="n">produced</span><span class="si">}</span><span class="s2">, i=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">aia_files</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s2">, elapsed=</span><span class="si">{</span><span class="n">dt</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">] ERROR at i=</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">aia_files</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">wl</span><span class="si">}</span><span class="s2">] Done. Total produced=</span><span class="si">{</span><span class="n">produced</span><span class="si">}</span><span class="s2">. Output=</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 进程数别太大，避免 I/O 打爆；一般 3~5 就很好</span>
+</span></span><span class="line"><span class="cl">    <span class="n">max_workers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_wavelengths</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span><span class="n">ex</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">make_png_for_wavelength</span><span class="p">,</span> <span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">target_wavelengths</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">fut</span> <span class="ow">in</span> <span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">fut</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;All wavelengths done.&#34;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main</span><span class="p">()</span></span></span></code></pre></div>
+</div>
+<h2 id="mp4-mk">MP4 mk</h2>
+<p>在生成 png 后可以生成视频，保存到本地方便查看</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">imageio.v2</span> <span class="k">as</span> <span class="nn">imageio</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">glob</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">threading</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">create_video_for_wavelength</span><span class="p">(</span><span class="n">target_wavelength</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;为单个波长创建MP4视频&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;开始处理波长: </span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 构建该波长的目录路径</span>
+</span></span><span class="line"><span class="cl">    <span class="n">png_dir</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/share/home/sunr/Documents/Corona/cme_three_sturctrue/aia_ql/</span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s1">&#39;</span> <span class="c1"># 上一步生成的 png 快视图片存储位置</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 检查目录是否存在</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">png_dir</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;警告: 目录不存在 </span><span class="si">{</span><span class="n">png_dir</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 获取并排序所有PNG文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">png_files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">png_dir</span><span class="p">,</span> <span class="s1">&#39;*.png&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="n">png_files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># 确保按时间顺序排列</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="ow">not</span> <span class="n">png_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;警告: 在 </span><span class="si">{</span><span class="n">png_dir</span><span class="si">}</span><span class="s2"> 中未找到PNG文件&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 生成MP4</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output_dir</span> <span class="o">=</span> <span class="s1">&#39;/share/home/sunr/Documents/Corona/cme_three_sturctrue/aia_ql/video&#39;</span> <span class="c1"># mp4 输出目录</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># 确保输出目录存在</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">output_mp4</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;aia_</span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s1">_ql.mp4&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">try</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1"># 使用ffmpeg格式创建MP4</span>
+</span></span><span class="line"><span class="cl">        <span class="k">with</span> <span class="n">imageio</span><span class="o">.</span><span class="n">get_writer</span><span class="p">(</span><span class="n">output_mp4</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;FFMPEG&#39;</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="n">png_file</span> <span class="ow">in</span> <span class="n">png_files</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">                <span class="n">image</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">png_file</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="n">writer</span><span class="o">.</span><span class="n">append_data</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1"># 计算帧数和文件大小</span>
+</span></span><span class="line"><span class="cl">        <span class="n">num_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">png_files</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">file_size_mb</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">output_mp4</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>  <span class="c1"># 转换为MB</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s2">A] 已保存至: </span><span class="si">{</span><span class="n">output_mp4</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;[</span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s2">A] 共 </span><span class="si">{</span><span class="n">num_frames</span><span class="si">}</span><span class="s2"> 帧, 总大小: </span><span class="si">{</span><span class="n">file_size_mb</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> MB&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;错误: 处理波长 </span><span class="si">{</span><span class="n">target_wavelength</span><span class="si">}</span><span class="s2"> 时发生异常: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 获取所有波长</span>
+</span></span><span class="line"><span class="cl"><span class="n">target_wavelengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">94</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">304</span><span class="p">,</span> <span class="mi">335</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;开始处理 </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">target_wavelengths</span><span class="p">)</span><span class="si">}</span><span class="s2"> 个波长: </span><span class="si">{</span><span class="n">target_wavelengths</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 使用多线程处理（限制线程数以避免资源耗尽）</span>
+</span></span><span class="line"><span class="cl"><span class="n">max_workers</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_wavelengths</span><span class="p">))</span>  <span class="c1"># 根据实际情况调整，避免同时开启过多进程</span>
+</span></span><span class="line"><span class="cl"><span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">max_workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 提交所有任务</span>
+</span></span><span class="line"><span class="cl">    <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">create_video_for_wavelength</span><span class="p">,</span> <span class="n">wl</span><span class="p">)</span> <span class="k">for</span> <span class="n">wl</span> <span class="ow">in</span> <span class="n">target_wavelengths</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 等待所有任务完成</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;所有视频生成完成！&#34;</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+]]></description></item><item><title>Sunpy Basic 学习记录</title><link>https://tristesun.github.io/2024/11/27/sunpy_basic/</link><guid isPermaLink="true">https://tristesun.github.io/2024/11/27/sunpy_basic/</guid><pubDate>Wed, 27 Nov 2024 21:00:00 +0000</pubDate><description><![CDATA[<p>这是一个Sunpy基础的学习文档，来自于官方文档
+<a href="https://docs.sunpy.org/en/stable/tutorial/index.html">https://docs.sunpy.org/en/stable/tutorial/index.html</a></p>
+<h1 id="units">Units</h1>
+<p>Sunpy中的单位知识
+<a href="https://docs.sunpy.org/en/stable/tutorial/units.html">https://docs.sunpy.org/en/stable/tutorial/units.html</a></p>
+<h2 id="adding-units-to-data">Adding units to data</h2>
+<p>为数据添加单位，通过数字*单位创建一个带单位的变量。</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+</span></span><span class="line"><span class="cl"><span class="n">length</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">meter</span>
+</span></span><span class="line"><span class="cl"><span class="n">length</span></span></span></code></pre></div>
+</div>
+<p>$10; \mathrm{m}$</p>
+<p>变量length具有float数值（value）和单位（unit）两部分</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">length.value</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">length.unit</span></span></code></pre></div>
+</div>
+<p>$\mathrm{m}$</p>
+<h2 id="arithmetic-with-units">Arithmetic With Units</h2>
+<p>带单位的计算</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">distance_start</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">mm</span>
+</span></span><span class="line"><span class="cl"><span class="n">distance_end</span> <span class="o">=</span> <span class="mi">23</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">km</span>
+</span></span><span class="line"><span class="cl"><span class="n">displacement</span> <span class="o">=</span> <span class="n">distance_end</span> <span class="o">-</span> <span class="n">distance_start</span>
+</span></span><span class="line"><span class="cl"><span class="n">displacement</span></span></span></code></pre></div>
+</div>
+<p>$22.99999; \mathrm{km}$</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">time</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">minute</span>
+</span></span><span class="line"><span class="cl"><span class="n">speed</span> <span class="o">=</span> <span class="n">displacement</span> <span class="o">/</span> <span class="n">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">speed</span></span></span></code></pre></div>
+</div>
+<p>$1.5333327; \mathrm{\frac{km}{min}}$</p>
+<p>可见 <code>astropy.unit</code> 能自动对单位进行换算与量纲的计。与此同时，不同单位间的错误计算会被报错。</p>
+<h2 id="converting-units">Converting Units</h2>
+<p>单位转换</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">length</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+<p>$0.01; \mathrm{km}$</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">length.cgs # cgs为厘米-克-秒下的单位</span></span></code></pre></div>
+</div>
+<p>$1000; \mathrm{cm}$</p>
+<h2 id="unit-equivalencies">Unit Equivalencies</h2>
+<p>如在公式$E=hc/\lambda$中，能量（keV）与波长（m）是等效的，但直接进行单位转化会报错。然而，我们可以使用光谱等效性来执行这种转换：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">length</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">keV</span><span class="p">,</span> <span class="n">equivalencies</span><span class="o">=</span><span class="n">u</span><span class="o">.</span><span class="n">spectral</span><span class="p">())</span></span></span></code></pre></div>
+</div>
+<p>$1.239842 \times 10^{-10}; \mathrm{keV}$</p>
+<p>在太阳物理学中常见的一种等效关系是将天空平面中的角距离（arcsec）转换为太阳上的实际距离。要进行这种转换，sunpy 提供了  <code>solar_angle_equivalency</code> ，这需要指定测量该角距离的位置：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.coordinates</span> <span class="kn">import</span> <span class="n">get_earth</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.coordinates.utils</span> <span class="kn">import</span> <span class="n">solar_angle_equivalency</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">length</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="n">equivalencies</span><span class="o">=</span><span class="n">solar_angle_equivalency</span><span class="p">(</span><span class="n">get_earth</span><span class="p">(</span><span class="s2">&#34;2013-10-28&#34;</span><span class="p">)))</span><span class="c1">#2013-10-28时太阳到地球的距离</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">INFO: Apparent body location accounts for 495.82 seconds of light travel time [sunpy.coordinates.ephemeris]</span></span></code></pre></div>
+</div>
+<p>$1.3876375 \times 10^{-5}\mathrm{arcsec}$</p>
+<h2 id="dropping-units">Dropping Units</h2>
+<p>不需要单位时，可以去掉单位</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">length</span><span class="o">.</span><span class="n">to_value</span><span class="p">()</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">length</span><span class="o">.</span><span class="n">to_value</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">km</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+<h2 id="quantities-as-function-arguments">Quantities as function arguments</h2>
+<p>当调用一个依赖于与物理量相对应的输入的函数时，通常隐含着一个假设，即这些输入参数是以该函数预期的单位表示的。例如，如果我们像上面那样定义一个计算速度的函数，输入应该对应于距离和时间：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">speed</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">length</span> <span class="o">/</span> <span class="n">time</span></span></span></code></pre></div>
+</div>
+<p>然而，这是假设传入的两个参数在没有进行检查的情况下具有与距离和时间一致的单位。 <code>quantity_input</code> 装饰器与函数注释结合使用，对函数输入强制执行兼容的单位：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@u.quantity_input</span> <span class="c1"># 用于检测输入参数的单位是否正确</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">speed</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">length</span> <span class="o">/</span> <span class="n">time</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">speed</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+<p>$1; \mathrm{\frac{m}{min}}$</p>
+<p>注意到，输出的单位取决于输入的单位。为了确保函数的输出具有一致的单位，可以添加了一个额外的函数注释，以便在返回答案之前始终将输出强制转换为米/秒。</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nd">@u.quantity_input</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">speed</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="o">/</span><span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">length</span> <span class="o">/</span> <span class="n">time</span>
+</span></span><span class="line"><span class="cl"><span class="n">speed</span><span class="p">(</span><span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">m</span><span class="p">,</span> <span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">minute</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+<p>$0.016666667; \mathrm{\frac{m}{s}}$</p>
+<h1 id="times">Times</h1>
+<p>Sunpy中有关时间的基本知识 <a href="https://docs.sunpy.org/en/stable/tutorial/time.html">https://docs.sunpy.org/en/stable/tutorial/time.html</a></p>
+<h2 id="parsing-times">Parsing Times</h2>
+<p>太阳数据与许多不同的时间格式相关联。为了处理所有这些格式，sunpy有 <code>sunpy.time.parse_time()</code> ，它接受各种输入，并返回一致的 Time 对象。注意， <code>datetime.datetime.datetime</code> 不提供对太阳物理学中使用的常见时间格式或闰秒的支持，因此在 sunpy 中始终使用  <code>astropy.time.Time</code> 。</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.time</span> <span class="kn">import</span> <span class="n">parse_time</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">parse_time</span><span class="p">(</span><span class="s1">&#39;2007-05-04T21:08:12&#39;</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2007-05-04T21:08:12.000&gt;</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">parse_time</span><span class="p">(</span><span class="mf">894316092.00000000</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;utime&#39;</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;Time object: scale=&#39;utc&#39; format=&#39;utime&#39; value=894316092.0&gt;</span></span></code></pre></div>
+</div>
+<h2 id="time-ranges">Time Ranges</h2>
+<p>数据分析中的另一项标准任务是处理时间对或时间范围。为了处理时间范围，sunpy 提供了 <code>sunpy.time.TimeRange</code> 对象。可以通过提供开始时间和结束时间来创建一个 <code>sunpy.time.TimeRange</code> 对象：</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">from sunpy.time import TimeRange
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">time_range = TimeRange(&#39;2010/03/04 00:10&#39;, &#39;2010/03/04 00:20&#39;)</span></span></code></pre></div>
+</div>
+<p><code>TimeRange</code> 使用了 <code>sunpy.time.parse_time()</code> ，所以它可以接受多种时间格式。或者，也可以指定一个开始时间和一个持续时间：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">time_range</span> <span class="o">=</span> <span class="n">TimeRange</span><span class="p">(</span><span class="s1">&#39;2010/03/04 00:10&#39;</span><span class="p">,</span> <span class="mi">400</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">second</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+<p><code>TimeRange</code> 提供了许多有用的函数。例如，可以轻松地获取间隔中心的时间或间隔的长度：</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">time_range.center # TimeRange的中间时刻</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2010-03-04T00:13:20.000&gt;</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">time_range.seconds # TimeRange的持续时间</span></span></code></pre></div>
+</div>
+<p>$400; \mathrm{s}$</p>
+<p><code>TimeRange</code> 也可以很容易地拆分为等长的子区间，例如将一个 <code>TimeRange</code> 对象拆分为两个新的 <code>TimeRange</code> 对象。</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">time_range</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[   &lt;sunpy.time.timerange.TimeRange object at 0x12443bdf0&gt;
+</span></span><span class="line"><span class="cl">     Start: 2010-03-04 00:10:00
+</span></span><span class="line"><span class="cl">     End:   2010-03-04 00:13:20
+</span></span><span class="line"><span class="cl">     Center:2010-03-04 00:11:40
+</span></span><span class="line"><span class="cl">     Duration:0.002314814814814825 days or
+</span></span><span class="line"><span class="cl">            0.0555555555555558 hours or
+</span></span><span class="line"><span class="cl">            3.333333333333348 minutes or
+</span></span><span class="line"><span class="cl">            200.00000000000088 seconds,
+</span></span><span class="line"><span class="cl">    &lt;sunpy.time.timerange.TimeRange object at 0x12443a8b0&gt;
+</span></span><span class="line"><span class="cl">     Start: 2010-03-04 00:13:20
+</span></span><span class="line"><span class="cl">     End:   2010-03-04 00:16:40
+</span></span><span class="line"><span class="cl">     Center:2010-03-04 00:15:00
+</span></span><span class="line"><span class="cl">     Duration:0.002314814814814825 days or
+</span></span><span class="line"><span class="cl">            0.0555555555555558 hours or
+</span></span><span class="line"><span class="cl">            3.333333333333348 minutes or
+</span></span><span class="line"><span class="cl">            200.00000000000088 seconds]</span></span></code></pre></div>
+</div>
+<h1 id="coordinates">Coordinates</h1>
+<p>Sunpy中的坐标相关知识，参照 <a href="https://docs.sunpy.org/en/stable/tutorial/coordinates.html">https://docs.sunpy.org/en/stable/tutorial/coordinates.html</a> 。</p>
+<p>本指南的这一部分介绍了在 sunpy 中坐标是如何表示的。sunpy 使用了 <code>astropy.coordinates</code> 模块来完成这个任务。</p>
+<p>就像 <code>units</code> 被用于表示物理量一样，sunpy 使用 <code>astropy.coordinates</code> 来表示物理空间中的点。这既适用于三维空间中的点，也适用于图像中的投影坐标。</p>
+<p>Astropy 的坐标模块主要通过 <code>SkyCoord</code> 类来使用，该类也使用了 Astropy 的单位体系。</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.coordinates</span> <span class="kn">import</span> <span class="n">frames</span> <span class="c1"># 导入sunpy中太阳使用的坐标系</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">coord</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="mi">70</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">obstime</span><span class="o">=</span><span class="s2">&#34;2017-08-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">frame</span><span class="o">=</span><span class="n">frames</span><span class="o">.</span><span class="n">HeliographicStonyhurst</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">coord</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (HeliographicStonyhurst: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km): (lon, lat) in deg
+</span></span><span class="line"><span class="cl">    (70., -30.)&gt;</span></span></code></pre></div>
+</div>
+<p>这个 <code>SkyCoord</code> 对象随后可以转换为在 Astropy 或 sunpy 中定义的任何其他坐标框架，例如将原始的斯通尼赫斯特框架（天球中的赤经/赤纬坐标系）转换为日心投影框架：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">coord</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">Helioprojective</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="s2">&#34;earth&#34;</span><span class="p">))</span> <span class="c1"># 转换为日面投影坐标arcsec</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (Helioprojective: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;earth&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, km)
+</span></span><span class="line"><span class="cl">    (769.96270814, -498.89715922, 1.51668773e+08)&gt;</span></span></code></pre></div>
+</div>
+<p>在实际使用中，使用数组坐标进行操作更加方便</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">coord</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">([</span><span class="o">-</span><span class="mi">500</span><span class="p">,</span> <span class="mi">400</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frames</span><span class="o">.</span><span class="n">Helioprojective</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">coord</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+</span></span><span class="line"><span class="cl">    [(-500., 100.), ( 400., 200.)]&gt;</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">coord[0]</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+</span></span><span class="line"><span class="cl">    (-500., 100.)&gt;</span></span></code></pre></div>
+</div>
+<h2 id="observer-location">Observer Location</h2>
+<p>“日心投影”（Helioprojective）和“日心”（Heliocentric）坐标系都是基于观测者的位置来定义的。因此，要将这两个坐标系中的任意一个转换为另一个坐标系，必须知道观测者的位置。可以使用 <code>SkyCoord</code> 的 <code>observer</code> 参数为坐标对象指定观测者。对于sunpy来说，要计算地球或其他太阳系天体的位置，必须知道与坐标相关的时间；这是通过 <code>obstime</code> 参数指定的。</p>
+<p>利用观测者位置，可以将一个观测者看到的坐标转换为另一个观测者看到的坐标：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">hpc</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="mi">0</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="mi">0</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="s2">&#34;earth&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">obstime</span><span class="o">=</span><span class="s2">&#34;2017-07-26&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">frame</span><span class="o">=</span><span class="n">frames</span><span class="o">.</span><span class="n">Helioprojective</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">hpc</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">Helioprojective</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="s2">&#34;venus&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                         <span class="n">obstime</span><span class="o">=</span><span class="s2">&#34;2017-07-26&#34;</span><span class="p">))</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (Helioprojective: obstime=2017-07-26T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;venus&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, AU)
+</span></span><span class="line"><span class="cl">    (-1285.47497992, 106.20918654, 0.72405937)&gt;</span></span></code></pre></div>
+</div>
+<h2 id="using-coordinates-with-maps">Using Coordinates with Maps</h2>
+<p>Sunpy 中的 Map 使用坐标来指定图像上的位置，并在地图的绘图上绘制覆盖图。当创建一个地图时，会根据头部信息构建一个坐标框架。可以使用 <code>.coordinate_frame</code> 来访问这个坐标框架：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">sunpy.map</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sunpy.data.sample</span> <span class="kn">import</span> <span class="n">AIA_171_IMAGE</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">amap</span> <span class="o">=</span> <span class="n">sunpy</span><span class="o">.</span><span class="n">map</span><span class="o">.</span><span class="n">Map</span><span class="p">(</span><span class="n">AIA_171_IMAGE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">amap</span><span class="o">.</span><span class="n">coordinate_frame</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;Helioprojective Frame (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+</span></span><span class="line"><span class="cl">    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;)&gt;</span></span></code></pre></div>
+</div>
+<p>这可以在创建一个 <code>SkyCoord</code> 对象时使用，以将坐标系设置为该图像的坐标系：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">coord</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">arcsec</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">amap</span><span class="o">.</span><span class="n">coordinate_frame</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">coord</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">&lt;SkyCoord (Helioprojective: obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+</span></span><span class="line"><span class="cl">    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;): (Tx, Ty) in arcsec
+</span></span><span class="line"><span class="cl">    (100., 10.)&gt;</span></span></code></pre></div>
+</div>
+<p><code>SkyCoord</code> 对象可以使用 <code>GenericMap.wcs.world_to_pixel</code> 转换为一对像素：</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">pixels = amap.wcs.world_to_pixel(coord)
+</span></span><span class="line"><span class="cl">pixels</span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">(array(551.7680511), array(515.18266871))</span></span></code></pre></div>
+</div>
+<p>这个 <code>SkyCoord</code> 对象也可以用于在地图上绘制一个点：</p>
+
+
+
+<div class="code-card" data-lang="python">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">python</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="n">amap</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">amap</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">ax</span><span class="o">.</span><span class="n">plot_coord</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span></span></span></code></pre></div>
+</div>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">[&lt;matplotlib.lines.Line2D at 0x1254ade50&gt;]</span></span></code></pre></div>
+</div>
+<p><img src="sunpy_basic_57_1.png" alt="png"></p>
+]]></description></item><item><title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh</title><link>https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/</link><guid isPermaLink="true">https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/</guid><pubDate>Tue, 26 Nov 2024 15:00:00 +0000</pubDate><description><![CDATA[<blockquote>
+<p>以下绝大多数操作在mac和windows上也可以使用（windows下需要先配置Windows terminal, zsh, vim, git等环境）</p>
+</blockquote>
+<h1 id="安装zsh">安装zsh</h1>
+<h2 id="1安装ncurses依赖">1.安装ncurses依赖</h2>
+<p>首先配置.bashrc文件</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim ~/.bashrc</span></span></code></pre></div>
+</div>
+<p>添加如下环境变量</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&#34;-fPIC&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&#34;-fPIC&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">NCURSES_HOME</span><span class="o">=</span><span class="nv">$HOME</span>/ncurses  <span class="c1"># ncurses 目录</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$NCURSES_HOME</span>/bin:<span class="nv">$PATH</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$NCURSES_HOME</span>/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CPPFLAGS</span><span class="o">=</span><span class="s2">&#34;-I</span><span class="nv">$NCURSES_HOME</span><span class="s2">/include&#34;</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&#34;-L</span><span class="nv">$NCURSES_HOME</span><span class="s2">/lib&#34;</span></span></span></code></pre></div>
+</div>
+<p>刷新</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> ~/.bashrc</span></span></code></pre></div>
+</div>
+<p>之后下载安装ncurses</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~ <span class="o">&amp;&amp;</span> mkdir ncurses <span class="o">&amp;&amp;</span> <span class="nb">cd</span> ncurses  <span class="c1"># 新建一个ncurses的安装目录</span>
+</span></span><span class="line"><span class="cl">wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz  <span class="c1"># 下载ncurses-6.1</span>
+</span></span><span class="line"><span class="cl">tar -xzvf ncurses-6.1.tar.gz  <span class="c1"># 解压</span>
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> ncurses-6.1
+</span></span><span class="line"><span class="cl">./configure --prefix<span class="o">=</span><span class="s2">&#34;</span><span class="nv">$HOME</span><span class="s2">/ncurses&#34;</span> --with-shared --without-debug --enable-widec  <span class="c1"># 指定路径configure</span>
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install  <span class="c1"># 安装</span></span></span></code></pre></div>
+</div>
+<h2 id="2安装zsh">2.安装zsh</h2>
+<p>安装zsh</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~
+</span></span><span class="line"><span class="cl">mkdir -p Applications/zsh-5.7.1 <span class="o">&amp;&amp;</span> <span class="nb">cd</span> Applications/zsh-5.7.1
+</span></span><span class="line"><span class="cl">wget -O zsh.tar.xz https://ftp.osuosl.org/pub/blfs/conglomeration/zsh/zsh-5.7.1.tar.xz
+</span></span><span class="line"><span class="cl">xz -d zsh.tar.xz <span class="o">&amp;&amp;</span> tar -xvf zsh.tar
+</span></span><span class="line"><span class="cl"><span class="nb">cd</span> zsh-5.7.1
+</span></span><span class="line"><span class="cl"><span class="c1"># 生成Makefile</span>
+</span></span><span class="line"><span class="cl">./configure --prefix<span class="o">=</span><span class="nv">$HOME</span>/Applications/zsh-5.7.1
+</span></span><span class="line"><span class="cl"><span class="c1"># 编译安装</span>
+</span></span><span class="line"><span class="cl">make <span class="o">&amp;&amp;</span> make install</span></span></code></pre></div>
+</div>
+<p>设置  <strong>bash_profile</strong>  文件将zsh设置为默认终端</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim ~/.bash_profile</span></span></code></pre></div>
+</div>
+<p>添加如下内容</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">exec</span> <span class="nv">$HOME</span>/Applications/zsh-5.7.1/bin/zsh -l</span></span></code></pre></div>
+</div>
+<p>刷新</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> ~/.bash_profile</span></span></code></pre></div>
+</div>
+<p>之后可以将  <strong>bashrc</strong>  文件中的   <em>conda</em>   环境设置复制到  <strong>zshrc</strong>  文件中，从而在zsh中使用conda环境。</p>
+<h1 id="安装oh-my-zsh">安装oh-my-zsh</h1>
+<h2 id="1安装oh-my-zsh">1.安装oh-my-zsh</h2>
+<p>按照官网教程</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 使用以下两种方法之一安装</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. wget</span>
+</span></span><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. curl</span>
+</span></span><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
+</div>
+<p>或使用国内镜像源</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#curl下载</span>
+</span></span><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#wget下载</span>
+</span></span><span class="line"><span class="cl">sh -c <span class="s2">&#34;</span><span class="k">$(</span>wget -O- https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
+</div>
+<h2 id="2安装powerlevel10k主题">2.安装powerlevel10k主题</h2>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone --depth<span class="o">=</span><span class="m">1</span> https://github.com/romkatv/powerlevel10k.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以使用 gitee.com 上的官方镜像加速下载</span>
+</span></span><span class="line"><span class="cl">git clone --depth<span class="o">=</span><span class="m">1</span> https://gitee.com/romkatv/powerlevel10k.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="nv">$HOME</span><span class="p">/.oh-my-zsh/custom</span><span class="si">}</span>/themes/powerlevel10k</span></span></code></pre></div>
+</div>
+<p>然后在.zshrc文件中设置主题</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim ~/.zshrc</span></span></code></pre></div>
+</div>
+<p>添加如下内容</p>
+
+
+
+<div class="code-card" data-lang="text">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">text</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ZSH_THEME=&#34;powerlevel10k/powerlevel10k&#34;</span></span></code></pre></div>
+</div>
+<p>按指引配置即可。如果需要重新配置</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">p10k configure</span></span></code></pre></div>
+</div>
+<h2 id="3安装相关插件">3.安装相关插件</h2>
+<h2 id="31zsh-autosuggestions">3.1.zsh-autosuggestions</h2>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/zsh-users/zsh-autosuggestions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-autosuggestions
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以使用下面任意一个加速下载</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速1</span>
+</span></span><span class="line"><span class="cl">git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-autosuggestions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-autosuggestions
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速2</span>
+</span></span><span class="line"><span class="cl">git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-autosuggestions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-autosuggestions
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速3</span>
+</span></span><span class="line"><span class="cl">git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-autosuggestions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-autosuggestions</span></span></code></pre></div>
+</div>
+<h2 id="32zsh-syntax-highlighting">3.2.zsh-syntax-highlighting</h2>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 可以使用下面任意一个加速下载</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速1</span>
+</span></span><span class="line"><span class="cl">git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速2</span>
+</span></span><span class="line"><span class="cl">git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class="line"><span class="cl"><span class="c1"># 加速3</span>
+</span></span><span class="line"><span class="cl">git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="p">~/.oh-my-zsh/custom</span><span class="si">}</span>/plugins/zsh-syntax-highlighting</span></span></code></pre></div>
+</div>
+<h2 id="33zsh-completions">3.3.zsh-completions</h2>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git clone https://github.com/zsh-users/zsh-completions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="si">${</span><span class="nv">ZSH</span><span class="k">:-</span><span class="p">~/.oh-my-zsh</span><span class="si">}</span><span class="p">/custom</span><span class="si">}</span>/plugins/zsh-completions
+</span></span><span class="line"><span class="cl"><span class="c1">#国内gitee源</span>
+</span></span><span class="line"><span class="cl">git clone https://gitee.com/yuhldr/zsh-completions <span class="si">${</span><span class="nv">ZSH_CUSTOM</span><span class="k">:-</span><span class="si">${</span><span class="nv">ZSH</span><span class="k">:-</span><span class="p">~/.oh-my-zsh</span><span class="si">}</span><span class="p">/custom</span><span class="si">}</span>/plugins/zsh-completions</span></span></code></pre></div>
+</div>
+<h2 id="34将插件添加到zshrc文件中">3.4.将插件添加到.zshrc文件中</h2>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim ~/.zshrc</span></span></code></pre></div>
+</div>
+<p>添加如下内容</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">plugins</span><span class="o">=(</span>
+</span></span><span class="line"><span class="cl">         git
+</span></span><span class="line"><span class="cl">         z
+</span></span><span class="line"><span class="cl">         zsh-autosuggestions
+</span></span><span class="line"><span class="cl">         zsh-syntax-highlighting
+</span></span><span class="line"><span class="cl">         zsh-completions
+</span></span><span class="line"><span class="cl"><span class="o">)</span></span></span></code></pre></div>
+</div>
+<p>刷新</p>
+
+
+
+<div class="code-card" data-lang="bash">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">bash</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">source</span> ~/.zshrc</span></span></code></pre></div>
+</div>
+]]></description></item></channel></rss>

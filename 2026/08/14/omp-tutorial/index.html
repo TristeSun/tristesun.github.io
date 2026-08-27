@@ -1,0 +1,712 @@
+<!doctype html><html lang=zh-CN data-theme=dark><head><script>(function(){var e=null;try{e=localStorage.getItem("sunrise-theme")}catch{}document.documentElement.setAttribute("data-theme",e||"dark")})()</script><link rel=stylesheet href=/css/main.min.fb26504800cefe72d300dd2a350caa88b69c6d12dd6a6a1cc8e81e6b6921ff55.css integrity="sha256-+yZQSADO/nLTAN0qNQyqiLacbRLdamocyOgea2kh/1U="><script defer src=/js/main.min.9d5448328f7b83f22cf28513b8af908dd64571f04d1c2664879cd491f8ac1015.js integrity="sha256-nVRIMo97g/Is8oUTuK+QjdZFcfBNHCZkh5zUkfisEBU="></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>omp（Oh My Pi）使用教程 · Triste's Blog</title><meta name=author content="Triste Sun"><meta name=description content="AI 编码代理 omp（Oh My Pi）的 CLI 用法与 Jupyter Notebook 工作流教程，基于官方文档整理。"><meta property="og:site_name" content="Triste's Blog"><meta property="og:title" content="omp（Oh My Pi）使用教程"><meta property="og:url" content="https://tristesun.github.io/2026/08/14/omp-tutorial/"><meta property="og:type" content="article"><meta property="og:description" content="AI 编码代理 omp（Oh My Pi）的 CLI 用法与 Jupyter Notebook 工作流教程，基于官方文档整理。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://tristesun.github.io/img/sun-prominence_hu_797a7f6cadc0e508.webp"><meta name=twitter:card content="summary_large_image"><link rel=canonical href=https://tristesun.github.io/2026/08/14/omp-tutorial/><link rel=icon type=image/jpeg href=/img/cube_hu_72502ee5a6f41d52.jpg><link rel=apple-touch-icon href=/img/cube_hu_8ed5f2c40c479a88.jpg></head><body><div class=progress aria-hidden=true><span id=progress-bar></span></div><header class=site-header><nav class="wrap nav"><a class=brand href=/ aria-label=返回首页><svg class="brand__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 20a13 13 0 0113 13H19a13 13 0 0113-13z" fill="currentColor"/><path d="M10 38h44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 8v5M17 13l3.6 3.6M47 13l-3.6 3.6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+<span class=brand__name>Triste's Blog</span></a><ul class=menu><li><a class=menu__link href=/archives/>归档</a></li><li><a class=menu__link href=/tags/>标签</a></li><li><a class=menu__link href=/search/>搜索</a></li><li><a class=menu__link href=/about/>关于</a></li></ul><button id=theme-toggle class=theme-toggle type=button aria-label=切换明暗主题>
+<svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2m0 14.6v2.2M2.5 12h2.2m14.6.0h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
+<svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5.0 019.5 4 7.5 7.5.0 1020 14.5z"/></svg></button></nav></header><main id=main class=site-main><div class="wrap wrap--article"><header class=post-header><div class=post-meta><time datetime=2026-08-14>2026 年 08 月 14 日</time>
+<span aria-hidden=true>·</span>
+<span>11442 字 · 约 33 分钟</span></div><h1 class=post-title>omp（Oh My Pi）使用教程</h1><div class=post-tags><a class=tag-chip href=/tags/ai-%E7%BC%96%E7%A8%8B/>#AI 编程</a><a class=tag-chip href=/tags/%E6%95%99%E7%A8%8B/>#教程</a></div></header><div class=post-layout><article class=prose><h1 id=ompoh-my-pi使用教程>omp（Oh My Pi）使用教程</h1><blockquote><p>本教程基于 <a href=http://omp.sh/docs>omp.sh/docs</a> 官方文档整理，重点覆盖 <strong>CLI 使用</strong> 与 <strong>CLI 中 Jupyter Notebook 的使用</strong>。omp 是一个可编程的 AI 编码代理（coding agent），由 can1357 开发，官方名称为 Oh My Pi，CLI 命令为 <code>omp</code>。</p></blockquote><hr><h2 id=-快速入门3-分钟上手>🚀 快速入门（3 分钟上手）</h2><p><strong>omp 是什么？</strong> 一句话：一个住在终端里的 AI 编程助手。你在项目目录里把它叫出来，用大白话跟它说你要干什么，它就帮你读代码、改代码、跑命令。
+<strong>第 1 步：安装（选一条）</strong></p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>curl -fsSL https://omp.sh/install <span class=p>|</span> bash   <span class=c1># 官方脚本（最简单）</span>
+</span></span><span class=line><span class=cl>bun install -g @oh-my-pi/pi-coding-agent   <span class=c1># 或 bun 全局装</span>
+</span></span><span class=line><span class=cl>mise use -g omp@latest                     <span class=c1># 或 mise 管理</span></span></span></code></pre></div></div><p>装完验证：<code>omp --version</code>。
+<strong>第 2 步：登录账号</strong></p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>omp          <span class=c1># 首次运行会自动进入引导向导</span>
+</span></span><span class=line><span class=cl>omp setup    <span class=c1># 想手动重跑引导也可以</span></span></span></code></pre></div></div><p>跟着提示登录一个提供商即可（有 Anthropic / ChatGPT / Copilot / Gemini 账号都能用）。
+<strong>第 3 步：用起来</strong></p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> 你的项目目录
+</span></span><span class=line><span class=cl>omp            <span class=c1># 打开交互式会话，直接打字聊天</span>
+</span></span><span class=line><span class=cl>omp -c         <span class=c1># 继续上次没聊完的会话</span>
+</span></span><span class=line><span class=cl>omp -p 给 README.md 写个简介   <span class=c1># 问一句就退出（适合脚本）</span>
+</span></span><span class=line><span class=cl>omp @bug.log 看看这个报错是怎么回事  <span class=c1># 带上文件一起问</span></span></span></code></pre></div></div><p><strong>第 4 步：记住 3 个救命命令</strong></p><ul><li><code>/plan 你的需求</code> —— 先让它做计划，确认后再动手（改代码前强烈建议）</li><li><code>/model</code> —— 切换模型（用哪个 AI 大脑）</li><li><code>omp --help</code> —— 忘了就查，全部参数都有
+<strong>遇到问题？</strong> 让它自己诊断：直接问它"报错了，帮我看看"，它自带调试能力。</li></ul><blockquote><p>想知道更多用法？往下翻目录，或点链接直接跳官方文档。</p></blockquote><hr><h2 id=-章节导航点击跳转>📚 章节导航（点击跳转）</h2><p>本页下方是按主题整理的详细教程；每条附官方文档链接，随时点开看最新版：</p><table header-row=true><tr><td>章节</td><td>官方文档</td></tr><tr><td>一、快速开始（安装 / 登录）</td><td>[Quickstart](https://omp.sh/docs/quickstart)</td></tr><tr><td>二、CLI 使用详解（重点）</td><td>[CLI reference](https://omp.sh/docs/cli)</td></tr><tr><td>三、CLI 中 Jupyter Notebook 的使用（重点）</td><td>[notebook-tool-runtime](https://github.com/can1357/oh-my-pi/blob/main/docs/notebook-tool-runtime.md)</td></tr><tr><td>四、常用斜杠命令</td><td>[Slash commands](https://omp.sh/docs/slash)</td></tr><tr><td>五、会话 / 记忆 / 计划模式</td><td>[Sessions](https://omp.sh/docs/sessions) / [Memory](https://omp.sh/docs/memory) / [Plan mode](https://omp.sh/docs/plan)</td></tr><tr><td>六、核心工具</td><td>[Tools index](https://omp.sh/docs/tools)</td></tr><tr><td>七、模型角色与提供商</td><td>[Roles](https://omp.sh/docs/roles) / [Providers](https://omp.sh/docs/providers)</td></tr><tr><td>八、配置与安全</td><td>[Settings](https://omp.sh/docs/settings) / [Env](https://omp.sh/docs/env) / [Secrets](https://omp.sh/docs/secrets)</td></tr><tr><td>九、子代理与并行</td><td>[Subagents](https://omp.sh/docs/subagents)</td></tr><tr><td>十、参考资料</td><td>[omp.sh/docs](https://omp.sh/docs)</td></tr></table>---
+## 一、快速开始
+### 1. 安装
+```bash
+# 方式一：通过 bun 全局安装
+bun install -g @oh-my-pi/pi-coding-agent<h1 id=方式二使用官方安装脚本>方式二：使用官方安装脚本</h1><p>curl -fsSL <a href=https://omp.sh/install>https://omp.sh/install</a> | bash</p><h1 id=方式三通过-mise-管理版本>方式三：通过 mise 管理版本</h1><p>mise use -g omp@latest</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><pre tabindex=0><code>验证安装：
+```bash
+omp --version
+omp --help    # 查看全部 flag / env var / 工具参考</code></pre></div><h3 id=2-认证登录>2. 认证（登录）</h3><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>omp               <span class=c1># 首次运行会进入引导向导</span>
+</span></span><span class=line><span class=cl>omp setup         <span class=c1># 手动运行引导向导</span>
+</span></span><span class=line><span class=cl>/login anthropic  <span class=c1># 在交互会话内登录提供商（支持 OAuth 的走浏览器流程）</span></span></span></code></pre></div></div><p>支持 OAuth 浏览器登录的提供商：Anthropic（Pro/Max）、OpenAI Codex、GitHub Copilot、Gemini CLI、Cursor。其余提供商用 <code>*_API_KEY</code> 环境变量或 <code>/login</code> 粘贴密钥。
+凭证统一存放在 <code>~/.omp/agent/agent.db</code>（SQLite）。</p><h3 id=3-终端建议>3. 终端建议</h3><ul><li>使用支持真实色彩的现代终端（Kitty、WezTerm、iTerm2 等），TUI 体验最佳。</li><li>建议在项目目录下启动 <code>omp</code>，它会自动识别项目上下文与配置文件。</li></ul><hr><h2 id=二cli-使用详解重点>二、CLI 使用详解（重点）</h2><h3 id=1-基本语法>1. 基本语法</h3><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>omp <span class=o>[</span>options<span class=o>]</span> <span class=o>[</span>@files...<span class=o>]</span> <span class=o>[</span>messages...<span class=o>]</span>
+</span></span><span class=line><span class=cl>omp &lt;command&gt; <span class=o>[</span>args<span class=o>]</span> <span class=o>[</span>flags<span class=o>]</span></span></span></code></pre></div></div><ul><li>裸运行 <code>omp</code>：在当前目录打开交互式会话。</li><li>加 <code>-p</code>：打印一个回答后退出（一次性调用）。</li><li>带子命令：直接调用该工具，不启动 agent。</li><li>任何带值的 flag 都支持 <code>--flag=value</code> 写法。</li><li>任何以 <code>@</code> 开头的参数都当作文件处理，即使夹在 flag 中间。</li></ul><h3 id=2-优先级规则>2. 优先级规则</h3><blockquote><p>CLI flag 大于环境变量，大于 <code>~/.omp/agent/config.yml</code>，大于内置默认值
+<code>--api-key</code> 只对本次运行生效、永不持久化，优先级高于一切。</p></blockquote><h3 id=3-五种输出模式>3. 五种输出模式</h3><table header-row=true><tr><td>模式</td><td>说明</td></tr><tr><td>`text`（默认）</td><td>纯文本流式输出到 stdout，配合 `-p` 用于脚本</td></tr><tr><td>`json`</td><td>换行分隔的 JSON 事件，适合管道给其他工具</td></tr><tr><td>`rpc`</td><td>基于 stdio 的 JSON-RPC，供 SDK 和编程客户端使用</td></tr><tr><td>`rpc-ui`</td><td>同 rpc，但把 TUI 内的工具调用界面暴露给客户端</td></tr><tr><td>`acp`</td><td>Agent Client Protocol（stdio），同 `omp acp`</td></tr></table>最常用的组合：`-p` 表示一次性文本输出；`--mode json` 用于 CI 集成。
+### 4. 模型选择
+```bash
+--model <id># 激活模型，支持模糊匹配，如 sonnet、gpt-5-codex
+--provider <name># 提供商提示（多为兼容旧配置）
+--smol <id># 覆盖 smol 角色（快速/便宜的小任务）
+--slow <id># 覆盖 slow 角色（深度推理、规划）
+--plan <id># 覆盖 plan 角色（plan mode 使用）
+--models p1,p2,... # 角色轮换模式列表，每项为 id[:effort]
+--thinking <level># 推理强度：minimal/low/medium/high/xhigh
+--list-models # 打印发现的模型（兼作认证探测）
+--api-key <key># 本次运行专用密钥，不持久化
+```
+### 5. 会话管理
+```bash
+--continue, -c # 打开当前目录最近一次的会话
+--resume, -r [id|path] # 按 id 前缀或 jsonl 路径恢复；不带值则弹出交互选择器
+--session <value># --resume 的别名
+--fork <message-id># 从指定消息分支（需与 -r 配合）
+--no-session # 本次运行不写入 ~/.omp/agent/sessions/
+--session-dir<dir># 自定义会话存储/查找目录
+--no-title # 跳过后台"生成标题"的模型调用
+```
+### 6. 工具与扩展控制
+```bash
+--tools a,b,... # 只允许这些内置工具（未知名称警告并丢弃）
+--no-tools # 禁用全部内置工具（插件工具仍加载）
+--no-lsp # 不启动语言服务器
+--no-pty # bash 工具不启用 PTY
+-e, --extension <path># 加载扩展文件（可重复）
+--hook <path># 加载 hook/扩展文件（可重复，同一加载器）
+--plugin-dir <path># 把目录当作插件根目录（可重复）
+--no-extensions # 禁用扩展发现（也丢弃本次的 -e）
+--no-skills # 禁用技能发现与加载
+--skills <p1,p2,...># 只保留匹配 glob 的技能
+--no-rules # 禁用 RULES.md 发现与注入
+--system-prompt <text|@file># 替换系统提示词
+--append-system-prompt <text|@file># 追加到默认系统提示词
+```
+### 7. 上下文文件（@files）
+```bash
+omp @prompt.md @screenshot.png "实现图上画的东西"
+```
+- 文本文件按 UTF-8 解码，内联为 `<file name=/abs/path>…</file>` 块；超过 5MB 的文件只保留路径桩。
+- 图片（PNG/JPEG/WebP/GIF…）作为多模态附件传入（默认自动缩放，单张上限 25MB）。
+- 缺失或不可读的文件会中止运行并返回非零退出码，绝不静默跳过。
+- 注意：`@files` 在 `--mode rpc` / `rpc-ui` 下不受支持，需走 RPC 协议传内容。
+- `-p` 会读取 STDIN 作为提示词：`cat README.md | omp -p "总结一下"`。
+### 8. 其他常用 flag
+```bash
+--cwd<dir># 指定启动目录
+--config <file># 加载额外的 config.yml 覆盖（可重复）
+--approval-mode <mode># always-ask / write / yolo
+--auto-approve, --yolo # 自动批准所有工具调用
+--hide-thinking # 隐藏思考块（仅影响显示）
+--export <file>[out] # 把录制的 jsonl 会话渲染为 HTML
+--allow-home # 允许从 $HOME 启动而不自动切到临时目录
+-h, --help # 帮助 + env var / 工具参考
+-v, --version # 版本号
+```
+### 9. 子命令一览<table header-row=true><tr><td>子命令</td><td>说明</td></tr><tr><td>`acp`</td><td>通过 stdio 说 Agent Client Protocol，供 Zed、Neovim 等编辑器嵌入</td></tr><tr><td>`agents`</td><td>管理 agent 定义；`omp agents unpack` 解出内置子代理</td></tr><tr><td>`auth-broker`</td><td>远程凭证保险库：serve / token / login / logout / list / import / migrate / status</td></tr><tr><td>`auth-gateway`</td><td>正向代理，向 OpenAI/Anthropic 请求注入 broker 凭证</td></tr><tr><td>`commit`</td><td>根据暂存 diff 生成提交信息并更新 [CHANGELOG.md](http://CHANGELOG.md)（--push / --dry-run / --no-changelog / --legacy / --context / --model）</td></tr><tr><td>`completions`</td><td>生成 bash / zsh / fish 的 shell 补全脚本</td></tr><tr><td>`config`</td><td>读写设置：list / get / set / reset / path / init-xdg</td></tr><tr><td>`grep`</td><td>独立运行原生 grep 包装（--glob / --limit / --context / --files / --count / --no-gitignore）</td></tr><tr><td>`grievances`</td><td>查看自动 QA 工具问题日志（list / clean / push）</td></tr><tr><td>`install`</td><td>安装或链接扩展包</td></tr><tr><td>`join`</td><td>从链接加入共享协作会话（同 /join）</td></tr><tr><td>`plugin`</td><td>插件与市场生命周期：install / uninstall / list / link / doctor / features / config / enable / disable / marketplace / discover / upgrade</td></tr><tr><td>`read`</td><td>从 shell 调用 read 工具读取任意路径或 \*:// URI</td></tr><tr><td>`search`（`q`）</td><td>通过配置的提供商栈做网络搜索；`omp q` 是短别名</td></tr><tr><td>`setup`</td><td>引导向导；`omp setup python` 配置 Python 内核，`omp setup stt` 配置语音转写</td></tr><tr><td>`shell`</td><td>进入基于 brush-core 的交互式 REPL（--cwd / --timeout / --no-snapshot）</td></tr><tr><td>`ssh`</td><td>管理 ssh 工具的主机定义（add / remove / list）</td></tr><tr><td>`stats`</td><td>查看所有会话的使用统计（成本、请求数、token）</td></tr><tr><td>`update`</td><td>自更新（--force / --check）</td></tr><tr><td>`usage`</td><td>显示每个已认证账号的提供商用量限制（--provider / --redact / --history / --days / --json）</td></tr><tr><td>`worktree`（`wt`）</td><td>列出/清理 \~/.omp/wt 下 agent 管理的 git worktree（list / clear）</td></tr></table>### 10. 实用配方（Recipes）
+```bash
+# 继续当前目录最近一次会话
+omp -c<h1 id=交互式挑选会话>交互式挑选会话</h1><p>omp -r</p><h1 id=按-id-前缀恢复并从某条消息分支>按 id 前缀恢复，并从某条消息分支</h1><p>omp -r 1f9d2a &ndash;fork msg_8c1e &ldquo;换一种思路试试&rdquo;</p><h1 id=一次性调用无-tui>一次性调用，无 TUI</h1><p>omp -p &ldquo;总结 CHANGELOG.md 自上个版本以来的变更&rdquo;</p><h1 id=只读审计无编辑无-shell无-lsp>只读审计：无编辑、无 shell、无 LSP</h1><p>omp &ndash;tools read,find,search &ndash;no-lsp -p &ldquo;在 src/ 里找死代码&rdquo;</p><h1 id=角色轮换slowplan-用-sonnetsmol-用-haiku>角色轮换：slow/plan 用 sonnet，smol 用 haiku</h1><p>omp &ndash;models &lsquo;sonnet:high,haiku:low&rsquo;</p><h1 id=一次性附带文件与图片>一次性附带文件与图片</h1><p>omp @prompt.md @screenshot.png &ldquo;实现图上画的东西&rdquo;</p><h1 id=把旧会话渲染成独立-html>把旧会话渲染成独立 HTML</h1><p>omp &ndash;export ~/.omp/agent/sessions/proj/2026-05-01.jsonl out.html</p><h1 id=管道输入stdin-的内容即提示词>管道输入：stdin 的内容即提示词</h1><p>git diff | omp &ldquo;review 这个 diff 并标出有风险的变化&rdquo;</p><h1 id=ci-用的-json-事件流>CI 用的 JSON 事件流</h1><p>omp &ndash;mode json &ndash;no-session -p &ldquo;$PROMPT&rdquo; > events.jsonl</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><pre tabindex=0><code>---
+## 三、CLI 中 Jupyter Notebook 的使用（重点）
+&gt; 核心结论：**omp 的 notebook 支持是文件转换/编辑，不是 notebook 执行**。`.ipynb` 文件通过 `read` 以&#34;单元格标记文本&#34;的形式暴露给模型编辑；真正的代码执行走 `eval` 工具（Python/JS 持久内核）。两者是分开的两条路径。
+### 1. 读取 .ipynb：单元格标记文本
+```bash
+# 在交互会话里让模型读一个 notebook
+read &#34;analysis.ipynb&#34;
+
+# 从 shell 直接读
+omp read analysis.ipynb</code></pre></div><p><code>read</code> 把 <code>.ipynb</code> 当作 notebook（除非加 <code>:raw</code> 选择器），默认视图是带标记的可编辑文本：</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl># %% [code] cell:0
+</span></span><span class=line><span class=cl>import pandas as pd
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># %% [markdown] cell:1
+</span></span><span class=line><span class=cl>这是分析说明
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl># %% [raw] cell:2
+</span></span><span class=line><span class=cl>...</span></span></code></pre></div></div><p>标记格式：<code># %% [code|markdown|raw] cell:N</code>。行选择器（如 <code>:50-200</code>）和多段范围选择器都作用在这个虚拟文本上。</p><h3 id=2-编辑-notebook走-edit-管线>2. 编辑 notebook：走 edit 管线</h3><ul><li>模型用 <code>edit</code> 工具修改上面的虚拟文本，<code>serializeEditedNotebookText</code> 会把虚拟文本<strong>往返写回 notebook JSON</strong>。</li><li>引用已存在但未被使用的 <code>cell:N</code> 时保留原单元格元数据；新单元格创建空元数据；<code>execution_count</code> 与 <code>outputs</code> 保留。</li><li>注意：<strong>独立的 <strong><code>write</code></strong> 工具不认 notebook</strong>——它会用给定字节直接覆盖文件。要用 <code>write</code> 必须给合法的 notebook JSON，而不是标记文本。</li></ul><h3 id=3-执行-pythoneval-工具持久内核>3. 执行 Python：eval 工具（持久内核）</h3><p>需要跑代码时，每个单元格一次 <code>eval</code> 调用，<code>language: "py"</code>：</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl># 模型内部工具调用（示意）
+</span></span><span class=line><span class=cl>eval(language=&#34;py&#34;, code=&#34;df = pd.read_csv(&#39;data.csv&#39;)&#34;)
+</span></span><span class=line><span class=cl>eval(language=&#34;py&#34;, code=&#34;df.describe()&#34;)</span></span></code></pre></div></div><p>关键特性：</p><ul><li><strong>session 模式（默认）</strong>：内核按 <code>(session id, cwd, interpreter)</code> 缓存，跨调用保持状态——前一个单元格的变量后一个还能用，这就是 notebook 的"持续内核"体验。</li><li><strong>per-call 模式</strong>：每次调用新建子进程，<code>finally</code> 里必定关闭。</li><li><strong>reset</strong>：<code>reset: true</code> 在本次执行前重置选中的 Python 会话（不影响其他语言运行时）。</li><li><strong>内核崩溃自愈</strong>：执行前检测到子进程已死会自动替换；执行中死掉会替换内核并<strong>重试一次</strong>；并发的 reset 会合并。</li><li><strong>流式输出</strong>：stdout/stderr 实时分块；<code>display</code>/<code>result</code> 渲染 MIME 包（优先级 text/markdown 大于 text/plain 大于 text/html）；JSON 输出树、PNG/JPEG 图像都能结构化捕获。</li><li><strong>超时/取消</strong>：发 SIGINT，超时后输出带超时标注，下次调用重建内核。</li><li><strong>输出截断</strong>：超出阈值时完整输出溢出到 artifact 文件，内存里保留 UTF-8 安全的尾部缓冲，返回截断提示与可选的 <code>artifact://&lt;id></code> 指针。</li></ul><h3 id=4-推荐的-notebook-工作流>4. 推荐的 notebook 工作流</h3><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>1. read 读取 .ipynb 的默认可编辑视图
+</span></span><span class=line><span class=cl>2. 用 edit 管线修改该虚拟文本
+</span></span><span class=line><span class=cl>3. 把某个目标 cell 的源码复制进 eval(language=&#34;py&#34;) 调用执行
+</span></span><span class=line><span class=cl>4. 逐个执行后续 cell；session 模式下 Python 状态跨调用保持
+</span></span><span class=line><span class=cl>5. 后续源码改动继续走 edit 管线（整文件 write 必须给 notebook JSON）</span></span></code></pre></div></div><blockquote><p>当前实现<strong>没有</strong>一个工具能同时修改 .ipynb 并以内核上下文执行 notebook cell——编辑走 edit 管线，执行走 eval 工具。</p></blockquote><h3 id=5-环境变量与内核配置>5. 环境变量与内核配置</h3><table header-row=true><tr><td>变量</td><td>作用</td></tr><tr><td>`PI_PY`</td><td>门控 eval 的 Python 后端：truthy（1/true/yes/on）启用，其他值禁用；未设置时跟随 `eval.py` 设置（默认启用）</td></tr><tr><td>`PI_JS`</td><td>eval 的 JavaScript 后端的配套门控（`eval.js` 设置）</td></tr><tr><td>`PI_PYTHON_SKIP_CHECK`</td><td>跳过 Python 可用性探测</td></tr><tr><td>`PI_PYTHON_IPC_TRACE`</td><td>设为 1 记录与 Python runner 交换的 NDJSON 帧</td></tr><tr><td>`VIRTUAL_ENV`</td><td>Python 运行时解析的最高优先级 venv 路径</td></tr></table>```bash
+# 单独配置 Python 内核
+omp setup python # 交互式引导
+omp setup python --check # 只探测不安装
+```
+Python runner 会剥离子进程环境里的常见 API key 变量，只转发 `LC_`、`XDG_`、`PI_` 前缀与一组安全基础变量。
+### 6. 与"真正的 Jupyter"的差别
+- omp 不会启动 Jupyter 服务、没有 notebook 专属工具去对接内核；`eval` 的 Python runner 是独立实现的 NDJSON 子进程协议。
+- notebook 编辑路径完全没有内核生命周期（无 kernel session id、无执行、无流式分块、无富显示捕获）。
+- 想同时要"改 notebook + 跑代码"，就按第 4 节的工作流手动组合 read/edit + eval。
+---
+## 四、常用斜杠命令
+在编辑器里输入 `/` 会弹出补全菜单。已安装的 skills 显示为 `/skill:<name>`，自定义命令模板以 `/<template>` 展开。
+### 1. Top 10 最常用
+- `/plan` — 切换计划模式；agent 先起草再执行（见 Plan mode）
+- `/model` — 打开模型选择器；挑选角色与提供商
+- `/compact` — 手动总结旧上下文；可传 focus
+- `/tree` — 会话树导航；跳转到任意历史消息
+- `/branch` — 从历史消息在同文件开新线程
+- `/extensions` — 扩展控制中心（skills / hooks / 自定义工具 / MCP / 插件）
+- `/agents` — Agent 控制中心；派生、观察、指挥子代理
+- `/login` — OAuth 登录提供商；`/logout` 撤销
+- `/share` — 渲染会话并上传（自定义 handler，否则 gist 兜底）
+- `/handoff` — 写结构化交接总结并结束回合
+### 2. 会话类
+- `/session [info/delete]` — 查看会话信息或删除当前会话
+- `/resume` — 打开会话选择器
+- `/new` — 开始新会话
+- `/drop` — 删除当前会话并开始新会话
+- `/rename<title>` — 重命名当前会话
+- `/move <path>` — 将会话移到不同工作目录
+- `/tree` — 会话树导航（切换分支）
+- `/branch` — 从历史消息分支（同文件、新叶子）
+- `/fork` — 从历史消息 fork 到新文件
+- `/compact [focus]` — 手动压缩会话上下文
+- `/handoff [focus]` — 写结构化交接并结束回合
+- `/btw <question>` — 用当前上下文问一个临时性问题
+- `/retry` — 重试最后一次失败的 agent 回合
+- `/export [path]` — 导出会话为 HTML
+- `/dump` — 复制会话记录到剪贴板
+- `/share` — 上传会话为私密 gist（或自定义 handler）
+- `/copy [last/code/all/cmd]` — 复制最后一条 agent 消息 / 代码块 / 最后一条 bash 或 python 命令
+- `/goal <subcommand>` — 持久自主目标（set / show / pause / resume / drop / budget）
+- `/todo <subcommand>` — 查看/编辑 todo 列表（edit / copy / export / import / append / start / done / drop / rm）
+### 3. 模型与计划
+- `/model`（`/models`）— 打开模型选择器
+- `/fast [on/off/status]` — 切换 OpenAI 服务层 fast 模式
+- `/loop [count/duration]` — 切换循环模式（每次产出后自动重提交下一条提示词）
+- `/force <tool> [prompt]` — 强制下一回合使用指定工具
+- `/browser [headless/visible]` — 切换浏览器 headless/visible 模式
+- `/plan [prompt]` — 切换计划模式；把下一条提示词路由给规划器
+### 4. 扩展与信息
+- `/mcp <subcommand>` — 管理 MCP 服务器（add / list / remove / test / reauth / unauth / enable / disable / smithery-search / smithery-login / smithery-logout / reconnect / reload / resources / prompts / notifications）
+- `/ssh <subcommand>` — 管理 SSH 主机（add / list / remove）
+- `/memory <subcommand>` — 检查/清空/重建记忆（view / clear/reset / enqueue/rebuild / mm list/show/refresh/history/seed/delete/reload）
+- `/marketplace <subcommand>` — 管理市场源与插件（add / remove / update / list / discover / install / uninstall / installed / upgrade）
+- `/plugins [list/enable/disable]` — 查看和管理已装插件（npm + marketplace）
+- `/reload-plugins` — 重载 skills、命令、hooks、工具、agents 与 MCP
+- `/usage` — 提供商用量与限流余量（回答"还能继续干吗？"）
+- `/context` — 当前回合的 token 预算分解（回答"下一回合装得下吗？"）
+- `/jobs` — 异步后台任务状态
+- `/tools` — 当前对 agent 可见的工具
+- `/extensions`（`/status`）— 打开扩展控制中心
+- `/agents` — 打开 Agent 控制中心
+- `/debug` — 打开调试工具选择器
+- `/changelog [full]` — 显示更新日志
+- `/hotkeys` — 显示实时键盘快捷键列表
+- `/settings` — 打开设置菜单
+---
+## 五、会话、记忆与计划模式
+### 1. 会话模型
+会话是磁盘上 `~/.omp/agent/sessions/` 下的一棵**只追加树**，按工作目录分组——两个项目永不共享历史。每个回合是一个带父指针的节点；分支会移动叶子节点并从此处追加，原时间线永远保留在文件里。
+- 会话 id 是时间有序的 UUIDv7，短前缀即可用 `-r` 识别。
+**恢复会话的四种方式：**
+```bash
+omp -c # 继续当前目录最近一次会话
+omp -r # 打开本项目的选择器
+omp -r 1f9d2a # 按 id 前缀恢复
+omp --resume ./session.jsonl # 恢复指定文件
+omp --no-session # 临时会话：不落盘
+```
+- `-c` 优先用每终端面包屑定位，split pane / tmux 互不干扰；缺失时回退到 cwd 最新会话。
+- `-r <prefix>` 先在当前项目找，再全局找；匹配在其他目录时会先询问再 fork 进来。
+- `--fork <id|path>` 把会话恢复进一个带 `parentSession` 血统标记的全新文件，原文件不动。
+- `--no-session` 临时运行：什么都不持久化，`/fork`、`/export`、`/share` 都被禁用。配 `-p` 做一次性管道完美。
+**`/tree`** 导航器**：原地移动叶子指针到当前文件的任意历史消息——不新建文件、不 fork。适合回合跑偏或想跳过冗长工具绕路时。
+**`/branch`** vs **`/fork`**：
+- `/branch` 留在同一文件，从历史消息开新线程（同 id 空间、新叶子）。
+- `/fork` 把整个会话克隆进全新文件（带 parentSession 标记），原文件不动。
+- 经验：想要一个文件成为探索的权威记录选 `/branch`；备选方案可能被抛弃、不想污染父会话的 `/tree` 视图选 `/fork`。
+**`/compact`**：把活动分支较老的一半总结成一条摘要条目，近期回合保持原样。可传 focus 引导总结方向，如 `/compact Focus on the API changes`。磁盘文件不受影响——`/tree` 仍能走回压缩前的历史。
+### 2. 记忆（Memory）
+记忆是**跨会话**的知识，和单会话内的压缩（compaction）是两回事。
+- **本地记忆**：注入本机过往会话的静态引导块。
+- **Hindsight**：可选的远程记忆库，agent 通过 retain / recall / reflect 读写。
+作用域（scoping）三档：
+- `per-project-tagged`（推荐）：全局事实与项目事实共存一个 bank，召回时合并。
+- `per-project`：项目之间互不可见（如 NDA 客户项目），但召回不再拉入跨项目偏好。
+- `global`：单开发者单心智项目。
+**Mental models**：长期维护的精选摘要（用户偏好、项目约定、架构决策），每个 bank 播种一次、整合后刷新；激活集以 `<mental_models>` 块拼进系统提示词。TUI 里用 `/memory mm` 管理。
+```yaml
+# config.yml 示例：自托管 Hindsight
+memory:
+backend: hindsight
+hindsight:
+apiUrl: http://hindsight.internal:8888
+apiToken: REPLACE_ME
+bankId: null # 首次使用时按项目分配
+scoping: per-project
+```
+### 3. 计划模式（Plan mode）
+`/plan` 把编辑器换成计划审查界面，并把下一条提示词路由给 **plan 角色**模型（旁路回合）。规划器被限制为只读：只能创建/编辑它的计划文件（`local://<slug>-plan.md`），批准前不会碰你的代码。
+```text
+/plan refactor src/importer.ts to stream rows instead of buffering
+```
+循环：陈述目标 → 迭代（规划器起草，你像正常回合一样回复纠正；只读工具仍可用，能 grep 仓库、读 PR）→ 批准（满意后规划器调用 `resolve` 且 `action: "apply"`，出现批准选择器）。
+计划模式用独立角色模型，可以把更强的推理器钉在这里而不用每回合付费。覆盖方式：`--plan <model-id>`（单次）、`PI_PLAN_MODEL`（shell）、`modelRoles.plan`（config.yml 持久）。
+---
+## 六、核心工具
+在会话里运行 `/tools` 查看实时工具面；CLI 用 `--tools read,search,edit` 限制。出厂内置工具：
+<table header-row="true">
+<tr>
+<td>工具</td>
+<td>说明</td>
+</tr>
+<tr>
+<td>`ast_edit`</td>
+<td>基于 ast-grep 模式的结构化 codemod；写入前先预览暂存</td>
+</tr>
+<tr>
+<td>`ast_grep`</td>
+<td>基于 ast-grep 模式的结构化代码搜索；`ast_edit` 的只读兄弟</td>
+</tr>
+<tr>
+<td>`bash`</td>
+<td>在持久会话里跑 shell，带 cwd/env/PTY 控制</td>
+</tr>
+<tr>
+<td>`browser`</td>
+<td>用 Puppeteer 驱动真实 Chromium 标签页；跨调用保留</td>
+</tr>
+<tr>
+<td>`debug`</td>
+<td>DAP 驱动的断点、单步、局部变量检查</td>
+</tr>
+<tr>
+<td>`edit`</td>
+<td>行锚定补丁，按每会话文件快照校验</td>
+</tr>
+<tr>
+<td>`eval`</td>
+<td>在持久内核里跑 Python 或 JS 单元（**notebook 执行路径**）</td>
+</tr>
+<tr>
+<td>`find`</td>
+<td>按 glob 快速查文件名，按修改时间排序</td>
+</tr>
+<tr>
+<td>`generate_image`</td>
+<td>结构化图像生成（subject / scene / lighting / style 字段）</td>
+</tr>
+<tr>
+<td>`github`</td>
+<td>基于 gh 的 op 包装：repo_view / pr_create / pr_checkout / search_\* / run_watch</td>
+</tr>
+<tr>
+<td>`inspect_image`</td>
+<td>把本地图像交给视觉模型拿文本回答</td>
+</tr>
+<tr>
+<td>`irc`</td>
+<td>同进程 peer agent 之间的短消息；给 parked agent 发消息会唤醒它</td>
+</tr>
+<tr>
+<td>`job`</td>
+<td>列出/等待/取消异步 bash 或 task 起的后台任务</td>
+</tr>
+<tr>
+<td>`lsp`</td>
+<td>重命名、引用、定义、悬停、诊断、代码操作</td>
+</tr>
+<tr>
+<td>`read`</td>
+<td>文件、目录、归档、SQLite、文档、图像、内部 URI、网页 URL</td>
+</tr>
+<tr>
+<td>`recipe`</td>
+<td>跑项目 task runner（bun / just / make / cargo）里的目标</td>
+</tr>
+<tr>
+<td>`report_tool_issue`</td>
+<td>上报异常工具行为供自动 QA 追踪</td>
+</tr>
+<tr>
+<td>`resolve`</td>
+<td>应用或丢弃挂起的预览动作（ast_edit、plan-mode 批准）</td>
+</tr>
+<tr>
+<td>`search`</td>
+<td>跨文件/目录/glob/内部 URL 的正则内容搜索</td>
+</tr>
+<tr>
+<td>`task`</td>
+<td>派发并行子代理；结果以 agent:// URL 返回</td>
+</tr>
+<tr>
+<td>`todo`</td>
+<td>分阶段任务跟踪，TUI 实时渲染</td>
+</tr>
+<tr>
+<td>`web_search`</td>
+<td>一次查询，派发给第一个可用搜索提供商</td>
+</tr>
+<tr>
+<td>`write`</td>
+<td>创建或覆盖文件、归档条目、SQLite 行</td>
+</tr>
+</table>
+---
+## 七、模型角色与提供商
+### 1. 模型角色（Roles）
+角色是 omp 在特定时刻会用到的命名槽位。把模型钉到每个角色上，agent 就不用每次都问。核心角色：
+<table header-row="true">
+<tr>
+<td>角色</td>
+<td>用途</td>
+<td>CLI 覆盖</td>
+<td>环境变量</td>
+</tr>
+<tr>
+<td>default</td>
+<td>常规回合的激活模型</td>
+<td>`--model`</td>
+<td>PI_MODEL 或 modelRoles.default</td>
+</tr>
+<tr>
+<td>smol</td>
+<td>快速/便宜的小任务</td>
+<td>`--smol`</td>
+<td>PI_SMOL_MODEL</td>
+</tr>
+<tr>
+<td>slow</td>
+<td>深度推理、规划</td>
+<td>`--slow`</td>
+<td>PI_SLOW_MODEL</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>plan mode 专用</td>
+<td>`--plan`</td>
+<td>PI_PLAN_MODEL</td>
+</tr>
+</table>
+角色轮换：`--models 'sonnet:high,haiku:low'` 让不同角色用不同模型/推理强度。
+### 2. 提供商认证（Providers）
+三种认证方式（后设置的会覆盖先前的）：
+<table header-row="true">
+<tr>
+<td>方式</td>
+<td>适用场景</td>
+<td>示例</td>
+</tr>
+<tr>
+<td>环境变量</td>
+<td>脚本、CI、首次冒烟测试，不落盘</td>
+<td>`ANTHROPIC_API_KEY=sk-ant-… omp`</td>
+</tr>
+<tr>
+<td>`/login`</td>
+<td>交互式；支持 OAuth 的走浏览器流程，否则提示输 key</td>
+<td>`/login anthropic`</td>
+</tr>
+<tr>
+<td>`config.yml` / `models.yml`</td>
+<td>声明式；钉住 key（或 env var 名）</td>
+<td>`apiKey: MYCO_API_KEY`</td>
+</tr>
+</table>
+`/login` 是追加式的（不替换已有凭证）；`/logout <provider>` 清空。凭证存 `~/.omp/agent/agent.db`。
+**支持 OAuth 浏览器登录的提供商**：
+<table header-row="true">
+<tr>
+<td>提供商</td>
+<td>`/login` id</td>
+<td>备注</td>
+</tr>
+<tr>
+<td>Anthropic（Pro/Max）</td>
+<td>anthropic</td>
+<td>[console.anthropic.com](http://console.anthropic.com) 浏览器流程；取消则回退到输 key</td>
+</tr>
+<tr>
+<td>OpenAI Codex</td>
+<td>openai-codex</td>
+<td>ChatGPT 账号流程；用量感知轮换，接近 5h/周限额时跳过</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td>github-copilot</td>
+<td>设备码流程；成功后可启用整个 Copilot 目录（Claude/GPT/Gemini/Grok）</td>
+</tr>
+<tr>
+<td>Gemini CLI</td>
+<td>google-gemini-cli</td>
+<td>Google 账号流程；与 gemini CLI 共用凭证</td>
+</tr>
+<tr>
+<td>[Z.AI](http://Z.AI)</td>
+<td>zai</td>
+<td>仅粘贴 key</td>
+</tr>
+<tr>
+<td>Cursor</td>
+<td>cursor</td>
+<td>[cursor.com](http://cursor.com) 浏览器流程</td>
+</tr>
+</table>
+**凭证解析顺序**（取第一个命中）：`--api-key` 运行时覆盖 > agent.db 里的 API key（多个 key 轮询）> agent.db 里的 OAuth 凭证（调用前刷新）> 提供商环境变量 > `models.yml` 的 `apiKey`。
+同时存在 API key 和 OAuth 凭证时 API key 优先；显式设 `ANTHROPIC_OAUTH_TOKEN` 可强制 OAuth 优先。
+### 3. 远程凭证保险库（auth broker）
+多机共享一套凭证，不用每台机器都 `/login`：
+```bash
+# broker 主机上
+omp auth-broker serve --bind=127.0.0.1:8765
+omp auth-broker login anthropic # OAuth 流程只在这里跑
+omp auth-broker token --json # 铸出给客户端用的 bearer token
+```
+配套 `auth-gateway` 正向代理：向 OpenAI Chat / Anthropic Messages / OpenAI Responses 请求注入 broker 凭证。
+---
+## 八、配置与安全
+### 1. Settings（config.yml）
+持久设置位于 `~/.omp/agent/config.yml`（可用 `PI_CODING_AGENT_DIR` 换目录、`PI_CONFIG_DIR` 改名）。纯 YAML 树，缺的键落到内置默认。三种改法：
+- `/settings`：会话内菜单驱动，保存即校验。
+- `omp config <action>`：脚本化修改。
+- 直接编辑文本：下次启动读取；YAML 损坏会警告并忽略整个文件。
+```bash
+omp config list # 完整配置树
+omp config get modelRoles.default # 读单个键
+omp config set theme.dark catppuccin-macchiato
+omp config reset theme.dark # 回到 schema 默认
+omp config path # 打印 agent 配置目录
+```
+**优先级**（高到低）：CLI flag > 环境变量 > `~/.omp/agent/config.yml` > 内置默认。
+### 2. 环境变量
+omp 通过分层的 `.env` 链解析环境变量，先定义先赢：进程环境 > `$PWD/.env` > `~/.omp/agent/.env` > `~/.omp/.env` > `~/.env`。`OMP_FOO` 会镜像成 `PI_FOO`。改完 `.env` 需重启 omp。
+常用运行时旋钮：
+<table header-row="true">
+<tr>
+<td>变量</td>
+<td>作用</td>
+</tr>
+<tr>
+<td>`PI_CODING_AGENT_DIR`</td>
+<td>把 agent 数据目录移出 `~/.omp/agent`</td>
+</tr>
+<tr>
+<td>`PI_CONFIG_DIR`</td>
+<td>重命名 `$HOME` 下的配置根目录（默认 `.omp`）</td>
+</tr>
+<tr>
+<td>`PI_SMOL_MODEL` / `PI_SLOW_MODEL` / `PI_PLAN_MODEL`</td>
+<td>钉住各角色模型（CLI flag 优先）</td>
+</tr>
+<tr>
+<td>`PI_NO_PTY`</td>
+<td>设为 1 关闭 bash 工具的 PTY</td>
+</tr>
+<tr>
+<td>`PI_PY` / `PI_JS`</td>
+<td>门控 eval 的 Python/JS 后端</td>
+</tr>
+</table>
+安全提示：任何以 `_API_KEY`、`_TOKEN`、`_OAUTH_TOKEN` 结尾的都是秘密。永不提交 `.env`；含凭证的 `.env` 要 `chmod 600`。
+### 3. 凭证存储与安全（Secrets）
+- 所有提供商凭证（OAuth refresh/access token、API key）都放在本地 SQLite：`~/.omp/agent/agent.db`。
+- 每行存 provider id、凭证类型（OAuth 或 API key）、密钥负载。OAuth 行带 refresh + access 两个 token；access 到期前 1 分钟自动进程内刷新。
+- 保护这个文件要像保护 `~/.ssh/id_*` 一样：文件系统权限是唯一防线。
+- 轮换凭证：`/logout` 再 `/login`（没有原地轮换）。
+- 想彻底把凭证移出机器，用 auth broker——笔记本上完全不持有 refresh token。
+OAuth 本地回调端口：Anthropic 54545、OpenAI Codex 1455、Gemini CLI 8085、Google Antigravity 51121、GitLab Duo 8080。端口被占时先关掉占用者再重跑 `/login`。
+---
+## 九、子代理与并行（Subagents & IRC）
+### 1. task 工具：并行派发
+`task` 一次派发一个或多个子代理并行工作。每个条目拿一条自包含的 `assignment`（批次共享 `context`），在自己的子会话里跑。并发由信号量限流；结果随产出实时送达。每个 agent 的完整输出以 `agent://<id>` 保留、转录以 `history://<id>` 保留，父会话随时可 `read`。
+- `isolated: true`：每个任务在独立工作区跑（APFS/Btrfs/overlayfs 等平台用 COW 克隆），并发编辑互不冲突，任务成功时补丁合并回来。
+### 2. 出厂内置的 8 个 agent
+<table header-row="true">
+<tr>
+<td>Agent</td>
+<td>最适合</td>
+<td>会派生</td>
+</tr>
+<tr>
+<td>explore</td>
+<td>快速只读调研；返回压缩结论</td>
+<td>—</td>
+</tr>
+<tr>
+<td>plan</td>
+<td>多文件架构决策</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>designer</td>
+<td>UI/UX 实现、无障碍、视觉评审</td>
+<td>—</td>
+</tr>
+<tr>
+<td>reviewer</td>
+<td>带结构化发现的质量与安全评审</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>librarian</td>
+<td>外部库/API 调研，源码可验证的回答</td>
+<td>—</td>
+</tr>
+<tr>
+<td>oracle</td>
+<td>资深工程师咨询：调试、架构、第二意见、动手实现</td>
+<td>explore</td>
+</tr>
+<tr>
+<td>task</td>
+<td>通用多步骤委派</td>
+<td>any</td>
+</tr>
+<tr>
+<td>quick_task</td>
+<td>纯机械更新或数据收集（跑便宜模型、少推理）</td>
+<td>—</td>
+</tr>
+</table>
+> 经验：机械活选 `quick_task`，开放式的活选 `task`。自定义 agent 丢到 `~/.omp/agent/agents/` 或 `.omp/agents/` 即可，`omp agents unpack` 可把内置 agent 解出来改。
+### 3. 并行机制
+同一次 `task` 调用的所有任务同时启动、独立运行。每个子代理都能在 IRC peer 块里看到其他任务，可以边干边聊。任务完成变 `idle`，TTL 过后变 `parked`——id 全程可寻址，给 `parked` 发消息会唤醒它跑一轮后续。
+### 4. IRC：agent 之间的短消息
+`irc` 工具在同进程的 agent 之间投递短消息。主 agent 叫 `Main`；子代理用自己的 task id（重名加 `-2` 后缀）。
+<table header-row="true">
+<tr>
+<td>op</td>
+<td>行为</td>
+</tr>
+<tr>
+<td>list</td>
+<td>枚举 peers（running / idle / parked）与未读数</td>
+</tr>
+<tr>
+<td>send</td>
+<td>投递消息给 `to`（peer id 或 all）；立即返回回执，不阻塞；`await: true` 阻塞到对方回复</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>阻塞等待一条入站消息</td>
+</tr>
+<tr>
+<td>inbox</td>
+<td>排空挂起的消息</td>
+</tr>
+</table>
+- 给忙的 peer 发 DM：在它的下一个步骤边界注入为旁注；对方太慢时会用侧信道生成简短自动回复。
+- 给 idle/parked 的 peer 发 DM：唤醒（或复活）它，把你的消息当后续回合跑。
+- 回复超时别重发，先查 `inbox`/`wait`——对方可能正在忙当前步骤。
+- 没有开关：只要还有可聊的对象，`irc` 就可用——每个子代理里、任何还能派生子代理的会话里都有。
+### 5. 工作示例：父派两个子代理，其中一个 DM 另一个
+```text
+# 父会话
+任务：审计 src/ 的 auth 覆盖
+- AuthMap：映射 src/auth/ 下所有 token 签发路径。RouteAudit ping 你时回答它。
+- RouteAudit：列出 src/routes/ 下的受保护路由。定稿前 DM AuthMap 要实时 issuer 列表。
+<h1 id="routeaudit-内部">RouteAudit 内部</h1>
+<p>irc op=send to=AuthMap await=true message=&ldquo;Which issuer does /api/v2 use?&rdquo;</p>
+<h1 id="--回复到达routeaudit-继续">-> 回复到达，RouteAudit 继续</h1>
+<h1 id="批次返回后父会话">批次返回后，父会话</h1>
+<p>read agent://AuthMap
+read agent://RouteAudit</p>
+<div class="code-card" data-lang="text">
+<div class="code-card__bar">
+<span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+<span class="code-card__lang">text</span>
+<button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="9" y="9" width="11" height="11" rx="2.2"/>
+<path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+</svg>
+<span class="copy-btn__txt">复制</span>
+</button>
+</div>
+<pre tabindex="0"><code>---
+## 十、参考资料
+- 官方文档：[omp.sh/docs](http://omp.sh/docs)
+- 开源仓库：[github.com/can1357/oh-my-pi](http://github.com/can1357/oh-my-pi)
+- 本地命令参考：`omp --help`（含全部 flag、环境变量、工具清单）
+- 本教程重点：**CLI 使用**（第二章）与 **CLI 中 Jupyter Notebook 的使用**（第三章），其余章节为支撑性速查。
+---
+*教程整理完毕。如有细节更新，建议对照官方文档复核后再用。*</code></pre>
+</div>
+<nav class="post-siblings">
+<a class="post-siblings__item post-siblings__item--prev" href="/2026/08/14/omo-tutorial/">
+<span class="post-siblings__dir">← 更早</span>OMO 使用教程
+</a>
+<a class="post-siblings__item post-siblings__item--next" href="/2026/08/25/solar-radio-calibration-review/">
+<span class="post-siblings__dir">更新 →</span>太阳射电观测的定标与传播效应 —— 文献综述
+</a>
+</nav>
+</article>
+<aside class="toc" aria-label="目录">
+<p class="toc__label">目录</p>
+<nav id="TableOfContents">
+<ul>
+<li><a href="#-快速入门3-分钟上手">🚀 快速入门（3 分钟上手）</a></li>
+<li><a href="#-章节导航点击跳转">📚 章节导航（点击跳转）</a></li>
+</ul>
+<ul>
+<li>
+<ul>
+<li><a href="#2-认证登录">2. 认证（登录）</a></li>
+<li><a href="#3-终端建议">3. 终端建议</a></li>
+</ul>
+</li>
+<li><a href="#二cli-使用详解重点">二、CLI 使用详解（重点）</a>
+<ul>
+<li><a href="#1-基本语法">1. 基本语法</a></li>
+<li><a href="#2-优先级规则">2. 优先级规则</a></li>
+<li><a href="#3-五种输出模式">3. 五种输出模式</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>
+<ul>
+<li><a href="#2-编辑-notebook走-edit-管线">2. 编辑 notebook：走 edit 管线</a></li>
+<li><a href="#3-执行-pythoneval-工具持久内核">3. 执行 Python：eval 工具（持久内核）</a></li>
+<li><a href="#4-推荐的-notebook-工作流">4. 推荐的 notebook 工作流</a></li>
+<li><a href="#5-环境变量与内核配置">5. 环境变量与内核配置</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</aside>
+</div>
+</div>
+</main><footer class="site-footer">
+<div class="wrap footer-inner">
+<p class="footer-line">© 2024–2026 Triste Sun · 记录、思考与经验</p>
+<p class="footer-line footer-links">
+<a href="https://github.com/TristeSun" target="_blank" rel="me noopener">GitHub</a>
+<span aria-hidden="true">·</span>
+<a href="/index.xml">RSS</a>
+<span aria-hidden="true">·</span>
+<span>Powered by Hugo，主题「日出」手写设计</span>
+</p>
+</div>
+</footer>
+</body>
+</html>

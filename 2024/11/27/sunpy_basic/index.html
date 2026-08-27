@@ -1,128 +1,273 @@
-<!doctype html><html lang=zh-CN data-theme=dark><head><script>(function(){var e=localStorage.getItem("sunrise-theme"),t=e||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.setAttribute("data-theme",t)})()</script><link rel=stylesheet href=/css/main.min.53d5e836940ecee45216d428522049da2c364a517d5e36fd0994bea4494f883e.css integrity="sha256-U9XoNpQOzuRSFtQoUiBJ2iw2SlF9Xjb9CZS+pElPiD4="><script defer src=/js/main.min.1c7bd2566e66271ff716e2674dc67f391bf4e5b67474d7d200def70d981207a0.js integrity="sha256-HHvSVm5mJx/3FuJnTcZ/ORv05bZ0dNfSAN73DZgSB6A="></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Sunpy Basic 学习记录 · Triste's Blog</title><meta name=author content="Triste Sun"><meta name=description content="SunPy 入门学习记录：环境安装与太阳数据处理的踩坑笔记。"><meta property="og:site_name" content="Triste's Blog"><meta property="og:title" content="Sunpy Basic 学习记录"><meta property="og:url" content="https://tristesun.github.io/2024/11/27/sunpy_basic/"><meta property="og:type" content="article"><meta property="og:description" content="SunPy 入门学习记录：环境安装与太阳数据处理的踩坑笔记。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://tristesun.github.io/img/sunfrag.jpg"><meta name=twitter:card content="summary_large_image"><link rel=canonical href=https://tristesun.github.io/2024/11/27/sunpy_basic/><link rel=icon type=image/svg+xml href='data:image/svg+xml;utf8,&amp;lt;svg%20xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34;%20viewBox=&amp;#34;0%200%2064%2064&amp;#34;&amp;gt;%0a%20%20&amp;lt;rect%20width=&amp;#34;64&amp;#34;%20height=&amp;#34;64&amp;#34;%20rx=&amp;#34;14&amp;#34;%20fill=&amp;#34;#10151f&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M32%2021a13%2013%200%200%201%2013%2013H19a13%2013%200%200%201%2013-13z&amp;#34;%20fill=&amp;#34;#f5a623&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M10%2039h44&amp;#34;%20stroke=&amp;#34;#f5a623&amp;#34;%20stroke-width=&amp;#34;3.6&amp;#34;%20stroke-linecap=&amp;#34;round&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M32%209v5M18%2014l3.4%203.4M46%2014l-3.4%203.4&amp;#34;%20stroke=&amp;#34;#ffc35c&amp;#34;%20stroke-width=&amp;#34;3.2&amp;#34;%20stroke-linecap=&amp;#34;round&amp;#34;/&amp;gt;%0a&amp;lt;/svg&amp;gt;%0a'><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1},{left:"$",right:"$",display:!1}],throwOnError:!1})})</script></head><body><div class=progress aria-hidden=true><span id=progress-bar></span></div><header class=site-header><nav class="wrap nav"><a class=brand href=/ aria-label=返回首页><svg class="brand__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 20a13 13 0 0113 13H19a13 13 0 0113-13z" fill="currentColor"/><path d="M10 38h44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 8v5M17 13l3.6 3.6M47 13l-3.6 3.6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
-<span class=brand__name>Triste's Blog</span></a><ul class=menu><li><a class=menu__link href=/archives/>归档</a></li><li><a class=menu__link href=/tags/>标签</a></li><li><a class=menu__link href=/about/>关于</a></li></ul><button id=theme-toggle class=theme-toggle type=button aria-label=切换明暗主题>
+<!doctype html><html lang=zh-CN data-theme=dark><head><script>(function(){var e=null;try{e=localStorage.getItem("sunrise-theme")}catch{}document.documentElement.setAttribute("data-theme",e||"dark")})()</script><link rel=stylesheet href=/css/main.min.fb26504800cefe72d300dd2a350caa88b69c6d12dd6a6a1cc8e81e6b6921ff55.css integrity="sha256-+yZQSADO/nLTAN0qNQyqiLacbRLdamocyOgea2kh/1U="><script defer src=/js/main.min.9d5448328f7b83f22cf28513b8af908dd64571f04d1c2664879cd491f8ac1015.js integrity="sha256-nVRIMo97g/Is8oUTuK+QjdZFcfBNHCZkh5zUkfisEBU="></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Sunpy Basic 学习记录 · Triste's Blog</title><meta name=author content="Triste Sun"><meta name=description content="SunPy 入门学习记录：环境安装与太阳数据处理的踩坑笔记。"><meta property="og:site_name" content="Triste's Blog"><meta property="og:title" content="Sunpy Basic 学习记录"><meta property="og:url" content="https://tristesun.github.io/2024/11/27/sunpy_basic/"><meta property="og:type" content="article"><meta property="og:description" content="SunPy 入门学习记录：环境安装与太阳数据处理的踩坑笔记。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://tristesun.github.io/2024/11/27/sunpy_basic/sunpy_basic_57_1_hu_4b528fd562a0bfb5.webp"><meta name=twitter:card content="summary_large_image"><link rel=canonical href=https://tristesun.github.io/2024/11/27/sunpy_basic/><link rel=icon type=image/jpeg href=/img/cube_hu_72502ee5a6f41d52.jpg><link rel=apple-touch-icon href=/img/cube_hu_8ed5f2c40c479a88.jpg><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"\\(",right:"\\)",display:!1},{left:"$",right:"$",display:!1}],throwOnError:!1})})</script></head><body><div class=progress aria-hidden=true><span id=progress-bar></span></div><header class=site-header><nav class="wrap nav"><a class=brand href=/ aria-label=返回首页><svg class="brand__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 20a13 13 0 0113 13H19a13 13 0 0113-13z" fill="currentColor"/><path d="M10 38h44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 8v5M17 13l3.6 3.6M47 13l-3.6 3.6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+<span class=brand__name>Triste's Blog</span></a><ul class=menu><li><a class=menu__link href=/archives/>归档</a></li><li><a class=menu__link href=/tags/>标签</a></li><li><a class=menu__link href=/search/>搜索</a></li><li><a class=menu__link href=/about/>关于</a></li></ul><button id=theme-toggle class=theme-toggle type=button aria-label=切换明暗主题>
 <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2m0 14.6v2.2M2.5 12h2.2m14.6.0h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
 <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5.0 019.5 4 7.5 7.5.0 1020 14.5z"/></svg></button></nav></header><main id=main class=site-main><div class="wrap wrap--article"><header class=post-header><div class=post-meta><time datetime=2024-11-27>2024 年 11 月 27 日</time>
 <span aria-hidden=true>·</span>
-<span>2062 字 · 约 6 分钟</span></div><h1 class=post-title>Sunpy Basic 学习记录</h1><div class=post-tags><a class=tag-chip href=/tags/sunpy/>#SunPy</a><a class=tag-chip href=/tags/python/>#Python</a></div></header><div class=post-layout><article class=prose><p>这是一个Sunpy基础的学习文档，来自于官方文档
+<span>2206 字 · 约 7 分钟</span></div><h1 class=post-title>Sunpy Basic 学习记录</h1><div class=post-tags><a class=tag-chip href=/tags/sunpy/>#SunPy</a><a class=tag-chip href=/tags/python/>#Python</a></div></header><div class=post-layout><article class=prose><p>这是一个Sunpy基础的学习文档，来自于官方文档
 <a href=https://docs.sunpy.org/en/stable/tutorial/index.html>https://docs.sunpy.org/en/stable/tutorial/index.html</a></p><h1 id=units>Units</h1><p>Sunpy中的单位知识
-<a href=https://docs.sunpy.org/en/stable/tutorial/units.html>https://docs.sunpy.org/en/stable/tutorial/units.html</a></p><h2 id=adding-units-to-data>Adding units to data</h2><p>为数据添加单位，通过数字*单位创建一个带单位的变量。</p><pre tabindex=0><code>import astropy.units as u
-length = 10 * u.meter
-length
-</code></pre><p>$10; \mathrm{m}$</p><p>变量length具有float数值（value）和单位（unit）两部分</p><pre tabindex=0><code>length.value
-</code></pre><pre tabindex=0><code>np.float64(10.0)
-</code></pre><pre tabindex=0><code>length.unit
-</code></pre><p>$\mathrm{m}$</p><h2 id=arithmetic-with-units>Arithmetic With Units</h2><p>带单位的计算</p><pre tabindex=0><code>distance_start = 10 * u.mm
-distance_end = 23 * u.km
-displacement = distance_end - distance_start
-displacement
-</code></pre><p>$22.99999; \mathrm{km}$</p><pre tabindex=0><code>time = 15 * u.minute
-speed = displacement / time
-speed
-</code></pre><p>$1.5333327; \mathrm{\frac{km}{min}}$</p><p>可见 <code>astropy.unit</code> 能自动对单位进行换算与量纲的计。与此同时，不同单位间的错误计算会被报错。</p><h2 id=converting-units>Converting Units</h2><p>单位转换</p><pre tabindex=0><code>length.to(u.km)
-</code></pre><p>$0.01; \mathrm{km}$</p><pre tabindex=0><code>length.cgs # cgs为厘米-克-秒下的单位
-</code></pre><p>$1000; \mathrm{cm}$</p><h2 id=unit-equivalencies>Unit Equivalencies</h2><p>如在公式$E=hc/\lambda$中，能量（keV）与波长（m）是等效的，但直接进行单位转化会报错。然而，我们可以使用光谱等效性来执行这种转换：</p><pre tabindex=0><code>length.to(u.keV, equivalencies=u.spectral())
-</code></pre><p>$1.239842 \times 10^{-10}; \mathrm{keV}$</p><p>在太阳物理学中常见的一种等效关系是将天空平面中的角距离（arcsec）转换为太阳上的实际距离。要进行这种转换，sunpy 提供了 <code>solar_angle_equivalency</code> ，这需要指定测量该角距离的位置：</p><pre tabindex=0><code>from sunpy.coordinates import get_earth
-from sunpy.coordinates.utils import solar_angle_equivalency
-
-length.to(u.arcsec, equivalencies=solar_angle_equivalency(get_earth(&#34;2013-10-28&#34;)))#2013-10-28时太阳到地球的距离
-</code></pre><pre tabindex=0><code>INFO: Apparent body location accounts for 495.82 seconds of light travel time [sunpy.coordinates.ephemeris]
-</code></pre><p>$1.3876375 \times 10^{-5}\mathrm{arcsec}$</p><h2 id=dropping-units>Dropping Units</h2><p>不需要单位时，可以去掉单位</p><pre tabindex=0><code>length.to_value()
-</code></pre><pre tabindex=0><code>np.float64(10.0)
-</code></pre><pre tabindex=0><code>length.to_value(u.km)
-</code></pre><pre tabindex=0><code>np.float64(0.01)
-</code></pre><h2 id=quantities-as-function-arguments>Quantities as function arguments</h2><p>当调用一个依赖于与物理量相对应的输入的函数时，通常隐含着一个假设，即这些输入参数是以该函数预期的单位表示的。例如，如果我们像上面那样定义一个计算速度的函数，输入应该对应于距离和时间：</p><pre tabindex=0><code>def speed(length, time):
-    return length / time
-</code></pre><p>然而，这是假设传入的两个参数在没有进行检查的情况下具有与距离和时间一致的单位。 <code>quantity_input</code> 装饰器与函数注释结合使用，对函数输入强制执行兼容的单位：</p><pre tabindex=0><code>@u.quantity_input # 用于检测输入参数的单位是否正确
-def speed(length: u.m, time: u.s):
-    return length / time
-</code></pre><pre tabindex=0><code>speed(1*u.m, 1*u.minute)
-</code></pre><p>$1; \mathrm{\frac{m}{min}}$</p><p>注意到，输出的单位取决于输入的单位。为了确保函数的输出具有一致的单位，可以添加了一个额外的函数注释，以便在返回答案之前始终将输出强制转换为米/秒。</p><pre tabindex=0><code>@u.quantity_input
-def speed(length: u.m, time: u.s) -&gt; u.m/u.s:
-    return length / time
-speed(1*u.m, 1*u.minute)
-</code></pre><p>$0.016666667; \mathrm{\frac{m}{s}}$</p><h1 id=times>Times</h1><p>Sunpy中有关时间的基本知识 <a href=https://docs.sunpy.org/en/stable/tutorial/time.html>https://docs.sunpy.org/en/stable/tutorial/time.html</a></p><h2 id=parsing-times>Parsing Times</h2><p>太阳数据与许多不同的时间格式相关联。为了处理所有这些格式，sunpy有 <code>sunpy.time.parse_time()</code> ，它接受各种输入，并返回一致的 Time 对象。注意， <code>datetime.datetime.datetime</code> 不提供对太阳物理学中使用的常见时间格式或闰秒的支持，因此在 sunpy 中始终使用 <code>astropy.time.Time</code> 。</p><pre tabindex=0><code>from sunpy.time import parse_time
-
-parse_time(&#39;2007-05-04T21:08:12&#39;)
-</code></pre><pre tabindex=0><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2007-05-04T21:08:12.000&gt;
-</code></pre><pre tabindex=0><code>parse_time(894316092.00000000, format=&#39;utime&#39;)
-</code></pre><pre tabindex=0><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;utime&#39; value=894316092.0&gt;
-</code></pre><h2 id=time-ranges>Time Ranges</h2><p>数据分析中的另一项标准任务是处理时间对或时间范围。为了处理时间范围，sunpy 提供了 <code>sunpy.time.TimeRange</code> 对象。可以通过提供开始时间和结束时间来创建一个 <code>sunpy.time.TimeRange</code> 对象：</p><pre tabindex=0><code>from sunpy.time import TimeRange
-
-time_range = TimeRange(&#39;2010/03/04 00:10&#39;, &#39;2010/03/04 00:20&#39;)
-</code></pre><p><code>TimeRange</code> 使用了 <code>sunpy.time.parse_time()</code> ，所以它可以接受多种时间格式。或者，也可以指定一个开始时间和一个持续时间：</p><pre tabindex=0><code>time_range = TimeRange(&#39;2010/03/04 00:10&#39;, 400 * u.second)
-</code></pre><p><code>TimeRange</code> 提供了许多有用的函数。例如，可以轻松地获取间隔中心的时间或间隔的长度：</p><pre tabindex=0><code>time_range.center # TimeRange的中间时刻
-</code></pre><pre tabindex=0><code>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2010-03-04T00:13:20.000&gt;
-</code></pre><pre tabindex=0><code>time_range.seconds # TimeRange的持续时间
-</code></pre><p>$400; \mathrm{s}$</p><p><code>TimeRange</code> 也可以很容易地拆分为等长的子区间，例如将一个 <code>TimeRange</code> 对象拆分为两个新的 <code>TimeRange</code> 对象。</p><pre tabindex=0><code>time_range.split(2)
-</code></pre><pre tabindex=0><code>[   &lt;sunpy.time.timerange.TimeRange object at 0x12443bdf0&gt;
-     Start: 2010-03-04 00:10:00
-     End:   2010-03-04 00:13:20
-     Center:2010-03-04 00:11:40
-     Duration:0.002314814814814825 days or
-            0.0555555555555558 hours or
-            3.333333333333348 minutes or
-            200.00000000000088 seconds,
-    &lt;sunpy.time.timerange.TimeRange object at 0x12443a8b0&gt;
-     Start: 2010-03-04 00:13:20
-     End:   2010-03-04 00:16:40
-     Center:2010-03-04 00:15:00
-     Duration:0.002314814814814825 days or
-            0.0555555555555558 hours or
-            3.333333333333348 minutes or
-            200.00000000000088 seconds]
-</code></pre><h1 id=coordinates>Coordinates</h1><p>Sunpy中的坐标相关知识，参照 <a href=https://docs.sunpy.org/en/stable/tutorial/coordinates.html>https://docs.sunpy.org/en/stable/tutorial/coordinates.html</a> 。</p><p>本指南的这一部分介绍了在 sunpy 中坐标是如何表示的。sunpy 使用了 <code>astropy.coordinates</code> 模块来完成这个任务。</p><p>就像 <code>units</code> 被用于表示物理量一样，sunpy 使用 <code>astropy.coordinates</code> 来表示物理空间中的点。这既适用于三维空间中的点，也适用于图像中的投影坐标。</p><p>Astropy 的坐标模块主要通过 <code>SkyCoord</code> 类来使用，该类也使用了 Astropy 的单位体系。</p><pre tabindex=0><code>from astropy.coordinates import SkyCoord
-import astropy.units as u
-from sunpy.coordinates import frames # 导入sunpy中太阳使用的坐标系
-
-coord = SkyCoord(70*u.deg, -30*u.deg, obstime=&#34;2017-08-01&#34;,
-                 frame=frames.HeliographicStonyhurst)
-coord
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (HeliographicStonyhurst: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km): (lon, lat) in deg
-    (70., -30.)&gt;
-</code></pre><p>这个 <code>SkyCoord</code> 对象随后可以转换为在 Astropy 或 sunpy 中定义的任何其他坐标框架，例如将原始的斯通尼赫斯特框架（天球中的赤经/赤纬坐标系）转换为日心投影框架：</p><pre tabindex=0><code>coord.transform_to(frames.Helioprojective(observer=&#34;earth&#34;)) # 转换为日面投影坐标arcsec
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (Helioprojective: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;earth&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, km)
-    (769.96270814, -498.89715922, 1.51668773e+08)&gt;
-</code></pre><p>在实际使用中，使用数组坐标进行操作更加方便</p><pre tabindex=0><code>coord = SkyCoord([-500, 400]*u.arcsec, [100, 200]*u.arcsec, frame=frames.Helioprojective)
-coord
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
-    [(-500., 100.), ( 400., 200.)]&gt;
-</code></pre><pre tabindex=0><code>coord[0]
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
-    (-500., 100.)&gt;
-</code></pre><h2 id=observer-location>Observer Location</h2><p>“日心投影”（Helioprojective）和“日心”（Heliocentric）坐标系都是基于观测者的位置来定义的。因此，要将这两个坐标系中的任意一个转换为另一个坐标系，必须知道观测者的位置。可以使用 <code>SkyCoord</code> 的 <code>observer</code> 参数为坐标对象指定观测者。对于sunpy来说，要计算地球或其他太阳系天体的位置，必须知道与坐标相关的时间；这是通过 <code>obstime</code> 参数指定的。</p><p>利用观测者位置，可以将一个观测者看到的坐标转换为另一个观测者看到的坐标：</p><pre tabindex=0><code>hpc = SkyCoord(0*u.arcsec, 0*u.arcsec, observer=&#34;earth&#34;,
-                obstime=&#34;2017-07-26&#34;,
-                frame=frames.Helioprojective)
-
-hpc.transform_to(frames.Helioprojective(observer=&#34;venus&#34;,
-                                         obstime=&#34;2017-07-26&#34;))
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (Helioprojective: obstime=2017-07-26T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;venus&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, AU)
-    (-1285.47497992, 106.20918654, 0.72405937)&gt;
-</code></pre><h2 id=using-coordinates-with-maps>Using Coordinates with Maps</h2><p>Sunpy 中的 Map 使用坐标来指定图像上的位置，并在地图的绘图上绘制覆盖图。当创建一个地图时，会根据头部信息构建一个坐标框架。可以使用 <code>.coordinate_frame</code> 来访问这个坐标框架：</p><pre tabindex=0><code>from astropy.coordinates import SkyCoord
-import astropy.units as u
-
-import sunpy.map
-from sunpy.data.sample import AIA_171_IMAGE
-
-amap = sunpy.map.Map(AIA_171_IMAGE)
-amap.coordinate_frame
-</code></pre><pre tabindex=0><code>&lt;Helioprojective Frame (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
-    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;)&gt;
-</code></pre><p>这可以在创建一个 <code>SkyCoord</code> 对象时使用，以将坐标系设置为该图像的坐标系：</p><pre tabindex=0><code>coord = SkyCoord(100 * u.arcsec, 10*u.arcsec, frame=amap.coordinate_frame)
-coord
-</code></pre><pre tabindex=0><code>&lt;SkyCoord (Helioprojective: obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
-    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;): (Tx, Ty) in arcsec
-    (100., 10.)&gt;
-</code></pre><p><code>SkyCoord</code> 对象可以使用 <code>GenericMap.wcs.world_to_pixel</code> 转换为一对像素：</p><pre tabindex=0><code>pixels = amap.wcs.world_to_pixel(coord)
-pixels
-</code></pre><pre tabindex=0><code>(array(551.7680511), array(515.18266871))
-</code></pre><p>这个 <code>SkyCoord</code> 对象也可以用于在地图上绘制一个点：</p><pre tabindex=0><code>import matplotlib.pyplot as plt
-
-fig = plt.figure()
-ax = plt.subplot(projection=amap)
-amap.plot()
-ax.plot_coord(coord, &#39;o&#39;)
-</code></pre><pre tabindex=0><code>[&lt;matplotlib.lines.Line2D at 0x1254ade50&gt;]
-</code></pre><p><img src=sunpy_basic_57_1.png alt=png></p><nav class=post-siblings><a class="post-siblings__item post-siblings__item--prev" href=/2024/11/26/oh-my-zsh-setup/><span class=post-siblings__dir>← 更早</span>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh</a></nav></article><aside class=toc aria-label=目录><p class=toc__label>目录</p><nav id=TableOfContents><ul><li><a href=#adding-units-to-data>Adding units to data</a></li><li><a href=#arithmetic-with-units>Arithmetic With Units</a></li><li><a href=#converting-units>Converting Units</a></li><li><a href=#unit-equivalencies>Unit Equivalencies</a></li><li><a href=#dropping-units>Dropping Units</a></li><li><a href=#quantities-as-function-arguments>Quantities as function arguments</a></li></ul><ul><li><a href=#parsing-times>Parsing Times</a></li><li><a href=#time-ranges>Time Ranges</a></li></ul><ul><li><a href=#observer-location>Observer Location</a></li><li><a href=#using-coordinates-with-maps>Using Coordinates with Maps</a></li></ul></nav></aside></div></div></main><footer class=site-footer><div class="wrap footer-inner"><p class=footer-line>© 2024–2026 Triste Sun · 记录、思考与经验</p><p class="footer-line footer-links"><a href=https://github.com/TristeSun target=_blank rel="me noopener">GitHub</a>
+<a href=https://docs.sunpy.org/en/stable/tutorial/units.html>https://docs.sunpy.org/en/stable/tutorial/units.html</a></p><h2 id=adding-units-to-data>Adding units to data</h2><p>为数据添加单位，通过数字*单位创建一个带单位的变量。</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>astropy.units</span> <span class=k>as</span> <span class=nn>u</span>
+</span></span><span class=line><span class=cl><span class=n>length</span> <span class=o>=</span> <span class=mi>10</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>meter</span>
+</span></span><span class=line><span class=cl><span class=n>length</span></span></span></code></pre></div></div><p>$10; \mathrm{m}$</p><p>变量length具有float数值（value）和单位（unit）两部分</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>length.value</span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>np</span><span class=o>.</span><span class=n>float64</span><span class=p>(</span><span class=mf>10.0</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>length.unit</span></span></code></pre></div></div><p>$\mathrm{m}$</p><h2 id=arithmetic-with-units>Arithmetic With Units</h2><p>带单位的计算</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>distance_start</span> <span class=o>=</span> <span class=mi>10</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>mm</span>
+</span></span><span class=line><span class=cl><span class=n>distance_end</span> <span class=o>=</span> <span class=mi>23</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>km</span>
+</span></span><span class=line><span class=cl><span class=n>displacement</span> <span class=o>=</span> <span class=n>distance_end</span> <span class=o>-</span> <span class=n>distance_start</span>
+</span></span><span class=line><span class=cl><span class=n>displacement</span></span></span></code></pre></div></div><p>$22.99999; \mathrm{km}$</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>time</span> <span class=o>=</span> <span class=mi>15</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>minute</span>
+</span></span><span class=line><span class=cl><span class=n>speed</span> <span class=o>=</span> <span class=n>displacement</span> <span class=o>/</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl><span class=n>speed</span></span></span></code></pre></div></div><p>$1.5333327; \mathrm{\frac{km}{min}}$</p><p>可见 <code>astropy.unit</code> 能自动对单位进行换算与量纲的计。与此同时，不同单位间的错误计算会被报错。</p><h2 id=converting-units>Converting Units</h2><p>单位转换</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>length</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>u</span><span class=o>.</span><span class=n>km</span><span class=p>)</span></span></span></code></pre></div></div><p>$0.01; \mathrm{km}$</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>length.cgs # cgs为厘米-克-秒下的单位</span></span></code></pre></div></div><p>$1000; \mathrm{cm}$</p><h2 id=unit-equivalencies>Unit Equivalencies</h2><p>如在公式$E=hc/\lambda$中，能量（keV）与波长（m）是等效的，但直接进行单位转化会报错。然而，我们可以使用光谱等效性来执行这种转换：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>length</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>u</span><span class=o>.</span><span class=n>keV</span><span class=p>,</span> <span class=n>equivalencies</span><span class=o>=</span><span class=n>u</span><span class=o>.</span><span class=n>spectral</span><span class=p>())</span></span></span></code></pre></div></div><p>$1.239842 \times 10^{-10}; \mathrm{keV}$</p><p>在太阳物理学中常见的一种等效关系是将天空平面中的角距离（arcsec）转换为太阳上的实际距离。要进行这种转换，sunpy 提供了 <code>solar_angle_equivalency</code> ，这需要指定测量该角距离的位置：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sunpy.coordinates</span> <span class=kn>import</span> <span class=n>get_earth</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sunpy.coordinates.utils</span> <span class=kn>import</span> <span class=n>solar_angle_equivalency</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>length</span><span class=o>.</span><span class=n>to</span><span class=p>(</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=n>equivalencies</span><span class=o>=</span><span class=n>solar_angle_equivalency</span><span class=p>(</span><span class=n>get_earth</span><span class=p>(</span><span class=s2>&#34;2013-10-28&#34;</span><span class=p>)))</span><span class=c1>#2013-10-28时太阳到地球的距离</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>INFO: Apparent body location accounts for 495.82 seconds of light travel time [sunpy.coordinates.ephemeris]</span></span></code></pre></div></div><p>$1.3876375 \times 10^{-5}\mathrm{arcsec}$</p><h2 id=dropping-units>Dropping Units</h2><p>不需要单位时，可以去掉单位</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>length</span><span class=o>.</span><span class=n>to_value</span><span class=p>()</span></span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>np</span><span class=o>.</span><span class=n>float64</span><span class=p>(</span><span class=mf>10.0</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>length</span><span class=o>.</span><span class=n>to_value</span><span class=p>(</span><span class=n>u</span><span class=o>.</span><span class=n>km</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>np</span><span class=o>.</span><span class=n>float64</span><span class=p>(</span><span class=mf>0.01</span><span class=p>)</span></span></span></code></pre></div></div><h2 id=quantities-as-function-arguments>Quantities as function arguments</h2><p>当调用一个依赖于与物理量相对应的输入的函数时，通常隐含着一个假设，即这些输入参数是以该函数预期的单位表示的。例如，如果我们像上面那样定义一个计算速度的函数，输入应该对应于距离和时间：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=k>def</span> <span class=nf>speed</span><span class=p>(</span><span class=n>length</span><span class=p>,</span> <span class=n>time</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>length</span> <span class=o>/</span> <span class=n>time</span></span></span></code></pre></div></div><p>然而，这是假设传入的两个参数在没有进行检查的情况下具有与距离和时间一致的单位。 <code>quantity_input</code> 装饰器与函数注释结合使用，对函数输入强制执行兼容的单位：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@u.quantity_input</span> <span class=c1># 用于检测输入参数的单位是否正确</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>speed</span><span class=p>(</span><span class=n>length</span><span class=p>:</span> <span class=n>u</span><span class=o>.</span><span class=n>m</span><span class=p>,</span> <span class=n>time</span><span class=p>:</span> <span class=n>u</span><span class=o>.</span><span class=n>s</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>length</span> <span class=o>/</span> <span class=n>time</span></span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>speed</span><span class=p>(</span><span class=mi>1</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>m</span><span class=p>,</span> <span class=mi>1</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>minute</span><span class=p>)</span></span></span></code></pre></div></div><p>$1; \mathrm{\frac{m}{min}}$</p><p>注意到，输出的单位取决于输入的单位。为了确保函数的输出具有一致的单位，可以添加了一个额外的函数注释，以便在返回答案之前始终将输出强制转换为米/秒。</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=nd>@u.quantity_input</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>speed</span><span class=p>(</span><span class=n>length</span><span class=p>:</span> <span class=n>u</span><span class=o>.</span><span class=n>m</span><span class=p>,</span> <span class=n>time</span><span class=p>:</span> <span class=n>u</span><span class=o>.</span><span class=n>s</span><span class=p>)</span> <span class=o>-&gt;</span> <span class=n>u</span><span class=o>.</span><span class=n>m</span><span class=o>/</span><span class=n>u</span><span class=o>.</span><span class=n>s</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>length</span> <span class=o>/</span> <span class=n>time</span>
+</span></span><span class=line><span class=cl><span class=n>speed</span><span class=p>(</span><span class=mi>1</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>m</span><span class=p>,</span> <span class=mi>1</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>minute</span><span class=p>)</span></span></span></code></pre></div></div><p>$0.016666667; \mathrm{\frac{m}{s}}$</p><h1 id=times>Times</h1><p>Sunpy中有关时间的基本知识 <a href=https://docs.sunpy.org/en/stable/tutorial/time.html>https://docs.sunpy.org/en/stable/tutorial/time.html</a></p><h2 id=parsing-times>Parsing Times</h2><p>太阳数据与许多不同的时间格式相关联。为了处理所有这些格式，sunpy有 <code>sunpy.time.parse_time()</code> ，它接受各种输入，并返回一致的 Time 对象。注意， <code>datetime.datetime.datetime</code> 不提供对太阳物理学中使用的常见时间格式或闰秒的支持，因此在 sunpy 中始终使用 <code>astropy.time.Time</code> 。</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sunpy.time</span> <span class=kn>import</span> <span class=n>parse_time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>parse_time</span><span class=p>(</span><span class=s1>&#39;2007-05-04T21:08:12&#39;</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2007-05-04T21:08:12.000&gt;</span></span></code></pre></div></div><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>parse_time</span><span class=p>(</span><span class=mf>894316092.00000000</span><span class=p>,</span> <span class=nb>format</span><span class=o>=</span><span class=s1>&#39;utime&#39;</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;Time object: scale=&#39;utc&#39; format=&#39;utime&#39; value=894316092.0&gt;</span></span></code></pre></div></div><h2 id=time-ranges>Time Ranges</h2><p>数据分析中的另一项标准任务是处理时间对或时间范围。为了处理时间范围，sunpy 提供了 <code>sunpy.time.TimeRange</code> 对象。可以通过提供开始时间和结束时间来创建一个 <code>sunpy.time.TimeRange</code> 对象：</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>from sunpy.time import TimeRange
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>time_range = TimeRange(&#39;2010/03/04 00:10&#39;, &#39;2010/03/04 00:20&#39;)</span></span></code></pre></div></div><p><code>TimeRange</code> 使用了 <code>sunpy.time.parse_time()</code> ，所以它可以接受多种时间格式。或者，也可以指定一个开始时间和一个持续时间：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>time_range</span> <span class=o>=</span> <span class=n>TimeRange</span><span class=p>(</span><span class=s1>&#39;2010/03/04 00:10&#39;</span><span class=p>,</span> <span class=mi>400</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>second</span><span class=p>)</span></span></span></code></pre></div></div><p><code>TimeRange</code> 提供了许多有用的函数。例如，可以轻松地获取间隔中心的时间或间隔的长度：</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>time_range.center # TimeRange的中间时刻</span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;Time object: scale=&#39;utc&#39; format=&#39;isot&#39; value=2010-03-04T00:13:20.000&gt;</span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>time_range.seconds # TimeRange的持续时间</span></span></code></pre></div></div><p>$400; \mathrm{s}$</p><p><code>TimeRange</code> 也可以很容易地拆分为等长的子区间，例如将一个 <code>TimeRange</code> 对象拆分为两个新的 <code>TimeRange</code> 对象。</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>time_range</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>[   &lt;sunpy.time.timerange.TimeRange object at 0x12443bdf0&gt;
+</span></span><span class=line><span class=cl>     Start: 2010-03-04 00:10:00
+</span></span><span class=line><span class=cl>     End:   2010-03-04 00:13:20
+</span></span><span class=line><span class=cl>     Center:2010-03-04 00:11:40
+</span></span><span class=line><span class=cl>     Duration:0.002314814814814825 days or
+</span></span><span class=line><span class=cl>            0.0555555555555558 hours or
+</span></span><span class=line><span class=cl>            3.333333333333348 minutes or
+</span></span><span class=line><span class=cl>            200.00000000000088 seconds,
+</span></span><span class=line><span class=cl>    &lt;sunpy.time.timerange.TimeRange object at 0x12443a8b0&gt;
+</span></span><span class=line><span class=cl>     Start: 2010-03-04 00:13:20
+</span></span><span class=line><span class=cl>     End:   2010-03-04 00:16:40
+</span></span><span class=line><span class=cl>     Center:2010-03-04 00:15:00
+</span></span><span class=line><span class=cl>     Duration:0.002314814814814825 days or
+</span></span><span class=line><span class=cl>            0.0555555555555558 hours or
+</span></span><span class=line><span class=cl>            3.333333333333348 minutes or
+</span></span><span class=line><span class=cl>            200.00000000000088 seconds]</span></span></code></pre></div></div><h1 id=coordinates>Coordinates</h1><p>Sunpy中的坐标相关知识，参照 <a href=https://docs.sunpy.org/en/stable/tutorial/coordinates.html>https://docs.sunpy.org/en/stable/tutorial/coordinates.html</a> 。</p><p>本指南的这一部分介绍了在 sunpy 中坐标是如何表示的。sunpy 使用了 <code>astropy.coordinates</code> 模块来完成这个任务。</p><p>就像 <code>units</code> 被用于表示物理量一样，sunpy 使用 <code>astropy.coordinates</code> 来表示物理空间中的点。这既适用于三维空间中的点，也适用于图像中的投影坐标。</p><p>Astropy 的坐标模块主要通过 <code>SkyCoord</code> 类来使用，该类也使用了 Astropy 的单位体系。</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>astropy.coordinates</span> <span class=kn>import</span> <span class=n>SkyCoord</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>astropy.units</span> <span class=k>as</span> <span class=nn>u</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sunpy.coordinates</span> <span class=kn>import</span> <span class=n>frames</span> <span class=c1># 导入sunpy中太阳使用的坐标系</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>coord</span> <span class=o>=</span> <span class=n>SkyCoord</span><span class=p>(</span><span class=mi>70</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>deg</span><span class=p>,</span> <span class=o>-</span><span class=mi>30</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>deg</span><span class=p>,</span> <span class=n>obstime</span><span class=o>=</span><span class=s2>&#34;2017-08-01&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                 <span class=n>frame</span><span class=o>=</span><span class=n>frames</span><span class=o>.</span><span class=n>HeliographicStonyhurst</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>coord</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (HeliographicStonyhurst: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km): (lon, lat) in deg
+</span></span><span class=line><span class=cl>    (70., -30.)&gt;</span></span></code></pre></div></div><p>这个 <code>SkyCoord</code> 对象随后可以转换为在 Astropy 或 sunpy 中定义的任何其他坐标框架，例如将原始的斯通尼赫斯特框架（天球中的赤经/赤纬坐标系）转换为日心投影框架：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>coord</span><span class=o>.</span><span class=n>transform_to</span><span class=p>(</span><span class=n>frames</span><span class=o>.</span><span class=n>Helioprojective</span><span class=p>(</span><span class=n>observer</span><span class=o>=</span><span class=s2>&#34;earth&#34;</span><span class=p>))</span> <span class=c1># 转换为日面投影坐标arcsec</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (Helioprojective: obstime=2017-08-01T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;earth&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, km)
+</span></span><span class=line><span class=cl>    (769.96270814, -498.89715922, 1.51668773e+08)&gt;</span></span></code></pre></div></div><p>在实际使用中，使用数组坐标进行操作更加方便</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>coord</span> <span class=o>=</span> <span class=n>SkyCoord</span><span class=p>([</span><span class=o>-</span><span class=mi>500</span><span class=p>,</span> <span class=mi>400</span><span class=p>]</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=p>[</span><span class=mi>100</span><span class=p>,</span> <span class=mi>200</span><span class=p>]</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=n>frame</span><span class=o>=</span><span class=n>frames</span><span class=o>.</span><span class=n>Helioprojective</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>coord</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+</span></span><span class=line><span class=cl>    [(-500., 100.), ( 400., 200.)]&gt;</span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>coord[0]</span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (Helioprojective: obstime=None, rsun=695700.0 km, observer=None): (Tx, Ty) in arcsec
+</span></span><span class=line><span class=cl>    (-500., 100.)&gt;</span></span></code></pre></div></div><h2 id=observer-location>Observer Location</h2><p>“日心投影”（Helioprojective）和“日心”（Heliocentric）坐标系都是基于观测者的位置来定义的。因此，要将这两个坐标系中的任意一个转换为另一个坐标系，必须知道观测者的位置。可以使用 <code>SkyCoord</code> 的 <code>observer</code> 参数为坐标对象指定观测者。对于sunpy来说，要计算地球或其他太阳系天体的位置，必须知道与坐标相关的时间；这是通过 <code>obstime</code> 参数指定的。</p><p>利用观测者位置，可以将一个观测者看到的坐标转换为另一个观测者看到的坐标：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>hpc</span> <span class=o>=</span> <span class=n>SkyCoord</span><span class=p>(</span><span class=mi>0</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=mi>0</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=n>observer</span><span class=o>=</span><span class=s2>&#34;earth&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>obstime</span><span class=o>=</span><span class=s2>&#34;2017-07-26&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                <span class=n>frame</span><span class=o>=</span><span class=n>frames</span><span class=o>.</span><span class=n>Helioprojective</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>hpc</span><span class=o>.</span><span class=n>transform_to</span><span class=p>(</span><span class=n>frames</span><span class=o>.</span><span class=n>Helioprojective</span><span class=p>(</span><span class=n>observer</span><span class=o>=</span><span class=s2>&#34;venus&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>                                         <span class=n>obstime</span><span class=o>=</span><span class=s2>&#34;2017-07-26&#34;</span><span class=p>))</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (Helioprojective: obstime=2017-07-26T00:00:00.000, rsun=695700.0 km, observer=&lt;HeliographicStonyhurst Coordinate for &#39;venus&#39;&gt;): (Tx, Ty, distance) in (arcsec, arcsec, AU)
+</span></span><span class=line><span class=cl>    (-1285.47497992, 106.20918654, 0.72405937)&gt;</span></span></code></pre></div></div><h2 id=using-coordinates-with-maps>Using Coordinates with Maps</h2><p>Sunpy 中的 Map 使用坐标来指定图像上的位置，并在地图的绘图上绘制覆盖图。当创建一个地图时，会根据头部信息构建一个坐标框架。可以使用 <code>.coordinate_frame</code> 来访问这个坐标框架：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>from</span> <span class=nn>astropy.coordinates</span> <span class=kn>import</span> <span class=n>SkyCoord</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>astropy.units</span> <span class=k>as</span> <span class=nn>u</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>sunpy.map</span>
+</span></span><span class=line><span class=cl><span class=kn>from</span> <span class=nn>sunpy.data.sample</span> <span class=kn>import</span> <span class=n>AIA_171_IMAGE</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>amap</span> <span class=o>=</span> <span class=n>sunpy</span><span class=o>.</span><span class=n>map</span><span class=o>.</span><span class=n>Map</span><span class=p>(</span><span class=n>AIA_171_IMAGE</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>amap</span><span class=o>.</span><span class=n>coordinate_frame</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;Helioprojective Frame (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+</span></span><span class=line><span class=cl>    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;)&gt;</span></span></code></pre></div></div><p>这可以在创建一个 <code>SkyCoord</code> 对象时使用，以将坐标系设置为该图像的坐标系：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=n>coord</span> <span class=o>=</span> <span class=n>SkyCoord</span><span class=p>(</span><span class=mi>100</span> <span class=o>*</span> <span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=mi>10</span><span class=o>*</span><span class=n>u</span><span class=o>.</span><span class=n>arcsec</span><span class=p>,</span> <span class=n>frame</span><span class=o>=</span><span class=n>amap</span><span class=o>.</span><span class=n>coordinate_frame</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>coord</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>&lt;SkyCoord (Helioprojective: obstime=2011-06-07T06:33:02.880, rsun=696000.0 km, observer=&lt;HeliographicStonyhurst Coordinate (obstime=2011-06-07T06:33:02.880, rsun=696000.0 km): (lon, lat, radius) in (deg, deg, m)
+</span></span><span class=line><span class=cl>    (-0.00406429, 0.04787238, 1.51846026e+11)&gt;): (Tx, Ty) in arcsec
+</span></span><span class=line><span class=cl>    (100., 10.)&gt;</span></span></code></pre></div></div><p><code>SkyCoord</code> 对象可以使用 <code>GenericMap.wcs.world_to_pixel</code> 转换为一对像素：</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>pixels = amap.wcs.world_to_pixel(coord)
+</span></span><span class=line><span class=cl>pixels</span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>(array(551.7680511), array(515.18266871))</span></span></code></pre></div></div><p>这个 <code>SkyCoord</code> 对象也可以用于在地图上绘制一个点：</p><div class=code-card data-lang=python><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>python</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-python data-lang=python><span class=line><span class=cl><span class=kn>import</span> <span class=nn>matplotlib.pyplot</span> <span class=k>as</span> <span class=nn>plt</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>fig</span> <span class=o>=</span> <span class=n>plt</span><span class=o>.</span><span class=n>figure</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>ax</span> <span class=o>=</span> <span class=n>plt</span><span class=o>.</span><span class=n>subplot</span><span class=p>(</span><span class=n>projection</span><span class=o>=</span><span class=n>amap</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>amap</span><span class=o>.</span><span class=n>plot</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=n>ax</span><span class=o>.</span><span class=n>plot_coord</span><span class=p>(</span><span class=n>coord</span><span class=p>,</span> <span class=s1>&#39;o&#39;</span><span class=p>)</span></span></span></code></pre></div></div><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>[&lt;matplotlib.lines.Line2D at 0x1254ade50&gt;]</span></span></code></pre></div></div><p><img src=sunpy_basic_57_1.png alt=png></p><nav class=post-siblings><a class="post-siblings__item post-siblings__item--prev" href=/2024/11/26/oh-my-zsh-setup/><span class=post-siblings__dir>← 更早</span>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh
+</a><a class="post-siblings__item post-siblings__item--next" href=/2026/01/26/aia-data-processing/><span class=post-siblings__dir>更新 →</span>AIA Data Process: Note</a></nav></article><aside class=toc aria-label=目录><p class=toc__label>目录</p><nav id=TableOfContents><ul><li><a href=#adding-units-to-data>Adding units to data</a></li><li><a href=#arithmetic-with-units>Arithmetic With Units</a></li><li><a href=#converting-units>Converting Units</a></li><li><a href=#unit-equivalencies>Unit Equivalencies</a></li><li><a href=#dropping-units>Dropping Units</a></li><li><a href=#quantities-as-function-arguments>Quantities as function arguments</a></li></ul><ul><li><a href=#parsing-times>Parsing Times</a></li><li><a href=#time-ranges>Time Ranges</a></li></ul><ul><li><a href=#observer-location>Observer Location</a></li><li><a href=#using-coordinates-with-maps>Using Coordinates with Maps</a></li></ul></nav></aside></div></div></main><footer class=site-footer><div class="wrap footer-inner"><p class=footer-line>© 2024–2026 Triste Sun · 记录、思考与经验</p><p class="footer-line footer-links"><a href=https://github.com/TristeSun target=_blank rel="me noopener">GitHub</a>
 <span aria-hidden=true>·</span>
 <a href=/index.xml>RSS</a>
 <span aria-hidden=true>·</span>

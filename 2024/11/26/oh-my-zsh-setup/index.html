@@ -1,80 +1,140 @@
-<!doctype html><html lang=zh-CN data-theme=dark><head><script>(function(){var e=localStorage.getItem("sunrise-theme"),t=e||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.setAttribute("data-theme",t)})()</script><link rel=stylesheet href=/css/main.min.53d5e836940ecee45216d428522049da2c364a517d5e36fd0994bea4494f883e.css integrity="sha256-U9XoNpQOzuRSFtQoUiBJ2iw2SlF9Xjb9CZS+pElPiD4="><script defer src=/js/main.min.1c7bd2566e66271ff716e2674dc67f391bf4e5b67474d7d200def70d981207a0.js integrity="sha256-HHvSVm5mJx/3FuJnTcZ/ORv05bZ0dNfSAN73DZgSB6A="></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh · Triste's Blog</title><meta name=author content="Triste Sun"><meta name=description content="在没有 sudo 管理员权限的 Linux 服务器上，从源码安装 zsh 并配置 oh-my-zsh 的完整步骤。"><meta property="og:site_name" content="Triste's Blog"><meta property="og:title" content="Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh"><meta property="og:url" content="https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/"><meta property="og:type" content="article"><meta property="og:description" content="在没有 sudo 管理员权限的 Linux 服务器上，从源码安装 zsh 并配置 oh-my-zsh 的完整步骤。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://tristesun.github.io/img/sunfrag.jpg"><meta name=twitter:card content="summary_large_image"><link rel=canonical href=https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/><link rel=icon type=image/svg+xml href='data:image/svg+xml;utf8,&amp;lt;svg%20xmlns=&amp;#34;http://www.w3.org/2000/svg&amp;#34;%20viewBox=&amp;#34;0%200%2064%2064&amp;#34;&amp;gt;%0a%20%20&amp;lt;rect%20width=&amp;#34;64&amp;#34;%20height=&amp;#34;64&amp;#34;%20rx=&amp;#34;14&amp;#34;%20fill=&amp;#34;#10151f&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M32%2021a13%2013%200%200%201%2013%2013H19a13%2013%200%200%201%2013-13z&amp;#34;%20fill=&amp;#34;#f5a623&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M10%2039h44&amp;#34;%20stroke=&amp;#34;#f5a623&amp;#34;%20stroke-width=&amp;#34;3.6&amp;#34;%20stroke-linecap=&amp;#34;round&amp;#34;/&amp;gt;%0a%20%20&amp;lt;path%20d=&amp;#34;M32%209v5M18%2014l3.4%203.4M46%2014l-3.4%203.4&amp;#34;%20stroke=&amp;#34;#ffc35c&amp;#34;%20stroke-width=&amp;#34;3.2&amp;#34;%20stroke-linecap=&amp;#34;round&amp;#34;/&amp;gt;%0a&amp;lt;/svg&amp;gt;%0a'></head><body><div class=progress aria-hidden=true><span id=progress-bar></span></div><header class=site-header><nav class="wrap nav"><a class=brand href=/ aria-label=返回首页><svg class="brand__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 20a13 13 0 0113 13H19a13 13 0 0113-13z" fill="currentColor"/><path d="M10 38h44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 8v5M17 13l3.6 3.6M47 13l-3.6 3.6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
-<span class=brand__name>Triste's Blog</span></a><ul class=menu><li><a class=menu__link href=/archives/>归档</a></li><li><a class=menu__link href=/tags/>标签</a></li><li><a class=menu__link href=/about/>关于</a></li></ul><button id=theme-toggle class=theme-toggle type=button aria-label=切换明暗主题>
+<!doctype html><html lang=zh-CN data-theme=dark><head><script>(function(){var e=null;try{e=localStorage.getItem("sunrise-theme")}catch{}document.documentElement.setAttribute("data-theme",e||"dark")})()</script><link rel=stylesheet href=/css/main.min.fb26504800cefe72d300dd2a350caa88b69c6d12dd6a6a1cc8e81e6b6921ff55.css integrity="sha256-+yZQSADO/nLTAN0qNQyqiLacbRLdamocyOgea2kh/1U="><script defer src=/js/main.min.9d5448328f7b83f22cf28513b8af908dd64571f04d1c2664879cd491f8ac1015.js integrity="sha256-nVRIMo97g/Is8oUTuK+QjdZFcfBNHCZkh5zUkfisEBU="></script><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh · Triste's Blog</title><meta name=author content="Triste Sun"><meta name=description content="在没有 sudo 管理员权限的 Linux 服务器上，从源码安装 zsh 并配置 oh-my-zsh 的完整步骤。"><meta property="og:site_name" content="Triste's Blog"><meta property="og:title" content="Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh"><meta property="og:url" content="https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/"><meta property="og:type" content="article"><meta property="og:description" content="在没有 sudo 管理员权限的 Linux 服务器上，从源码安装 zsh 并配置 oh-my-zsh 的完整步骤。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://tristesun.github.io/img/sun-prominence_hu_797a7f6cadc0e508.webp"><meta name=twitter:card content="summary_large_image"><link rel=canonical href=https://tristesun.github.io/2024/11/26/oh-my-zsh-setup/><link rel=icon type=image/jpeg href=/img/cube_hu_72502ee5a6f41d52.jpg><link rel=apple-touch-icon href=/img/cube_hu_8ed5f2c40c479a88.jpg></head><body><div class=progress aria-hidden=true><span id=progress-bar></span></div><header class=site-header><nav class="wrap nav"><a class=brand href=/ aria-label=返回首页><svg class="brand__mark" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><path d="M32 20a13 13 0 0113 13H19a13 13 0 0113-13z" fill="currentColor"/><path d="M10 38h44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M32 8v5M17 13l3.6 3.6M47 13l-3.6 3.6" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/></svg>
+<span class=brand__name>Triste's Blog</span></a><ul class=menu><li><a class=menu__link href=/archives/>归档</a></li><li><a class=menu__link href=/tags/>标签</a></li><li><a class=menu__link href=/search/>搜索</a></li><li><a class=menu__link href=/about/>关于</a></li></ul><button id=theme-toggle class=theme-toggle type=button aria-label=切换明暗主题>
 <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2m0 14.6v2.2M2.5 12h2.2m14.6.0h2.2M5 5l1.6 1.6M17.4 17.4 19 19M19 5l-1.6 1.6M6.6 17.4 5 19"/></svg>
 <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5.0 019.5 4 7.5 7.5.0 1020 14.5z"/></svg></button></nav></header><main id=main class=site-main><div class="wrap wrap--article"><header class=post-header><div class=post-meta><time datetime=2024-11-26>2024 年 11 月 26 日</time>
 <span aria-hidden=true>·</span>
-<span>664 字 · 约 2 分钟</span></div><h1 class=post-title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh</h1><div class=post-tags><a class=tag-chip href=/tags/linux/>#Linux</a><a class=tag-chip href=/tags/zsh/>#Zsh</a></div></header><div class=post-layout><article class=prose><blockquote><p>以下绝大多数操作在mac和windows上也可以使用（windows下需要先配置Windows terminal, zsh, vim, git等环境）</p></blockquote><h1 id=安装zsh>安装zsh</h1><h2 id=1安装ncurses依赖>1.安装ncurses依赖</h2><p>首先配置.bashrc文件</p><pre tabindex=0><code>vim ~/.bashrc
-</code></pre><p>添加如下环境变量</p><pre tabindex=0><code>export CXXFLAGS=&#34;-fPIC&#34;
-export CFLAGS=&#34;-fPIC&#34;
-export NCURSES_HOME=$HOME/ncurses  # ncurses 目录
-export PATH=$NCURSES_HOME/bin:$PATH
-export LD_LIBRARY_PATH=$NCURSES_HOME/lib:$LD_LIBRARY_PATH
-export CPPFLAGS=&#34;-I$NCURSES_HOME/include&#34; LDFLAGS=&#34;-L$NCURSES_HOME/lib&#34;
-</code></pre><p>刷新</p><pre tabindex=0><code>source ~/.bashrc
-</code></pre><p>之后下载安装ncurses</p><pre tabindex=0><code>cd ~ &amp;&amp; mkdir ncurses &amp;&amp; cd ncurses  # 新建一个ncurses的安装目录
-wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz  # 下载ncurses-6.1
-tar -xzvf ncurses-6.1.tar.gz  # 解压
-cd ncurses-6.1
-./configure --prefix=&#34;$HOME/ncurses&#34; --with-shared --without-debug --enable-widec  # 指定路径configure
-make &amp;&amp; make install  # 安装
-</code></pre><h2 id=2安装zsh>2.安装zsh</h2><p>安装zsh</p><pre tabindex=0><code>cd ~
-mkdir -p Applications/zsh-5.7.1 &amp;&amp; cd Applications/zsh-5.7.1
-wget -O zsh.tar.xz https://ftp.osuosl.org/pub/blfs/conglomeration/zsh/zsh-5.7.1.tar.xz
-xz -d zsh.tar.xz &amp;&amp; tar -xvf zsh.tar
-cd zsh-5.7.1
-# 生成Makefile
-./configure --prefix=$HOME/Applications/zsh-5.7.1
-# 编译安装
-make &amp;&amp; make install
-</code></pre><p>设置 <strong>bash_profile</strong> 文件将zsh设置为默认终端</p><pre tabindex=0><code>vim ~/.bash_profile
-</code></pre><p>添加如下内容</p><pre tabindex=0><code>exec $HOME/Applications/zsh-5.7.1/bin/zsh -l
-</code></pre><p>刷新</p><pre tabindex=0><code>source ~/.bash_profile
-</code></pre><p>之后可以将 <strong>bashrc</strong> 文件中的 <em>conda</em> 环境设置复制到 <strong>zshrc</strong> 文件中，从而在zsh中使用conda环境。</p><h1 id=安装oh-my-zsh>安装oh-my-zsh</h1><h2 id=1安装oh-my-zsh>1.安装oh-my-zsh</h2><p>按照官网教程</p><pre tabindex=0><code># 使用以下两种方法之一安装
-# 1. wget
-sh -c &#34;$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;
-# 2. curl
-sh -c &#34;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;
-</code></pre><p>或使用国内镜像源</p><pre tabindex=0><code>#curl下载
-sh -c &#34;$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)&#34;
-#wget下载
-sh -c &#34;$(wget -O- https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)&#34;
-</code></pre><h2 id=2安装powerlevel10k主题>2.安装powerlevel10k主题</h2><pre tabindex=0><code>git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-# 可以使用 gitee.com 上的官方镜像加速下载
-git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-</code></pre><p>然后在.zshrc文件中设置主题</p><pre tabindex=0><code>vim ~/.zshrc
-</code></pre><p>添加如下内容</p><pre tabindex=0><code>ZSH_THEME=&#34;powerlevel10k/powerlevel10k&#34;
-</code></pre><p>按指引配置即可。如果需要重新配置</p><pre tabindex=0><code>p10k configure
-</code></pre><h2 id=3安装相关插件>3.安装相关插件</h2><h2 id=31zsh-autosuggestions>3.1.zsh-autosuggestions</h2><pre tabindex=0><code>git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-# 可以使用下面任意一个加速下载
-# 加速1
-git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# 加速2
-git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-# 加速3
-git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-</code></pre><h2 id=32zsh-syntax-highlighting>3.2.zsh-syntax-highlighting</h2><pre tabindex=0><code>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-
-# 可以使用下面任意一个加速下载
-# 加速1
-git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# 加速2
-git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-# 加速3
-git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-</code></pre><h2 id=33zsh-completions>3.3.zsh-completions</h2><pre tabindex=0><code>git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-#国内gitee源
-git clone https://gitee.com/yuhldr/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-</code></pre><h2 id=34将插件添加到zshrc文件中>3.4.将插件添加到.zshrc文件中</h2><pre tabindex=0><code>vim ~/.zshrc
-</code></pre><p>添加如下内容</p><pre tabindex=0><code>plugins=(
-         git
-         z
-         zsh-autosuggestions
-         zsh-syntax-highlighting
-         zsh-completions
-)
-</code></pre><p>刷新</p><pre tabindex=0><code>source ~/.zshrc
-</code></pre><nav class=post-siblings><span></span>
+<span>724 字 · 约 3 分钟</span></div><h1 class=post-title>Linux 服务器下（无 sudo 管理员权限）安装 oh-my-zsh</h1><div class=post-tags><a class=tag-chip href=/tags/linux/>#Linux</a><a class=tag-chip href=/tags/zsh/>#Zsh</a></div></header><div class=post-layout><article class=prose><blockquote><p>以下绝大多数操作在mac和windows上也可以使用（windows下需要先配置Windows terminal, zsh, vim, git等环境）</p></blockquote><h1 id=安装zsh>安装zsh</h1><h2 id=1安装ncurses依赖>1.安装ncurses依赖</h2><p>首先配置.bashrc文件</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>vim ~/.bashrc</span></span></code></pre></div></div><p>添加如下环境变量</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>export</span> <span class=nv>CXXFLAGS</span><span class=o>=</span><span class=s2>&#34;-fPIC&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>CFLAGS</span><span class=o>=</span><span class=s2>&#34;-fPIC&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>NCURSES_HOME</span><span class=o>=</span><span class=nv>$HOME</span>/ncurses  <span class=c1># ncurses 目录</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>PATH</span><span class=o>=</span><span class=nv>$NCURSES_HOME</span>/bin:<span class=nv>$PATH</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>LD_LIBRARY_PATH</span><span class=o>=</span><span class=nv>$NCURSES_HOME</span>/lib:<span class=nv>$LD_LIBRARY_PATH</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>CPPFLAGS</span><span class=o>=</span><span class=s2>&#34;-I</span><span class=nv>$NCURSES_HOME</span><span class=s2>/include&#34;</span> <span class=nv>LDFLAGS</span><span class=o>=</span><span class=s2>&#34;-L</span><span class=nv>$NCURSES_HOME</span><span class=s2>/lib&#34;</span></span></span></code></pre></div></div><p>刷新</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> ~/.bashrc</span></span></code></pre></div></div><p>之后下载安装ncurses</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> ~ <span class=o>&amp;&amp;</span> mkdir ncurses <span class=o>&amp;&amp;</span> <span class=nb>cd</span> ncurses  <span class=c1># 新建一个ncurses的安装目录</span>
+</span></span><span class=line><span class=cl>wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz  <span class=c1># 下载ncurses-6.1</span>
+</span></span><span class=line><span class=cl>tar -xzvf ncurses-6.1.tar.gz  <span class=c1># 解压</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> ncurses-6.1
+</span></span><span class=line><span class=cl>./configure --prefix<span class=o>=</span><span class=s2>&#34;</span><span class=nv>$HOME</span><span class=s2>/ncurses&#34;</span> --with-shared --without-debug --enable-widec  <span class=c1># 指定路径configure</span>
+</span></span><span class=line><span class=cl>make <span class=o>&amp;&amp;</span> make install  <span class=c1># 安装</span></span></span></code></pre></div></div><h2 id=2安装zsh>2.安装zsh</h2><p>安装zsh</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> ~
+</span></span><span class=line><span class=cl>mkdir -p Applications/zsh-5.7.1 <span class=o>&amp;&amp;</span> <span class=nb>cd</span> Applications/zsh-5.7.1
+</span></span><span class=line><span class=cl>wget -O zsh.tar.xz https://ftp.osuosl.org/pub/blfs/conglomeration/zsh/zsh-5.7.1.tar.xz
+</span></span><span class=line><span class=cl>xz -d zsh.tar.xz <span class=o>&amp;&amp;</span> tar -xvf zsh.tar
+</span></span><span class=line><span class=cl><span class=nb>cd</span> zsh-5.7.1
+</span></span><span class=line><span class=cl><span class=c1># 生成Makefile</span>
+</span></span><span class=line><span class=cl>./configure --prefix<span class=o>=</span><span class=nv>$HOME</span>/Applications/zsh-5.7.1
+</span></span><span class=line><span class=cl><span class=c1># 编译安装</span>
+</span></span><span class=line><span class=cl>make <span class=o>&amp;&amp;</span> make install</span></span></code></pre></div></div><p>设置 <strong>bash_profile</strong> 文件将zsh设置为默认终端</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>vim ~/.bash_profile</span></span></code></pre></div></div><p>添加如下内容</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>exec</span> <span class=nv>$HOME</span>/Applications/zsh-5.7.1/bin/zsh -l</span></span></code></pre></div></div><p>刷新</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> ~/.bash_profile</span></span></code></pre></div></div><p>之后可以将 <strong>bashrc</strong> 文件中的 <em>conda</em> 环境设置复制到 <strong>zshrc</strong> 文件中，从而在zsh中使用conda环境。</p><h1 id=安装oh-my-zsh>安装oh-my-zsh</h1><h2 id=1安装oh-my-zsh>1.安装oh-my-zsh</h2><p>按照官网教程</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 使用以下两种方法之一安装</span>
+</span></span><span class=line><span class=cl><span class=c1># 1. wget</span>
+</span></span><span class=line><span class=cl>sh -c <span class=s2>&#34;</span><span class=k>$(</span>wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1># 2. curl</span>
+</span></span><span class=line><span class=cl>sh -c <span class=s2>&#34;</span><span class=k>$(</span>curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh<span class=k>)</span><span class=s2>&#34;</span></span></span></code></pre></div></div><p>或使用国内镜像源</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>#curl下载</span>
+</span></span><span class=line><span class=cl>sh -c <span class=s2>&#34;</span><span class=k>$(</span>curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=c1>#wget下载</span>
+</span></span><span class=line><span class=cl>sh -c <span class=s2>&#34;</span><span class=k>$(</span>wget -O- https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh<span class=k>)</span><span class=s2>&#34;</span></span></span></code></pre></div></div><h2 id=2安装powerlevel10k主题>2.安装powerlevel10k主题</h2><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone --depth<span class=o>=</span><span class=m>1</span> https://github.com/romkatv/powerlevel10k.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=nv>$HOME</span><span class=p>/.oh-my-zsh/custom</span><span class=si>}</span>/themes/powerlevel10k
+</span></span><span class=line><span class=cl><span class=c1># 可以使用 gitee.com 上的官方镜像加速下载</span>
+</span></span><span class=line><span class=cl>git clone --depth<span class=o>=</span><span class=m>1</span> https://gitee.com/romkatv/powerlevel10k.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=nv>$HOME</span><span class=p>/.oh-my-zsh/custom</span><span class=si>}</span>/themes/powerlevel10k</span></span></code></pre></div></div><p>然后在.zshrc文件中设置主题</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>vim ~/.zshrc</span></span></code></pre></div></div><p>添加如下内容</p><div class=code-card data-lang=text><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>text</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>ZSH_THEME=&#34;powerlevel10k/powerlevel10k&#34;</span></span></code></pre></div></div><p>按指引配置即可。如果需要重新配置</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>p10k configure</span></span></code></pre></div></div><h2 id=3安装相关插件>3.安装相关插件</h2><h2 id=31zsh-autosuggestions>3.1.zsh-autosuggestions</h2><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone https://github.com/zsh-users/zsh-autosuggestions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-autosuggestions
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 可以使用下面任意一个加速下载</span>
+</span></span><span class=line><span class=cl><span class=c1># 加速1</span>
+</span></span><span class=line><span class=cl>git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-autosuggestions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-autosuggestions
+</span></span><span class=line><span class=cl><span class=c1># 加速2</span>
+</span></span><span class=line><span class=cl>git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-autosuggestions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-autosuggestions
+</span></span><span class=line><span class=cl><span class=c1># 加速3</span>
+</span></span><span class=line><span class=cl>git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-autosuggestions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-autosuggestions</span></span></code></pre></div></div><h2 id=32zsh-syntax-highlighting>3.2.zsh-syntax-highlighting</h2><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 可以使用下面任意一个加速下载</span>
+</span></span><span class=line><span class=cl><span class=c1># 加速1</span>
+</span></span><span class=line><span class=cl>git clone https://github.moeyy.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class=line><span class=cl><span class=c1># 加速2</span>
+</span></span><span class=line><span class=cl>git clone https://gh.xmly.dev/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-syntax-highlighting
+</span></span><span class=line><span class=cl><span class=c1># 加速3</span>
+</span></span><span class=line><span class=cl>git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-syntax-highlighting.git <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=p>~/.oh-my-zsh/custom</span><span class=si>}</span>/plugins/zsh-syntax-highlighting</span></span></code></pre></div></div><h2 id=33zsh-completions>3.3.zsh-completions</h2><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git clone https://github.com/zsh-users/zsh-completions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=si>${</span><span class=nv>ZSH</span><span class=k>:-</span><span class=p>~/.oh-my-zsh</span><span class=si>}</span><span class=p>/custom</span><span class=si>}</span>/plugins/zsh-completions
+</span></span><span class=line><span class=cl><span class=c1>#国内gitee源</span>
+</span></span><span class=line><span class=cl>git clone https://gitee.com/yuhldr/zsh-completions <span class=si>${</span><span class=nv>ZSH_CUSTOM</span><span class=k>:-</span><span class=si>${</span><span class=nv>ZSH</span><span class=k>:-</span><span class=p>~/.oh-my-zsh</span><span class=si>}</span><span class=p>/custom</span><span class=si>}</span>/plugins/zsh-completions</span></span></code></pre></div></div><h2 id=34将插件添加到zshrc文件中>3.4.将插件添加到.zshrc文件中</h2><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>vim ~/.zshrc</span></span></code></pre></div></div><p>添加如下内容</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>plugins</span><span class=o>=(</span>
+</span></span><span class=line><span class=cl>         git
+</span></span><span class=line><span class=cl>         z
+</span></span><span class=line><span class=cl>         zsh-autosuggestions
+</span></span><span class=line><span class=cl>         zsh-syntax-highlighting
+</span></span><span class=line><span class=cl>         zsh-completions
+</span></span><span class=line><span class=cl><span class=o>)</span></span></span></code></pre></div></div><p>刷新</p><div class=code-card data-lang=bash><div class=code-card__bar><span class=code-card__dots aria-hidden=true><i></i><i></i><i></i></span>
+<span class=code-card__lang>bash</span>
+<button type=button class=copy-btn aria-label=复制代码 data-copy>
+<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.2"/><path d="M5.5 15H5a2 2 0 01-2-2V5a2 2 0 012-2h8a2 2 0 012 2v.5"/></svg>
+<span class=copy-btn__txt>复制</span></button></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>source</span> ~/.zshrc</span></span></code></pre></div></div><nav class=post-siblings><span></span>
 <a class="post-siblings__item post-siblings__item--next" href=/2024/11/27/sunpy_basic/><span class=post-siblings__dir>更新 →</span>Sunpy Basic 学习记录</a></nav></article><aside class=toc aria-label=目录><p class=toc__label>目录</p><nav id=TableOfContents><ul><li><a href=#1安装ncurses依赖>1.安装ncurses依赖</a></li><li><a href=#2安装zsh>2.安装zsh</a></li></ul><ul><li><a href=#1安装oh-my-zsh>1.安装oh-my-zsh</a></li><li><a href=#2安装powerlevel10k主题>2.安装powerlevel10k主题</a></li><li><a href=#3安装相关插件>3.安装相关插件</a></li><li><a href=#31zsh-autosuggestions>3.1.zsh-autosuggestions</a></li><li><a href=#32zsh-syntax-highlighting>3.2.zsh-syntax-highlighting</a></li><li><a href=#33zsh-completions>3.3.zsh-completions</a></li><li><a href=#34将插件添加到zshrc文件中>3.4.将插件添加到.zshrc文件中</a></li></ul></nav></aside></div></div></main><footer class=site-footer><div class="wrap footer-inner"><p class=footer-line>© 2024–2026 Triste Sun · 记录、思考与经验</p><p class="footer-line footer-links"><a href=https://github.com/TristeSun target=_blank rel="me noopener">GitHub</a>
 <span aria-hidden=true>·</span>
 <a href=/index.xml>RSS</a>
