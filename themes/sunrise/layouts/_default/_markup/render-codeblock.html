@@ -1,0 +1,18 @@
+{{/* 代码块渲染钩子：终端风卡片 —— 语言标识 + 常显复制按钮 + Chroma 高亮 */}}
+{{ $lang := strings.ToLower (or .Type "text") }}
+{{ $result := transform.HighlightCodeBlock . }}
+<div class="code-card" data-lang="{{ $lang }}">
+  <div class="code-card__bar">
+    <span class="code-card__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="code-card__lang">{{ $lang }}</span>
+    <button type="button" class="copy-btn" aria-label="复制代码" data-copy>
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="11" height="11" rx="2.2"/>
+        <path d="M5.5 15H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v.5"/>
+      </svg>
+      <span class="copy-btn__txt">复制</span>
+    </button>
+  </div>
+  {{ $result.Wrapped }}
+</div>

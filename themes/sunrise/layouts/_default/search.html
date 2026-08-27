@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="wrap narrow">
+  <header class="page-head">
+    <h1 class="page-title">搜索</h1>
+    <p class="page-sub">检索全部文章的标题、标签与正文</p>
+  </header>
+
+  <input id="search-input" class="search-input" type="search"
+         placeholder="输入关键词，如：射电 / zsh / AIA / SunPy …"
+         autocomplete="off" spellcheck="false">
+  <p id="search-status" class="search-status" aria-live="polite"></p>
+  <ul id="search-results" class="search-results"></ul>
+</div>
+{{ end }}

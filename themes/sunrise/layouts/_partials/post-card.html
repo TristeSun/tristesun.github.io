@@ -1,10 +1,26 @@
+{{- /* 封面缩略图：frontmatter cover 参数优先，否则取 bundle 内第一张图 */}}
+{{- $cover := "" }}
+{{- with .Params.cover }}{{ $cover = $.Resources.GetMatch . }}{{ end }}
+{{- if not $cover }}
+  {{- range first 1 (.Resources.ByType "image") }}{{ $cover = . }}{{ end }}
+{{- end }}
+
 <article class="post-card">
-  <a class="post-card__date" href="{{ .RelPermalink }}">{{ .Date.Format "2006-01-02" }}</a>
-  <h2 class="post-card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  <p class="post-card__summary">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 90 }}{{ end }}</p>
-  {{- with .GetTerms "tags" }}
-  <div class="post-card__tags">
-    {{- range . }}<a class="tag-chip" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end -}}
-  </div>
+  {{- with $cover }}
+  <a class="post-card__thumb" href="{{ $.RelPermalink }}" tabindex="-1" aria-hidden="true">
+    <img src="{{ (.Resize "720x webp q72").RelPermalink }}"
+         loading="lazy" alt="">
+  </a>
   {{- end }}
+
+  <div class="post-card__body">
+    <a class="post-card__date" href="{{ .RelPermalink }}">{{ .Date.Format "2006-01-02" }}</a>
+    <h2 class="post-card__title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p class="post-card__summary">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 90 }}{{ end }}</p>
+    {{- with .GetTerms "tags" }}
+    <div class="post-card__tags">
+      {{- range . }}<a class="tag-chip" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end -}}
+    </div>
+    {{- end }}
+  </div>
 </article>

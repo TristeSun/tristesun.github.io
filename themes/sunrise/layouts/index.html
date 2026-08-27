@@ -1,20 +1,58 @@
 {{ define "main" }}
-<section class="hero">
-  <div class="wrap hero-inner">
-    {{- $hero := resources.Get "img/sunfrag.jpg" }}
-    {{- with $hero }}
-    <img class="hero-photo" src="{{ (.Resize "1600x webp q82").RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" aria-hidden="true">
+
+{{/* ═══════════ 全屏封面：整屏太阳观测站入口，滚动揭示正文 ═══════════ */}}
+<section class="cover">
+  <div class="cover__stage" aria-hidden="true">
+    {{- with resources.Get "img/sun-prominence.png" }}
+    {{- $sun := .Process "resize 1600x webp q84" }}
+    <img class="cover__glow" src="{{ $sun.RelPermalink }}" alt="">
+    <img class="cover__sun" src="{{ $sun.RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="">
     {{- end }}
-    <p class="hero-kicker">{{ site.Params.author }} · 个人天文台</p>
-    <h1 class="hero-title">Some memories,<br>some thoughts,<br><em>some experiences.</em></h1>
-    <p class="hero-sub">记录、思考与经验 —— 夜空下的日出观测站。</p>
+    <div class="cover__rings">
+      <i></i><i></i><i></i>
+    </div>
+    <svg class="cover__stars" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <g class="stars-a">
+        <circle cx="90" cy="140" r="1.2"/><circle cx="320" cy="70" r="1"/><circle cx="520" cy="210" r="1.4"/>
+        <circle cx="700" cy="60" r=".9"/><circle cx="1050" cy="150" r="1.1"/><circle cx="1330" cy="90" r="1.3"/>
+        <circle cx="240" cy="330" r="1"/><circle cx="820" cy="300" r=".8"/><circle cx="1180" cy="260" r="1.2"/>
+        <circle cx="140" cy="520" r="1.1"/><circle cx="440" cy="470" r=".9"/><circle cx="960" cy="430" r="1"/>
+      </g>
+      <g class="stars-b">
+        <circle cx="200" cy="220" r="1.5"/><circle cx="600" cy="130" r="1.2"/><circle cx="900" cy="80" r="1"/>
+        <circle cx="1250" cy="190" r="1.5"/><circle cx="380" cy="400" r="1.2"/><circle cx="1100" cy="360" r="1"/>
+        <circle cx="60" cy="350" r="1"/><circle cx="760" cy="380" r="1.3"/><circle cx="1390" cy="300" r="1"/>
+      </g>
+      <g class="stars-c">
+        <circle cx="480" cy="90" r=".8"/><circle cx="1010" cy="220" r=".7"/><circle cx="290" cy="280" r=".8"/>
+        <circle cx="1210" cy="120" r=".7"/><circle cx="660" cy="250" r=".8"/><circle cx="60" cy="620" r=".7"/>
+        <circle cx="1340" cy="500" r=".8"/><circle cx="880" cy="560" r=".6"/><circle cx="1060" cy="640" r=".7"/>
+      </g>
+    </svg>
   </div>
+
+  <header class="cover__content wrap">
+    <p class="cover__kicker">{{ site.Title }} · Solar Observatory</p>
+    <h1 class="cover__title">The past is never dead,<br><em>it's not even past.</em></h1>
+    <p class="cover__meta">{{ site.Params.author }} ── 太阳物理 / 射电天文 / 折腾记录</p>
+  </header>
+
+  <a class="cover__cue" href="#recent" aria-label="向下滚动查看文章">
+    <span>SCROLL</span>
+    <svg viewBox="0 0 24 32" width="18" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+      <path d="M4 8l8 8 8-8"/><path d="M4 17l8 8 8-8" opacity=".45"/>
+    </svg>
+  </a>
 </section>
 
-<section class="wrap home-posts">
+{{/* ═══════════ 封面之下：正式博客内容 ═══════════ */}}
+<section class="wrap home-posts" id="recent">
   <div class="section-head">
     <h2 class="section-head__label">最近的文章</h2>
-    <a class="section-head__more" href="/archives/">全部归档 →</a>
+    <div class="section-head__more-group">
+      <a class="section-head__more" href="/search/">搜索 ⌕</a>
+      <a class="section-head__more" href="/archives/">全部归档 →</a>
+    </div>
   </div>
   <div class="post-list">
     {{- range first 10 (where site.RegularPages "Type" "posts") }}
@@ -22,4 +60,5 @@
     {{- end }}
   </div>
 </section>
+
 {{ end }}

@@ -16,13 +16,13 @@ draft = false
 
 首先配置.bashrc文件
 
-```
+```bash
 vim ~/.bashrc
 ```
 
 添加如下环境变量
 
-```
+```bash
 export CXXFLAGS="-fPIC"
 export CFLAGS="-fPIC"
 export NCURSES_HOME=$HOME/ncurses  # ncurses 目录
@@ -33,13 +33,13 @@ export CPPFLAGS="-I$NCURSES_HOME/include" LDFLAGS="-L$NCURSES_HOME/lib"
 
 刷新
 
-```
+```bash
 source ~/.bashrc
 ```
 
 之后下载安装ncurses
 
-```
+```bash
 cd ~ && mkdir ncurses && cd ncurses  # 新建一个ncurses的安装目录
 wget http://ftp.gnu.org/pub/gnu/ncurses/ncurses-6.1.tar.gz  # 下载ncurses-6.1
 tar -xzvf ncurses-6.1.tar.gz  # 解压
@@ -52,7 +52,7 @@ make && make install  # 安装
 
 安装zsh
 
-```
+```bash
 cd ~
 mkdir -p Applications/zsh-5.7.1 && cd Applications/zsh-5.7.1
 wget -O zsh.tar.xz https://ftp.osuosl.org/pub/blfs/conglomeration/zsh/zsh-5.7.1.tar.xz
@@ -66,19 +66,19 @@ make && make install
 
 设置  **bash_profile**  文件将zsh设置为默认终端
 
-```
+```bash
 vim ~/.bash_profile
 ```
 
 添加如下内容
 
-```
+```bash
 exec $HOME/Applications/zsh-5.7.1/bin/zsh -l
 ```
 
 刷新
 
-```
+```bash
 source ~/.bash_profile
 ```
 
@@ -90,7 +90,7 @@ source ~/.bash_profile
 
 按照官网教程
 
-```
+```bash
 # 使用以下两种方法之一安装
 # 1. wget
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -100,7 +100,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 或使用国内镜像源
 
-```
+```bash
 #curl下载
 sh -c "$(curl -fsSL https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)"
 #wget下载
@@ -109,7 +109,7 @@ sh -c "$(wget -O- https://gitee.com/pocmon/ohmyzsh/raw/master/tools/install.sh)"
 
 ## 2.安装powerlevel10k主题
 
-```
+```bash
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 # 可以使用 gitee.com 上的官方镜像加速下载
 git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
@@ -117,19 +117,19 @@ git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$H
 
 然后在.zshrc文件中设置主题
 
-```
+```bash
 vim ~/.zshrc
 ```
 
 添加如下内容
 
-```
+```text
 ZSH_THEME="powerlevel10k/powerlevel10k"
 ```
 
 按指引配置即可。如果需要重新配置
 
-```
+```bash
 p10k configure
 ```
 
@@ -137,7 +137,7 @@ p10k configure
 
 ## 3.1.zsh-autosuggestions
 
-```
+```bash
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 # 可以使用下面任意一个加速下载
@@ -151,7 +151,7 @@ git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-autosugge
 
 ## 3.2.zsh-syntax-highlighting
 
-```
+```bash
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 # 可以使用下面任意一个加速下载
@@ -165,7 +165,7 @@ git clone https://gh.api.99988866.xyz/https://github.com/zsh-users/zsh-syntax-hi
 
 ## 3.3.zsh-completions
 
-```
+```bash
 git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
 #国内gitee源
 git clone https://gitee.com/yuhldr/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
@@ -173,13 +173,13 @@ git clone https://gitee.com/yuhldr/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my
 
 ## 3.4.将插件添加到.zshrc文件中
 
-```
+```bash
 vim ~/.zshrc
 ```
 
 添加如下内容
 
-```
+```bash
 plugins=(
          git
          z
@@ -191,6 +191,6 @@ plugins=(
 
 刷新
 
-```
+```bash
 source ~/.zshrc
 ```
