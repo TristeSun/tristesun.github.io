@@ -168,6 +168,21 @@ a {
   border-bottom: 1px solid var(--line-soft);
 }
 
+/* 悬浮在暗色封面上方时，顶栏同步锁定为暗色玻璃 */
+.site-header.header--dark {
+  --bg: #0b0e14;
+  --bg-soft: #10151f;
+  --raised: #141b28;
+  --line: #212a3b;
+  --line-soft: #192130;
+  --ink: #e8e3d7;
+  --muted: #9aa2b5;
+  --faint: #667084;
+
+  background: rgba(10, 13, 19, 0.62);
+  border-bottom-color: rgba(33, 42, 59, 0.6);
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -262,8 +277,18 @@ a {
   display: block;
 }
 
-/* ── 全屏封面：太阳观测站入口 ── */
+/* ── 全屏封面：太阳观测站入口（不受明暗主题影响，恒为暗色）── */
 .cover {
+  /* 局部覆盖设计 token：封面区域锁定暗色 */
+  --bg: #0b0e14;
+  --bg-soft: #10151f;
+  --raised: #141b28;
+  --line: #212a3b;
+  --line-soft: #192130;
+  --ink: #e8e3d7;
+  --muted: #9aa2b5;
+  --faint: #667084;
+
   position: relative;
   height: 100svh;
   min-height: 600px;
@@ -272,16 +297,11 @@ a {
   justify-content: center;
   overflow: hidden;
   border-bottom: 1px solid var(--line-soft);
+  color: var(--ink);
   background:
     radial-gradient(85% 90% at 74% 16%, rgba(64, 33, 8, 0.5) 0%, transparent 58%),
     radial-gradient(120% 120% at 80% 0%, #121a2c 0%, transparent 62%),
-    var(--bg);
-}
-
-[data-theme='light'] .cover {
-  background:
-    radial-gradient(80% 85% at 74% 14%, rgba(255, 189, 100, 0.32) 0%, transparent 60%),
-    linear-gradient(var(--bg), var(--bg));
+    #0b0e14;
 }
 
 .cover__stage {
@@ -289,26 +309,27 @@ a {
   inset: 0;
 }
 
+/* 太阳主体：大幅铺满右侧画面 */
 .cover__sun,
 .cover__glow {
   position: absolute;
-  top: -9%;
-  right: max(-28rem, -22vw);
-  width: min(76vw, 1080px);
+  top: -16%;
+  right: max(-34rem, -26vw);
+  width: min(112vw, 1560px);
   height: auto;
 }
 
 .cover__sun {
   opacity: 0.97;
   filter: saturate(1.08) contrast(1.05);
-  -webkit-mask-image: radial-gradient(72% 72% at 56% 44%, #000 44%, transparent 73%);
-  mask-image: radial-gradient(72% 72% at 56% 44%, #000 44%, transparent 73%);
+  -webkit-mask-image: radial-gradient(74% 74% at 58% 42%, #000 48%, transparent 76%);
+  mask-image: radial-gradient(74% 74% at 58% 42%, #000 48%, transparent 76%);
   animation: kenburns 26s ease-in-out infinite alternate;
 }
 
 .cover__glow {
   opacity: 0.5;
-  filter: blur(90px) saturate(1.3);
+  filter: blur(100px) saturate(1.3);
   transform: scale(1.07);
 }
 
@@ -372,11 +393,6 @@ a {
 @keyframes twinkle {
   0%, 100% { opacity: 0.35; }
   50%      { opacity: 0.95; }
-}
-
-[data-theme='light'] .cover__stars,
-[data-theme='light'] .cover__glow {
-  display: none;
 }
 
 .cover__content {
@@ -1212,27 +1228,6 @@ a {
   border-radius: 10px;
 }
 
-/* 文章卡片的封面缩略图 */
-.post-card__thumb {
-  display: block;
-  margin-bottom: 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.post-card__thumb img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 7;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.post-card:hover .post-card__thumb img {
-  transform: scale(1.035);
-}
-
 .section-head__more-group {
   display: flex;
   gap: 1.15rem;
@@ -1460,9 +1455,9 @@ mark,
 
   .cover__sun,
   .cover__glow {
-    width: 165vw;
-    right: -70vw;
-    top: 4%;
+    width: 210vw;
+    right: -108vw;
+    top: 2%;
   }
 
   .cover__rings i:nth-child(3),

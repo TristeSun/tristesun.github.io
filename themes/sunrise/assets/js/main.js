@@ -69,6 +69,17 @@
     }
   });
 
+  /* ── 封面可见时顶栏锁定暗色玻璃（亮色主题下同样生效）── */
+  var coverSection = document.querySelector('.cover');
+  var siteHeader = document.querySelector('.site-header');
+  if (coverSection && siteHeader && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        siteHeader.classList.toggle('header--dark', en.isIntersecting);
+      });
+    }, { rootMargin: '-64px 0px 0px 0px' }).observe(coverSection);
+  }
+
   /* ── 目录当前章节高亮 ── */
   var toc = document.querySelector('.toc');
   if (toc && 'IntersectionObserver' in window) {
