@@ -1,0 +1,60 @@
+{{/* ── 主题初始化：必须在首屏渲染前执行，避免明暗切换闪烁 ── */}}
+<script>
+  (function () {
+    var saved = localStorage.getItem('sunrise-theme');
+    var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+{{- /* ── 资源管线：CSS / JS 压缩指纹 ── */}}
+{{- $css := resources.Get "css/main.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{- $js := resources.Get "js/main.js" | minify | fingerprint -}}
+<script defer src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{{ if .IsHome }}{{ site.Title }} — {{ site.Params.description }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+<meta name="author" content="{{ site.Params.author }}">
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 100 }}{{ end }}">
+
+{{- /* ── Open Graph（修正旧站 og:url 指向 example.com 的遗留问题）── */}}
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 100 }}{{ end }}">
+<meta property="og:locale" content="zh_CN">
+{{- $hero := resources.Get "img/sunfrag.jpg" }}
+{{- $cover := "" }}
+{{- if and .IsPage .Params.cover }}{{ $cover = (.Resources.GetMatch .Params.cover) }}{{ end }}
+{{- with or $cover $hero }}
+<meta property="og:image" content="{{ (print site.BaseURL (strings.TrimPrefix "/" .RelPermalink)) | absURL }}">
+<meta name="twitter:card" content="summary_large_image">
+{{- end }}
+
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" type="image/svg+xml" href='data:image/svg+xml;utf8,{{ readFile "assets/favicon.svg" | htmlEscape }}'>
+{{- with .OutputFormats.Get "RSS" }}
+<link rel="alternate" type="application/rss+xml" title="{{ site.Title }}" href="{{ .Permalink }}">
+{{- end }}
+
+{{- /* ── KaTeX：仅 frontmatter 标注 math: true 的页面按需加载 ── */}}
+{{- if .Params.math }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '$', right: '$', display: false }
+      ],
+      throwOnError: false
+    });
+  });
+</script>
+{{- end }}

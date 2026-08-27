@@ -1,0 +1,45 @@
+{{ define "main" }}
+<div class="wrap wrap--article">
+
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006 年 01 月 02 日" }}</time>
+      <span aria-hidden="true">·</span>
+      <span>{{ .WordCount }} 字 · 约 {{ div (add .WordCount 349) 350 }} 分钟</span>
+    </div>
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .GetTerms "tags" }}
+    <div class="post-tags">
+      {{- range . }}<a class="tag-chip" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>{{ end -}}
+    </div>
+    {{- end }}
+  </header>
+
+  <div class="post-layout {{ if not .TableOfContents }}no-toc{{ end }}">
+    <article class="prose">
+      {{ .Content }}
+
+      <nav class="post-siblings">
+        {{- with .PrevInSection }}
+        <a class="post-siblings__item post-siblings__item--prev" href="{{ .RelPermalink }}">
+          <span class="post-siblings__dir">← 更早</span>{{ .Title }}
+        </a>
+        {{- else }}<span></span>{{- end }}
+        {{- with .NextInSection }}
+        <a class="post-siblings__item post-siblings__item--next" href="{{ .RelPermalink }}">
+          <span class="post-siblings__dir">更新 →</span>{{ .Title }}
+        </a>
+        {{- end }}
+      </nav>
+    </article>
+
+    {{- if .TableOfContents }}
+    <aside class="toc" aria-label="目录">
+      <p class="toc__label">目录</p>
+      {{ .TableOfContents }}
+    </aside>
+    {{- end }}
+  </div>
+
+</div>
+{{ end }}

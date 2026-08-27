@@ -1,0 +1,23 @@
+{{ define "main" }}
+{{ $posts := where site.RegularPages "Type" "posts" }}
+<div class="wrap narrow">
+  <header class="page-head">
+    <h1 class="page-title">归档</h1>
+    <p class="page-sub">共 {{ len $posts }} 篇</p>
+  </header>
+
+  {{- range $posts.GroupByDate "2006" }}
+  <section class="year-group">
+    <h2 class="year-group__year">{{ .Key }}</h2>
+    <div class="row-list">
+      {{- range .Pages }}
+      <a class="row-item" href="{{ .RelPermalink }}">
+        <time class="row-item__date">{{ .Date.Format "01-02" }}</time>
+        <span class="row-item__title">{{ .Title }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
+</div>
+{{ end }}

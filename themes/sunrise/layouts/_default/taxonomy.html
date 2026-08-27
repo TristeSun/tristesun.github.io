@@ -1,0 +1,32 @@
+{{ define "main" }}
+<div class="wrap narrow">
+  {{- if eq .Kind "taxonomy" }}
+
+  <header class="page-head">
+    <h1 class="page-title">标签</h1>
+    <p class="page-sub">共 {{ len .Data.Terms }} 个标签</p>
+  </header>
+  <div class="tag-cloud">
+    {{- range .Data.Terms.ByCount }}
+    <a class="tag-chip tag-chip--lg" href="{{ .Page.RelPermalink }}">#{{ .Page.LinkTitle }}<span class="tag-count">{{ .Count }}</span></a>
+    {{- end }}
+  </div>
+
+  {{- else }}
+
+  <header class="page-head">
+    <h1 class="page-title"># {{ .Title }}</h1>
+    <p class="page-sub">共 {{ len .Pages }} 篇</p>
+  </header>
+  <div class="row-list">
+    {{- range .Pages }}
+    <a class="row-item" href="{{ .RelPermalink }}">
+      <time class="row-item__date">{{ .Date.Format "2006-01-02" }}</time>
+      <span class="row-item__title">{{ .Title }}</span>
+    </a>
+    {{- end }}
+  </div>
+
+  {{- end }}
+</div>
+{{ end }}

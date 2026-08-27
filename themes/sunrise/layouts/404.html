@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div class="notfound wrap">
+  <svg viewBox="0 0 64 40" width="96" height="60" aria-hidden="true">
+    <path d="M32 8a14 14 0 0 1 14 14H18A14 14 0 0 1 32 8z" fill="currentColor"/>
+    <path d="M6 26h52" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+    <path d="M13 34h38" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".25"/>
+  </svg>
+  <h1 class="notfound__code">404</h1>
+  <p class="notfound__text">这一页沉到地平线以下了。</p>
+  <p class="notfound__actions">
+    <a class="btn" href="/">返回首页</a>
+    <a class="btn btn--ghost" href="/archives/">看看归档</a>
+  </p>
+</div>
+{{ end }}

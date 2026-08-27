@@ -1,0 +1,22 @@
+{{ define "main" }}
+<div class="wrap">
+  <header class="page-head">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="page-sub">共 {{ .Paginator.TotalNumberOfElements }} 篇</p>
+  </header>
+  <div class="post-list">
+    {{- range .Paginator.Pages }}
+      {{- partial "post-card.html" . }}
+    {{- end }}
+  </div>
+
+  {{- $pager := .Paginator }}
+  {{- if gt $pager.TotalPages 1 }}
+  <nav class="pager">
+    {{- with $pager.Prev }}<a class="pager__link" href="{{ .RelPermalink }}">← 新一些</a>{{ end }}
+    <span class="pager__status">{{ $pager.PageNumber }} / {{ $pager.TotalPages }}</span>
+    {{- with $pager.Next }}<a class="pager__link" href="{{ .RelPermalink }}">老一些 →</a>{{ end }}
+  </nav>
+  {{- end }}
+</div>
+{{ end }}

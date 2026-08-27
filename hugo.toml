@@ -1,0 +1,64 @@
+# ── 站点基本信息 ────────────────────────────────────────────
+baseURL            = 'https://tristesun.github.io/'
+title              = "Triste's Blog"
+theme              = 'sunrise'
+
+defaultContentLanguage = 'zh'
+locale             = 'zh-CN'
+hasCJKLanguage     = true   # 中日韩混排：正确统计摘要字数
+
+enableRobotsTXT    = true
+enableGitInfo      = false  # 部署仓库与源码仓库分离，日期一律以 frontmatter 为准
+
+[pagination]
+pagerSize = 10
+
+[params]
+  author      = 'Triste Sun'
+  description = 'Some memories, some thoughts, some experiences.'
+  github      = 'https://github.com/TristeSun'
+  email       = '2012536@mail.nankai.edu.cn'
+  since       = 2024
+
+[permalinks]
+  posts = '/:year/:month/:day/:slug/'
+
+[taxonomies]
+  tag        = 'tags'
+
+[[menu.main]]
+  name   = '归档'
+  url    = '/archives/'
+  weight = 20
+
+[[menu.main]]
+  name   = '标签'
+  url    = '/tags/'
+  weight = 30
+
+[[menu.main]]
+  name   = '关于'
+  url    = '/about/'
+  weight = 40
+
+# ── Markdown 渲染 ──────────────────────────────────────────
+[markup]
+  [markup.highlight]
+    # 用 CSS class 输出，配色由主题样式表统一接管（明暗两套）
+    noClasses = false
+    lineNos        = false
+    codeFences     = true
+    guessSyntax    = false
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    # 让 $...$ / $$..$$ 原样穿透到 HTML，交给 KaTeX 渲染
+    [markup.goldmark.extensions.passthrough]
+      enabled = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block  = [['$$', '$$']]
+        inline = [['$', '$']]
+
+[outputs]
+  home = ['HTML', 'RSS']

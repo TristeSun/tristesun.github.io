@@ -1,0 +1,25 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="wrap hero-inner">
+    {{- $hero := resources.Get "img/sunfrag.jpg" }}
+    {{- with $hero }}
+    <img class="hero-photo" src="{{ (.Resize "1600x webp q82").RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="" aria-hidden="true">
+    {{- end }}
+    <p class="hero-kicker">{{ site.Params.author }} · 个人天文台</p>
+    <h1 class="hero-title">Some memories,<br>some thoughts,<br><em>some experiences.</em></h1>
+    <p class="hero-sub">记录、思考与经验 —— 夜空下的日出观测站。</p>
+  </div>
+</section>
+
+<section class="wrap home-posts">
+  <div class="section-head">
+    <h2 class="section-head__label">最近的文章</h2>
+    <a class="section-head__more" href="/archives/">全部归档 →</a>
+  </div>
+  <div class="post-list">
+    {{- range first 10 (where site.RegularPages "Type" "posts") }}
+      {{- partial "post-card.html" . }}
+    {{- end }}
+  </div>
+</section>
+{{ end }}
